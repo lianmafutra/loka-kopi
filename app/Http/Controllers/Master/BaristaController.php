@@ -51,13 +51,13 @@ class BaristaController extends Controller
          DB::beginTransaction();
         $requestSafe = $request->safe();
 
-        $user = User::create([
-         'name' =>  $requestSafe->nama,
-         'jenkel' =>  $requestSafe->jenkel,
-         'kontak' =>  $requestSafe->kontak,
-         'username' => $requestSafe->username,
-         'password' => bcrypt($requestSafe->password),
-      ]);
+         $user = User::create([
+            'name' =>  $requestSafe->nama,
+            'jenkel' =>  $requestSafe->jenkel,
+            'kontak' =>  $requestSafe->kontak,
+            'username' => $requestSafe->username,
+            'password' => bcrypt($requestSafe->password),
+         ]);
 
          $barista = Barista::create(
             $requestSafe->merge([
@@ -99,15 +99,22 @@ class BaristaController extends Controller
       try {
 
     
+    
          DB::beginTransaction();
-      
-         $barista->fill($request->safe()->all())->save();
+         $requestSafe = $request->safe();
+
+         $user = User::find($barista->id)->update([
+            'name' =>  $requestSafe->nama,
+            'username' =>  $requestSafe->username,
+            'jenkel' =>  $requestSafe->jenkel,
+            'kontak' =>  $requestSafe->kontak,
+         ]);
+
+         $barista->fill($request->except('jenkel','nama','kontak','username','password'))->save();
      
-
-
          DB::commit();
 
-         return $this->success(__('trans.crud.success'));
+         return $this->success(__('trans.crud.update'));
       } catch (\Throwable $th) {
          DB::rollBack();
          return $this->error(__('trans.crud.error') . $th, 400);
@@ -122,6 +129,7 @@ class BaristaController extends Controller
      
       try {
          DB::beginTransaction();
+         
          $barista->delete();
          DB::commit();
 
