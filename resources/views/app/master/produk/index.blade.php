@@ -2,10 +2,11 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-@endpush
-<style>
+    <style>
 
-</style>
+    </style>
+@endpush
+
 @section('header')
     <x-header title="Data Master Produk"></x-header>
 @endsection
@@ -18,7 +19,7 @@
                     Data</a>
             </div>
             <div class="card-body">
-                <x-datatable id="datatable" :th="['No', 'Nama', 'Deskripsi','Harga', 'Komposisi', 'Aksi']" style="width: 100%"></x-datatable>
+                <x-datatable id="datatable" :th="['No', 'Foto','Nama', 'Deskripsi','Harga', 'Komposisi', 'Aksi']" style="width: 100%"></x-datatable>
             </div>
         </div>
     </div>
@@ -47,6 +48,12 @@
                     width: '1%'
                 },
                 {
+                    data: 'foto',
+                    name: 'foto',
+                    orderable: false,
+                    searchable: false
+                },
+                {
                     data: 'nama',
                     name: 'nama',
                     orderable: true,
@@ -68,8 +75,8 @@
                 {
                     data: 'komposisi2',
                     name: 'komposisi2',
-                    orderable: true,
-                    searchable: true
+                    orderable: false,
+                    searchable: false
                 },
               
                

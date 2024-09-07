@@ -24,17 +24,18 @@ class ProdukController extends Controller
                return   "Rp. " . Rupiah::toRupiah($data->harga);
             })
             ->editColumn('komposisi2', function ($data) {
-               // Ubah string menjadi array dengan delimiter ";"
                $items = explode(';', $data->komposisi);
-               // Inisialisasi string untuk badge
                $badges = '';
-               // Loop untuk setiap item dan buat badge
                foreach ($items as $item) {
                   $badges .= '<span class="badge badge-info">' . trim($item) . '</span> ';
                }
                return $badges;
             })
-
+            ->addColumn('foto', function ($data) {
+               return ' <div class="shadow" style="width: 90px; height: 100px;">
+        <img src="'.$data?->foto_url.'" alt="Centered Image" class="img-fluid w-100 h-100" style="object-fit: cover;">
+    </div>';
+            })
             ->addColumn('action', function ($data) {
                return view('app.master.produk.action', compact('data'));
             })

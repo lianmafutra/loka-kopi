@@ -24,7 +24,7 @@ class Produk extends Model
           return url('storage/uploads/' . $this->foto); // Change the folder path accordingly
       }
 
-      return null; // Return null if no image is available
+      return url('img/placeholder_produk.png' . $this->foto);; // Return null if no image is available
   }
 
   // Specify which attributes should be appended to the model's array and JSON form
