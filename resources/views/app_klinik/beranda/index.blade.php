@@ -8,7 +8,7 @@
    <div class="callout callout-info">
      <h5>Selamat Datang, <span style="color:#4543a0">User</span> </h5>
      <p>
-     SAMPEYAN - Sistem Administrasi Pelayanan Pasien
+    LOKA - KOPI
      </p>
    </div>
  </div>

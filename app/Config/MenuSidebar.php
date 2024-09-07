@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Config;
-
 class MenuSidebar
 {
    public static function render()
@@ -71,69 +69,64 @@ class MenuSidebar
             'title' => 'Data Master',
             'permission' => ['role-admin'],
          ],
-
+        
          [
             'type' => 'menu',
-            'title' => 'Data Obat',
-            'url' => route('master-data.obat.index'),
+            'title' => 'Data Barista',
+            'url' => route('master-data.barista.index'),
             'icon' => 'fas fa-angle-right',
-            'active' => ['master-data/obat*','master-data/penyesuaian/obat*'],
+            'active' => ['master/barista*'],
             'permission' => ['role-admin'],
          ],
-         
          [
             'type' => 'menu',
-            'title' => 'Data Dokter',
-            'url' => route('master-data.dokter.index'),
+            'title' => 'Data Gerobak',
+            'url' => route('master-data.gerobak.index'),
+            'icon' => 'fas fa-angle-right',
+            'active' => ['master/gerobak*'],
+            'permission' => ['role-admin'],
+         ],
+         [
+            'type' => 'menu',
+            'title' => 'Data Stok',
+            'url' => '',
+            'icon' => 'fas fa-angle-right',
+            'active' => ['master/stok*'],
+            'permission' => ['role-admin'],
+         ],
+         [
+            'type' => 'menu',
+            'title' => 'Data Produk',
+            'url' => route('master-data.produk.index'),
+            'icon' => 'fas fa-angle-right',
+            'active' => ['master/produk*'],
+            'permission' => ['role-admin'],
+         ],
+         [
+            'type' => 'menu',
+            'title' => 'Data Konsumen',
+            'url' => route('master-data.konsumen.index'),
             'icon' => 'fas fa-angle-right',
             'active' => ['master-data/dokter*'],
             'permission' => ['role-admin'],
          ],
-        
-         [
-            'type' => 'tree',
-            'title' => 'Data Anggota',
-            'url' => '#',
-             'icon' => 'fas fa-angle-right',
-            'active' => ['master-data/anggota/personil*','master-data/anggota/siswa*','master-data/angkatan*'],
-            'permission' => ['role-admin'],
-            'items' => [
-               [
-                  'type' => 'menu',
-                  'title' => 'Data Siswa',
-                  'url' => route('master-data.siswa.index'),
-                  'icon' => 'far fa-circle',
-                  'active' => ['master-data/anggota/siswa*'],
-      
-               ],
-               [
-                  'type' => 'menu',
-                  'title' => 'Angkatan Siswa',
-                  'url' => route('angkatan.index'),
-                  'icon' => 'far fa-circle',
-                  'active' => ['master-data/angkatan*'],
-      
-               ],
-               [
-                  'type' => 'menu',
-                  'title' => 'Data Personil',
-                  'url' => route('master-data.personil.index'),
-                  'icon' => 'far fa-circle',
-                  'active' => ['master-data/anggota/personil*'],
-      
-               ],
-            ]
-            ],
-         
          [
             'type' => 'menu',
-            'title' => 'Data Pengguna',
+            'title' => 'Data Lokasi',
+            'url' => route('master-data.lokasi.index'),
+            'icon' => 'fas fa-angle-right',
+            'active' => ['master-data/dokter*'],
+            'permission' => ['role-admin'],
+         ],
+  
+         [
+            'type' => 'menu',
+            'title' => 'Data User App',
             'url' => route('master-data.pengguna.index'),
             'icon' => 'fas fa-angle-right',
             'active' => ['master-data/pengguna*'],
             'permission' => ['role-admin'],
          ],
-
          [
             'type' => 'header',
             'title' => 'Menu',
@@ -144,7 +137,13 @@ class MenuSidebar
             'url' => route('klinik.dashboard.index'),
             'icon' => 'fas fa-angle-right',
             'active' => ['dashboard*'],
-
+         ],
+         [
+            'type' => 'menu',
+            'title' => 'Transaksi',
+            'url' => route('klinik.dashboard.index'),
+            'icon' => 'fas fa-angle-right',
+            'active' => ['dashboard*'],
          ],
          // [
          //    'type' => 'menu',
@@ -154,9 +153,6 @@ class MenuSidebar
          //    'active' => ['admin/settings'],
          //    'permission' => ['settings'],
          // ],
-
-        
-        
          [
             'type' => 'tree',
             'title' => 'Laporan',
@@ -167,26 +163,24 @@ class MenuSidebar
                [
                   'type' => 'menu',
                   'title' => 'Laporan Data Pemeriksaan',
-                  'url' => route('laporan.pemeriksaan'),
+                  'url' => '',
                   'icon' => 'far fa-circle',
                   'active' => ['laporan/pemeriksaan'],
                ],
                [
                   'type' => 'menu',
                   'title' => 'Laporan Rikkes Siswa',
-                  'url' => route('laporan.rikkes.siswa'),
+                  'url' => '',
                   'icon' => 'far fa-circle',
                   'active' => ['laporan/rikkes/siswa'],
                ],
                [
                   'type' => 'menu',
                   'title' => 'Laporan Obat',
-                  'url' => route('laporan.obat'),
+                  'url' => '',
                   'icon' => 'far fa-circle',
                   'active' => ['laporan/obat'],
                ],
-               
-
                // [
                //    'type' => 'menu',
                //    'title' => 'Laporan Data Obat',
@@ -194,9 +188,7 @@ class MenuSidebar
                //    'icon' => 'far fa-circle',
                //    'active' => ['laporan/obat'],
                // ],
-
             ],
-
          ],
          [
             'type' => 'menu',
@@ -205,8 +197,6 @@ class MenuSidebar
             'icon' => 'fas fa-angle-right',
             'active' => ['user/profile*'],
          ],
-
-        
          // [
          //    'type' => 'header',
          //    'title' => 'Menu App',
