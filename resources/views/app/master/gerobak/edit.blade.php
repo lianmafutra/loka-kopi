@@ -9,34 +9,33 @@
     </style>
 @endpush
 @section('header')
-    <x-header title="Edit Data Dokter" back-button="true"></x-header>
+    <x-header title="Edit Data Gerobak" back-button="true"></x-header>
 @endsection
 @section('content')
     <div class="col-lg-8 col-sm-12">
-        <form id="form_sample" method="post">
+      <form id="form_sample" method="post">
          @csrf
-         @method('PUT')
-            <div class="card">
-                <div class="card-body">
-                    <x-input label="Nama Lengkap" id="nama" required />
+         <div class="card">
+             <div class="card-body">
+                 <x-input label="Nama Gerobak" id="nama" required />
+              
+                 <x-select2 required id="barista_id" label="Barista" placeholder="Pilih Barista">
                   
-                    <x-select2 required id="jenis_kelamin" label="Jenis Kelamin" placeholder="Pilih Jenis Kelamin">
-                        <option value="L">Laki-Laki</option>
-                        <option value="P">Perempuan</option>
-                    </x-select2>
-                    <x-input label="Spesialis" id="spesialis" required />
-                    <x-textarea id="alamat" label="Alamat" placeholder="Alamat Tempat Tinggal"  />
-                    <x-input-phone id="no_hp" label="Nomor HP" placeholder="Nomor Telepon Aktif" />
-                  
-                </div>
-                <div class="card-footer">
-                    <div style="gap:8px;" class="d-flex">
-                        <a href="{{ route('master-data.dokter.index') }}" type="button" class="btn btn-secondary">Kembali</a>
-                        <button type="submit" class="btn_submit btn btn-primary">Simpan</button>
-                    </div>
-                </div>
-            </div>
-        </form>
+                   @foreach ($barista as $item)
+                    <option value="{{ $item->id }}">{{ $item?->user?->name }}</option>
+                   @endforeach
+                 </x-select2>
+               
+               
+             </div>
+             <div class="card-footer">
+                 <div style="gap:8px;" class="d-flex">
+                     <a href="{{ route('master-data.gerobak.index') }}" type="button" class="btn btn-secondary">Kembali</a>
+                     <button type="submit" class="btn_submit btn btn-primary">Update</button>
+                 </div>
+             </div>
+         </div>
+     </form>
     </div>
 @endsection
 @push('js')
@@ -59,9 +58,10 @@
             $('#form_sample').submit(function(e) {
                 e.preventDefault();
                 const formData = new FormData(this);
+                formData.append('_method', 'PUT');
                 $.ajax({
                     type: 'POST',
-                    url: route('master-data.dokter.update', @json($dokter->id)),
+                    url: route('master-data.gerobak.update', @json($gerobak->id)),
                     data: formData,
                     contentType: false,
                     processData: false,
@@ -79,7 +79,7 @@
                                 showCancelButton: false,
                                 allowOutsideClick: false,
                             }).then((result) => {
-                                window.location.replace(route('master-data.dokter.index'))
+                                window.location.replace(route('master-data.gerobak.index'))
                             })
                         }
                     },
@@ -89,13 +89,9 @@
                 })
             })
 
-                // set data 
-                $('#nama').val(@json($dokter?->nama))
-                $('#nik').val(@json($dokter->nik))
-                $('#spesialis').val(@json($dokter->spesialis))
-                $('#alamat').val(@json($dokter->alamat))
-                $('#no_hp').val(@json($dokter->no_hp))
-                $('#jenis_kelamin').val(@json($dokter->jenis_kelamin)).change()
+               
+                $('#nama').val(@json($gerobak?->nama))
+                $('#barista_id').val(@json($gerobak?->barista?->id)).change()
       
         })
     </script>

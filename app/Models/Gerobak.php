@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Gerobak extends Model
 {
@@ -14,4 +15,17 @@ class Gerobak extends Model
       'created_at' => 'date:d-m-Y H:i:s',
       'updated_at' => 'date:d-m-Y H:i:s',
   ];
+
+
+  /**
+   * Get the user that owns the Gerobak
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+   */
+  public function barista(): BelongsTo
+  {
+      return $this->belongsTo(Barista::class, 'barista_id', 'id');
+  }
+  
+  
 }

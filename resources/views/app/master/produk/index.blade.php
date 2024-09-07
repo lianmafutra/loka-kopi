@@ -7,18 +7,18 @@
 
 </style>
 @section('header')
-    <x-header title="Data Master Dokter"></x-header>
+    <x-header title="Data Master Produk"></x-header>
 @endsection
 @section('content')
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <a href="{{ route('master-data.dokter.create') }}" id="btn_input_data" class="btn btn-sm btn-primary"><i
+                <a href="{{ route('master-data.produk.create') }}" id="btn_input_data" class="btn btn-sm btn-primary"><i
                         class="fas fa-plus"></i> Input
                     Data</a>
             </div>
             <div class="card-body">
-                <x-datatable id="datatable" :th="['No', 'Nama' ,'Jenis Kelamin','Spesialis','No Hp','alamat', 'Aksi']" style="width: 100%"></x-datatable>
+                <x-datatable id="datatable" :th="['No', 'Nama', 'Deskripsi','Harga', 'Komposisi', 'Aksi']" style="width: 100%"></x-datatable>
             </div>
         </div>
     </div>
@@ -38,8 +38,8 @@
             aaSorting: [],
             // order: [3, 'desc'],
             scrollX: true,
-         
-            ajax: route('master-data.dokter.index'),
+
+            ajax: route('master-data.produk.index'),
             columns: [{
                     data: "DT_RowIndex",
                     orderable: false,
@@ -52,31 +52,27 @@
                     orderable: true,
                     searchable: true
                 },
+
+                {
+                    data: 'desc_short',
+                    name: 'desc_short',
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                    data: 'harga_format',
+                    name: 'harga_format',
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                    data: 'komposisi2',
+                    name: 'komposisi2',
+                    orderable: true,
+                    searchable: true
+                },
+              
                
-                {
-                    data: 'jenis_kelamin',
-                    name: 'jenis_kelamin',
-                    orderable: true,
-                    searchable: true
-                },
-                {
-                    data: 'spesialis',
-                    name: 'spesialis',
-                    orderable: true,
-                    searchable: true
-                },
-                {
-                    data: 'no_hp',
-                    name: 'no_hp',
-                    orderable: true,
-                    searchable: true
-                },
-                {
-                    data: 'alamat',
-                    name: 'alamat',
-                    orderable: true,
-                    searchable: true
-                },
 
                 {
                     data: "action",
@@ -133,7 +129,7 @@
                             _alertSuccess(response.message)
                         },
                         error: function(response) {
-             
+
                             _showError(response)
                         }
                     })

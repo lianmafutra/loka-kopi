@@ -88,20 +88,21 @@ class MenuSidebar
          ],
          [
             'type' => 'menu',
-            'title' => 'Data Stok',
-            'url' => '',
-            'icon' => 'fas fa-angle-right',
-            'active' => ['master/stok*'],
-            'permission' => ['role-admin'],
-         ],
-         [
-            'type' => 'menu',
             'title' => 'Data Produk',
             'url' => route('master-data.produk.index'),
             'icon' => 'fas fa-angle-right',
             'active' => ['master/produk*'],
             'permission' => ['role-admin'],
          ],
+         [
+            'type' => 'menu',
+            'title' => 'Data Stok',
+            'url' => '',
+            'icon' => 'fas fa-angle-right',
+            'active' => ['master/stok*'],
+            'permission' => ['role-admin'],
+         ],
+        
          [
             'type' => 'menu',
             'title' => 'Data Konsumen',
