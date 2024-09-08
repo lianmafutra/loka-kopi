@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\SampleCrudController;
 use App\Http\Controllers\Admin\TinyEditorController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\Klinik\Dashboard\DashboarddController;
-
+use App\Http\Controllers\Loka\TransaksiController;
 use App\Http\Controllers\Master\BaristaController;
 use App\Http\Controllers\Master\GerobakController;
 use App\Http\Controllers\Master\KonsumenController;
@@ -69,6 +69,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
+   Route::get('transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
 
  
 });

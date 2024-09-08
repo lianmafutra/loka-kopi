@@ -142,9 +142,9 @@ class MenuSidebar
          [
             'type' => 'menu',
             'title' => 'Transaksi',
-            'url' => "",
+            'url' => route('transaksi.index'),
             'icon' => 'fas fa-angle-right',
-            'active' => [''],
+            'active' => ['transaksi*'],
          ],
          // [
          //    'type' => 'menu',
