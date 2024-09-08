@@ -94,21 +94,21 @@ class MenuSidebar
             'active' => ['master/produk*'],
             'permission' => ['role-admin'],
          ],
-         [
-            'type' => 'menu',
-            'title' => 'Data Stok',
-            'url' => '',
-            'icon' => 'fas fa-angle-right',
-            'active' => ['master/stok*'],
-            'permission' => ['role-admin'],
-         ],
+         // [
+         //    'type' => 'menu',
+         //    'title' => 'Data Stok',
+         //    'url' => '',
+         //    'icon' => 'fas fa-angle-right',
+         //    'active' => ['master/stok*'],
+         //    'permission' => ['role-admin'],
+         // ],
         
          [
             'type' => 'menu',
             'title' => 'Data Konsumen',
             'url' => route('master-data.konsumen.index'),
             'icon' => 'fas fa-angle-right',
-            'active' => ['master-data/dokter*'],
+            'active' => ['master/konsumen*'],
             'permission' => ['role-admin'],
          ],
          [

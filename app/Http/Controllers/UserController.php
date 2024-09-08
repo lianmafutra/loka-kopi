@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use App\Utils\ApiResponse;
 use App\Utils\LmFileTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +14,7 @@ use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
    use LmFileTrait;
+   use ApiResponse;
 
    public function index()
    {
@@ -134,4 +136,30 @@ class UserController extends Controller
 
       return back();
    }
+
+   public function updateStatus(Request $request)
+   {
+      
+      try {
+         $user = User::find($request->user_id);
+         
+         if($user->status == "AKTIF"){
+            $user->update([
+               'status' => 'NONAKTIF'
+            ]);
+         }else{
+            $user->update([
+               'status' => 'AKTIF'
+            ]);
+         }
+        
+         return $this->success(__('trans.crud.success'));
+      } catch (\Throwable $th) {
+         DB::rollBack();
+         return $this->error(__('trans.crud.error'), 400);
+      }
+
+     
+   }
+
 }

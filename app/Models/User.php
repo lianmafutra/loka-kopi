@@ -23,7 +23,7 @@ class User extends Authenticatable
    //  use \OwenIt\Auditing\Auditable;
   
     protected $guarded = [];
-
+    protected $table = 'users';
     protected $hidden = [
         'password',
         'remember_token',
@@ -105,6 +105,12 @@ class User extends Authenticatable
     public function barista(): HasOne
     {
         return $this->hasOne(Barista::class);
+    }
+
+
+    public function konsumen(): HasOne
+    {
+        return $this->hasOne(Konsumen::class);
     }
 
     

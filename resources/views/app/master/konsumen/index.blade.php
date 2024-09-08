@@ -2,23 +2,24 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-@endpush
-<style>
+    <style>
 
-</style>
+    </style>
+@endpush
+
 @section('header')
-    <x-header title="Data Master Gerobak"></x-header>
+    <x-header title="Data Master Barista"></x-header>
 @endsection
 @section('content')
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <a href="{{ route('master-data.gerobak.create') }}" id="btn_input_data" class="btn btn-sm btn-primary"><i
+                <a href="{{ route('master-data.konsumen.create') }}" id="btn_input_data" class="btn btn-sm btn-primary"><i
                         class="fas fa-plus"></i> Input
                     Data</a>
             </div>
             <div class="card-body">
-                <x-datatable id="datatable" :th="['No', 'Nama','Barista','Total Stok','Aksi']" style="width: 100%"></x-datatable>
+                <x-datatable id="datatable" :th="['No','Foto', 'Nama','Email', 'Jenis Kelamin', 'Tgl Lahir', 'Tgl Regis', 'alamat', 'Kontak', 'Aksi']" style="width: 100%"></x-datatable>
             </div>
         </div>
     </div>
@@ -36,10 +37,10 @@
             info: true,
             ordering: true,
             aaSorting: [],
-            order: [1, 'asc'],
+            // order: [3, 'desc'],
             scrollX: true,
-         
-            ajax: route('master-data.gerobak.index'),
+
+            ajax: route('master-data.konsumen.index'),
             columns: [{
                     data: "DT_RowIndex",
                     orderable: false,
@@ -47,20 +48,50 @@
                     width: '1%'
                 },
                 {
-                    data: 'nama',
-                    name: 'nama',
+                    data: 'foto',
+                    name: 'foto',
                     orderable: true,
                     searchable: true
                 },
                 {
-                    data: 'barista',
-                    name: 'barista.user.name',
+                    data: 'users.name',
+                    name: 'users.name',
                     orderable: true,
                     searchable: true
                 },
                 {
-                    data: 'total_stok',
-                    name: 'total_stok',
+                    data: 'email',
+                    name: 'email',
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                    data: 'users.jenkel',
+                    name: 'users.jenkel',
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                    data: 'tgl_lahir',
+                    name: 'tgl_lahir',
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                    data: 'tgl_registrasi',
+                    name: 'tgl_registrasi',
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                    data: 'alamat',
+                    name: 'alamat',
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                   data: 'users.kontak',
+                    data: 'users.kontak',
                     orderable: true,
                     searchable: true
                 },
@@ -119,7 +150,7 @@
                             _alertSuccess(response.message)
                         },
                         error: function(response) {
-             
+
                             _showError(response)
                         }
                     })

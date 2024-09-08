@@ -5,21 +5,7 @@ use App\Http\Controllers\Admin\SampleCrudController;
 use App\Http\Controllers\Admin\TinyEditorController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\Klinik\Dashboard\DashboarddController;
-use App\Http\Controllers\Klinik\DataMaster\AnggotaPersonilController;
-use App\Http\Controllers\Klinik\DataMaster\AnggotaSiswaAngkatanController;
-use App\Http\Controllers\Klinik\DataMaster\AnggotaSiswaController;
-use App\Http\Controllers\Klinik\DataMaster\MasterDokterController;
-use App\Http\Controllers\Klinik\DataMaster\MasterObatController;
-use App\Http\Controllers\Klinik\DataMaster\MasterTindakanController;
-use App\Http\Controllers\Klinik\DataMaster\PenyesuaianStokObatController;
-use App\Http\Controllers\Klinik\Laporan\LaporanController;
-use App\Http\Controllers\Klinik\PanduanController;
-use App\Http\Controllers\Klinik\Pasien\PasienController;
-use App\Http\Controllers\Klinik\Pemeriksaan\PemeriksaanController;
-use App\Http\Controllers\Klinik\Pemeriksaan\PemeriksaanObatController;
-use App\Http\Controllers\Klinik\Rikkes\RikkesController;
-use App\Http\Controllers\Klinik\Rikkes\RikkesSiswaAbsensiController;
-use App\Http\Controllers\Klinik\Rikkes\RikkesSiswaJadwalController;
+
 use App\Http\Controllers\Master\BaristaController;
 use App\Http\Controllers\Master\GerobakController;
 use App\Http\Controllers\Master\KonsumenController;
@@ -33,11 +19,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
    Route::get('beranda', [BerandaController::class, 'index'])->name('beranda.index');
+
    Route::controller(UserController::class)->group(function () {
       Route::put('user/profile/{user_id}', 'update')->name('user.update');
       Route::get('user/profile', 'profile')->name('user.profile');
       Route::get('user/profile/{username}', 'show')->name('user.show');
       Route::put('user/profile/photo/change', 'changePhoto')->name('user.change.photo');
+      Route::post('user/status/', 'updateStatus')->name('user.status');
    });
 
    Route::post('tiny-editor/upload', [TinyEditorController::class, 'upload'])->name('tiny-editor.upload');
@@ -48,8 +36,10 @@ Route::middleware(['auth'])->group(function () {
    Route::get('dashboard', [DashboarddController::class, 'index'])->name('klinik.dashboard.index');
  
 
-
-
+   Route::resource('master/konsumen', KonsumenController::class, [
+      'as' => 'master-data'
+   ])->parameters(['konsumen' => 'konsumen']);
+   
    Route::resource('master/barista', BaristaController::class, [
       'as' => 'master-data'
    ])->parameters(['barista' => 'barista']);
@@ -62,11 +52,7 @@ Route::middleware(['auth'])->group(function () {
    Route::put('produk/gerobak/updateStok', [GerobakController::class, 'updateStokGerobak'])->name('produk.gerobak.update.stok');
  
    
-
-
-   Route::resource('konsumen', KonsumenController::class, [
-      'as' => 'master-data'
-   ]);
+ 
    Route::resource('master/lokasi', LokasiController::class, [
       'as' => 'master-data'
    ]);

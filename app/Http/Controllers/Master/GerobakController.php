@@ -23,7 +23,7 @@ class GerobakController extends Controller
     */
    public function index()
    {
-      $data = Gerobak::with('barista', 'barista.user');
+      $data = Gerobak::with('barista', 'barista.user','gerobakStoks');
       if (request()->ajax()) {
          return datatables()->of($data)
             ->addIndexColumn()
@@ -34,6 +34,9 @@ class GerobakController extends Controller
 
             ->addColumn('barista', function ($data) {
                return $data?->barista?->user?->name;
+            })
+            ->addColumn('total_stok', function ($data) {
+               return $data?->gerobakStoks?->sum('jumlah_stok');
             })
             ->rawColumns(['action', 'foto'])
             ->make(true);
@@ -103,7 +106,7 @@ class GerobakController extends Controller
          $data = Produk::where('id', $request->produk_id)->with(['gerobakStoks.gerobak','gerobakStoks' => function ($query) use ($gerobakId) {
             $query->where('gerobak_id', $gerobakId);
          }])->first();
-         
+
          return $this->success('Data Produk Gerobak detail', $data, 200);
         
       }else{
