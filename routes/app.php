@@ -57,6 +57,13 @@ Route::middleware(['auth'])->group(function () {
    Route::resource('master/gerobak', GerobakController::class, [
       'as' => 'master-data'
    ]);
+
+   Route::get('produk/gerobak/detail', [GerobakController::class, 'produkGerobakDetail'])->name('produk.gerobak.detail');
+   Route::put('produk/gerobak/updateStok', [GerobakController::class, 'updateStokGerobak'])->name('produk.gerobak.update.stok');
+ 
+   
+
+
    Route::resource('konsumen', KonsumenController::class, [
       'as' => 'master-data'
    ]);

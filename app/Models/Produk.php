@@ -15,7 +15,10 @@ class Produk extends Model
       'updated_at' => 'date:d-m-Y H:i:s',
   ];
 
-
+  public function gerobakStoks()
+  {
+      return $this->hasOne(GerobakStok::class, 'produk_id', 'id');
+  }
   
   public function getFotoUrlAttribute()
   {
