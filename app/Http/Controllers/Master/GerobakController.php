@@ -84,28 +84,46 @@ class GerobakController extends Controller
 
    public function produkGerobakDetail(Request $request){
       $gerobakId = $request->gerobak_id;
-
+     
+      
       $data = Produk::where('id', $request->produk_id)->with(['gerobakStoks.gerobak','gerobakStoks' => function ($query) use ($gerobakId) {
          $query->where('gerobak_id', $gerobakId);
       }])->first();
 
-      return $this->success('Data Produk Gerobak detail', $data, 200);
+      if($data->gerobakStoks==null){
+         DB::beginTransaction();
+
+         GerobakStok::create([
+            "gerobak_id" =>  $gerobakId,
+            "produk_id" =>  $request->produk_id,
+            "jumlah_stok" => 0,
+         ]);
+         DB::commit();
+
+         $data = Produk::where('id', $request->produk_id)->with(['gerobakStoks.gerobak','gerobakStoks' => function ($query) use ($gerobakId) {
+            $query->where('gerobak_id', $gerobakId);
+         }])->first();
+         
+         return $this->success('Data Produk Gerobak detail', $data, 200);
+        
+      }else{
+
+         return $this->success('Data Produk Gerobak detail', $data, 200);
+      
+      }
+   
+   
    }
 
 
    public function updateStokGerobak(Request $request){
-      
      $GerobakStok = GerobakStok::where('id', $request->gerobak_stok_id)->first();
       $stokTerbaru = $GerobakStok?->jumlah_stok + $request->stok_update;
-
-
     $GerobakStok->update([
          'jumlah_stok' => $stokTerbaru
       ]);
-
       return $this->success('update data stok gerobak berhasil', 200);
    }
-
 
    public function edit(Gerobak $gerobak)
    {

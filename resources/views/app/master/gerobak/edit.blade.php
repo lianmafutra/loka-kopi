@@ -131,6 +131,7 @@
                 $('.teks_info_update_stok').text('Keterangan stok : ');
                 let data = $(this).attr('data-url');
                 let produk_id = $(this).attr('data-id');
+               
                 $('#modal_edit_stok').modal('show');
                 _clearInput()
                 $.ajax({
@@ -142,7 +143,7 @@
                     },
                     dataType: "json",
                     success: function(response) {
-
+                        console.log(response)
                         $('#nama_produk').val(response.data.nama)
                         $('#gerobak_stok_id').val(response.data.gerobak_stoks.id)
                         $('#nama_gerobak').val(response.data.gerobak_stoks.gerobak.nama)

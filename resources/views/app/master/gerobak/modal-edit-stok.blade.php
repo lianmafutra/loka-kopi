@@ -16,7 +16,7 @@
                             <div class="row">
                             
                                 <div class="col-md-12">  
-                                 <input value="" name="gerobak_stok_id" id="gerobak_stok_id" /> 
+                                 <input value="" hidden name="gerobak_stok_id" id="gerobak_stok_id" /> 
 
                                  <x-input label="Nama Produk" id="nama_produk" placeholder=""  disabled/> 
                                  <x-input label="Gerobak" id="nama_gerobak" placeholder="" disabled /> 
