@@ -135,16 +135,16 @@ class MenuSidebar
          [
             'type' => 'menu',
             'title' => 'Dashboard',
-            'url' => route('klinik.dashboard.index'),
+            'url' => route('loka.dashboard.index'),
             'icon' => 'fas fa-angle-right',
             'active' => ['dashboard*'],
          ],
          [
             'type' => 'menu',
             'title' => 'Transaksi',
-            'url' => route('klinik.dashboard.index'),
+            'url' => "",
             'icon' => 'fas fa-angle-right',
-            'active' => ['dashboard*'],
+            'active' => [''],
          ],
          // [
          //    'type' => 'menu',

@@ -33,7 +33,7 @@ Route::middleware(['auth'])->group(function () {
 
 
    // app Klinik
-   Route::get('dashboard', [DashboarddController::class, 'index'])->name('klinik.dashboard.index');
+   Route::get('dashboard', [DashboarddController::class, 'index'])->name('loka.dashboard.index');
  
 
    Route::resource('master/konsumen', KonsumenController::class, [
