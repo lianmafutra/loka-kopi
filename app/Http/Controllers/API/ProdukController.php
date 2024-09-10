@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Produk;
 use App\Utils\ApiResponse;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
 class ProdukController extends Controller
@@ -20,7 +21,14 @@ class ProdukController extends Controller
 
     public function detail($produk_id)
     {
-      $produk = Produk::find($produk_id);
+      try {
+         $produk = Produk::findOrFail($produk_id);
+         // Jika produk ditemukan, lakukan tindakan berikutnya
+     } catch (ModelNotFoundException $e) {
+         return $this->error("Produk tidak ditemukan", 404);
+     }
+    
+    
       return $this->success("Detail Produk", $produk);
     }
 
