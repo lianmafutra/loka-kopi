@@ -14,7 +14,6 @@ class ProdukController extends Controller
 
     public function list(): JsonResponse
     {
-   
       $produk = Produk::get();
       return $this->success("List Produk", $produk);
     }
@@ -22,8 +21,8 @@ class ProdukController extends Controller
     public function detail($produk_id)
     {
       try {
-         $produk = Produk::findOrFail($produk_id);
-         // Jika produk ditemukan, lakukan tindakan berikutnya
+         $produk = Produk::findOrFail($produk_id)->makeHidden(['stok','diskon']);
+       
      } catch (ModelNotFoundException $e) {
          return $this->error("Produk tidak ditemukan", 404);
      }

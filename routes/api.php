@@ -22,4 +22,6 @@ Route::post('user/register', [AuthController::class, 'register']);
 Route::middleware(['auth:api'])->group(function () {
    Route::get('produk/list', [ProdukController::class, 'list']);
    Route::get('produk/{id}', [ProdukController::class, 'detail']);
+
+   Route::get('user/detail', [AuthController::class, 'detail'])->name('user.detail');
 });

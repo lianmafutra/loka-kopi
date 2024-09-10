@@ -26,15 +26,31 @@ class AuthController extends Controller
 
       if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
          $user   = auth()->user();
-         if ($user->status == "disable") {
+         if ($user->status == "NONAKTIF") {
             return response()->json(['success' => false, 'message' => 'User Diblokir, Silahkan Hubungi Admin'], 400);
          }
-         $success['token'] = $user->createToken('sibanjir')->accessToken;
+         $success['token'] = $user->createToken('loka-api')->accessToken;
          $success['user']  = $user;
          return $this->success('User Berhasil Login', $success);
       } else {
          return $this->error('Username atau password salah', 400);
       }
+   }
+
+
+   public function detail()
+   {
+
+      try {
+         $data = auth()->user();
+       
+     } catch (ModelNotFoundException $e) {
+         return $this->error("User tidak ditemukan", 404);
+     }
+    
+    
+      return $this->success("Info Detail User", $data);
+     
    }
 
 
@@ -45,7 +61,7 @@ class AuthController extends Controller
       try {
          $input = $request->safe();
         
-         $user = User::create($input->except(['email','password']));
+         $user = User::create($input->merge(['password' =>bcrypt('loka112277')])->except(['email']));
          $token = $user->createToken('loka-api')->accessToken;
 
          return $this->success("Pendaftaran akun berhasil", ["user" => $user, "token" => $token]);

@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `barista` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 -- Membuang data untuk tabel db_loka.barista: ~5 rows (lebih kurang)
 /*!40000 ALTER TABLE `barista` DISABLE KEYS */;
@@ -798,19 +798,17 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel db_loka.migrations: ~8 rows (lebih kurang)
+-- Membuang data untuk tabel db_loka.migrations: ~6 rows (lebih kurang)
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-	(16, '2016_06_01_000001_create_oauth_auth_codes_table', 1),
-	(17, '2016_06_01_000002_create_oauth_access_tokens_table', 1),
-	(18, '2016_06_01_000003_create_oauth_refresh_tokens_table', 1),
-	(19, '2016_06_01_000004_create_oauth_clients_table', 1),
-	(20, '2016_06_01_000005_create_oauth_personal_access_clients_table', 1),
-	(21, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-	(22, '2023_10_06_224434_create_data_table', 1),
-	(23, '2023_10_06_224824_create_categories_table', 1);
+	(30, '2016_06_01_000001_create_oauth_auth_codes_table', 1),
+	(31, '2016_06_01_000002_create_oauth_access_tokens_table', 1),
+	(32, '2016_06_01_000003_create_oauth_refresh_tokens_table', 1),
+	(33, '2016_06_01_000004_create_oauth_clients_table', 1),
+	(34, '2016_06_01_000005_create_oauth_personal_access_clients_table', 1),
+	(35, '2019_12_14_000001_create_personal_access_tokens_table', 1);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
 -- membuang struktur untuk table db_loka.model_has_permissions
@@ -848,7 +846,7 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 CREATE TABLE IF NOT EXISTS `oauth_access_tokens` (
   `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint(20) unsigned DEFAULT NULL,
-  `client_id` bigint(20) unsigned NOT NULL,
+  `client_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `scopes` text COLLATE utf8mb4_unicode_ci,
   `revoked` tinyint(1) NOT NULL,
@@ -859,15 +857,19 @@ CREATE TABLE IF NOT EXISTS `oauth_access_tokens` (
   KEY `oauth_access_tokens_user_id_index` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel db_loka.oauth_access_tokens: ~0 rows (lebih kurang)
+-- Membuang data untuk tabel db_loka.oauth_access_tokens: ~3 rows (lebih kurang)
 /*!40000 ALTER TABLE `oauth_access_tokens` DISABLE KEYS */;
+INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+	('2ee2d0f6e942517e58b3b259bcd1f3ab4d32dfb70a162f4c80598816f1564aa9029bc519078866f9', 112363, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 07:27:34', '2024-09-10 07:27:34', '2025-09-10 07:27:34'),
+	('804e771f0da6cc2ef8ed304aa081ba6ddb77df7e9cd66b3b34a6ade069b54b3fcfe9fd4514307d52', 112351, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 05:41:26', '2024-09-10 05:41:26', '2025-09-10 05:41:26'),
+	('de643da1714e75d78dbfbfc2381919aa7e5e84ce51ca0f13348ce3b27ea4516184f8fe5beafc5912', 112364, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 07:30:37', '2024-09-10 07:30:37', '2025-09-10 07:30:37');
 /*!40000 ALTER TABLE `oauth_access_tokens` ENABLE KEYS */;
 
 -- membuang struktur untuk table db_loka.oauth_auth_codes
 CREATE TABLE IF NOT EXISTS `oauth_auth_codes` (
   `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint(20) unsigned NOT NULL,
-  `client_id` bigint(20) unsigned NOT NULL,
+  `client_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `scopes` text COLLATE utf8mb4_unicode_ci,
   `revoked` tinyint(1) NOT NULL,
   `expires_at` datetime DEFAULT NULL,
@@ -881,7 +883,7 @@ CREATE TABLE IF NOT EXISTS `oauth_auth_codes` (
 
 -- membuang struktur untuk table db_loka.oauth_clients
 CREATE TABLE IF NOT EXISTS `oauth_clients` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint(20) unsigned DEFAULT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `secret` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -896,21 +898,29 @@ CREATE TABLE IF NOT EXISTS `oauth_clients` (
   KEY `oauth_clients_user_id_index` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel db_loka.oauth_clients: ~0 rows (lebih kurang)
+-- Membuang data untuk tabel db_loka.oauth_clients: ~4 rows (lebih kurang)
 /*!40000 ALTER TABLE `oauth_clients` DISABLE KEYS */;
+INSERT INTO `oauth_clients` (`id`, `user_id`, `name`, `secret`, `provider`, `redirect`, `personal_access_client`, `password_client`, `revoked`, `created_at`, `updated_at`) VALUES
+	('9cf8bdd9-0031-4990-bc06-b52595181e50', NULL, ' Personal Access Client', 'NYWMVNPJTgSwbrtRcapRQeGDOraxFbmIidcYFnLC', NULL, 'http://localhost', 1, 0, 0, '2024-09-10 05:38:29', '2024-09-10 05:38:29'),
+	('9cf8bdd9-0672-498b-a141-676b13f64aab', NULL, ' Password Grant Client', 'Q9budBdvf2OOK9J3iCUM2i67bQpWvFtJCJiUBxOE', 'users', 'http://localhost', 0, 1, 0, '2024-09-10 05:38:29', '2024-09-10 05:38:29'),
+	('9cf8bde6-339c-47aa-9254-04b736eb7379', NULL, ' Personal Access Client', 'XyBET1KNydGztN8mvT5SwaeEQiCcmx15saSUT9ch', NULL, 'http://localhost', 1, 0, 0, '2024-09-10 05:38:38', '2024-09-10 05:38:38'),
+	('9cf8bde6-3aaa-4481-a9a1-69a50131ed84', NULL, ' Password Grant Client', 'SpnlnmevwOnOokF7z4DsJgHnV8SzmcMmMZjcpB7a', 'users', 'http://localhost', 0, 1, 0, '2024-09-10 05:38:38', '2024-09-10 05:38:38');
 /*!40000 ALTER TABLE `oauth_clients` ENABLE KEYS */;
 
 -- membuang struktur untuk table db_loka.oauth_personal_access_clients
 CREATE TABLE IF NOT EXISTS `oauth_personal_access_clients` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `client_id` bigint(20) unsigned NOT NULL,
+  `client_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel db_loka.oauth_personal_access_clients: ~0 rows (lebih kurang)
+-- Membuang data untuk tabel db_loka.oauth_personal_access_clients: ~2 rows (lebih kurang)
 /*!40000 ALTER TABLE `oauth_personal_access_clients` DISABLE KEYS */;
+INSERT INTO `oauth_personal_access_clients` (`id`, `client_id`, `created_at`, `updated_at`) VALUES
+	(1, '9cf8bdd9-0031-4990-bc06-b52595181e50', '2024-09-10 05:38:29', '2024-09-10 05:38:29'),
+	(2, '9cf8bde6-339c-47aa-9254-04b736eb7379', '2024-09-10 05:38:38', '2024-09-10 05:38:38');
 /*!40000 ALTER TABLE `oauth_personal_access_clients` ENABLE KEYS */;
 
 -- membuang struktur untuk table db_loka.oauth_refresh_tokens
@@ -1002,6 +1012,7 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
   `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   `abilities` text COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
+  `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -1208,7 +1219,7 @@ CREATE TABLE IF NOT EXISTS `transaksi` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 -- Membuang data untuk tabel db_loka.transaksi: ~0 rows (lebih kurang)
 /*!40000 ALTER TABLE `transaksi` DISABLE KEYS */;
@@ -1224,7 +1235,7 @@ CREATE TABLE IF NOT EXISTS `transaksi_produk` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 -- Membuang data untuk tabel db_loka.transaksi_produk: ~0 rows (lebih kurang)
 /*!40000 ALTER TABLE `transaksi_produk` DISABLE KEYS */;
@@ -1236,7 +1247,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` char(50) NOT NULL,
   `name` varchar(500) NOT NULL DEFAULT '',
   `status` enum('AKTIF','NONAKTIF') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'AKTIF',
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `foto` varchar(500) DEFAULT NULL,
   `last_login_at` timestamp NULL DEFAULT NULL,
@@ -1245,8 +1256,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_login_ip` varchar(50) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=112322 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=112365 DEFAULT CHARSET=latin1;
 
 -- Membuang data untuk tabel db_loka.users: ~12 rows (lebih kurang)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
@@ -1257,12 +1269,8 @@ INSERT INTO `users` (`id`, `username`, `name`, `status`, `password`, `remember_t
 	(4, 'ayu123', 'Ayu Lestari', 'AKTIF', '$2y$10$.kJUqBJKUatHQR8Ci8NWjeVwlZPmH8utdtf1TsIIN6TyRPww5SAci', NULL, 'foto3.jpg', NULL, '08456789012', 'P', '192.168.1.4', '2024-09-07 07:49:24', '2024-09-07 07:49:24'),
 	(5, 'rudi321', 'Rudi Hartono', 'AKTIF', '$2y$10$.kJUqBJKUatHQR8Ci8NWjeVwlZPmH8utdtf1TsIIN6TyRPww5SAci', NULL, NULL, '2024-09-07 13:00:00', '08567890123', 'L', '192.168.1.5', '2024-09-07 07:49:24', '2024-09-07 07:49:24'),
 	(7, 'lm', 'Lian Mafutra Konsumen', 'AKTIF', '$2y$10$.kJUqBJKUatHQR8Ci8NWjeVwlZPmH8utdtf1TsIIN6TyRPww5SAci', NULL, NULL, '2024-09-07 13:00:00', '08567890123', 'L', '192.168.1.5', '2024-09-07 07:49:24', '2024-09-08 16:58:12'),
-	(112277, 'superadmin', 'SuperAdmin Dev', 'AKTIF', '$2y$10$5D0BGqhoXbeq5wU2raO.guuguGtDlKtBveoTgQIUfc/m5OAOGg7Oy', 'zRvk16miIgDRe2WL1TsuxGSNit4785xIKKi2tu7lC0wi0bImIvMTyznSE860', 'adb830fe-a863-481b-849e-eba8715da241', '2024-09-08 21:16:03', NULL, NULL, '127.0.0.1', '2023-07-06 11:28:03', '2024-09-08 21:16:03'),
-	(112310, 'admin', 'Admin SAMPEYEAN', 'AKTIF', '$2y$10$.kJUqBJKUatHQR8Ci8NWjeVwlZPmH8utdtf1TsIIN6TyRPww5SAci', 'mpu101ewHCMz8vuQaxndHwqFV6hDPGmOs7zk6p0kw9at3OJOhsjZcrBG7Yu5', 'f52ccc0a-1883-4e23-9cd0-a15130273ecc', '2024-07-07 16:35:07', NULL, NULL, '127.0.0.1', '2024-05-24 18:46:41', '2024-07-07 16:35:07'),
-	(112318, 'dqwdqw', 'dqwdqw', 'AKTIF', '$2y$10$blqOGgeUxV0ehwTjVbuOv.Zb2P.WwVW6ycC4uqF7W5IDAIEIh8Uuq', NULL, NULL, NULL, NULL, 'L', NULL, '2024-09-07 08:16:10', '2024-09-07 08:16:10'),
-	(112319, '111', '11', 'AKTIF', '$2y$10$1AuQtMA5T1.Lun5TFQ5bGuktkxtk2aN4om2VFZ92vF6oVLApZRVNe', NULL, NULL, NULL, NULL, 'L', NULL, '2024-09-07 08:16:30', '2024-09-07 08:16:30'),
-	(112320, 'dwqd', 'qwd', 'AKTIF', '$2y$10$hn..rZucBZRzv1kC67gPreXmOCAOqckGjW0WGUiqtZmPCc09dKuvC', NULL, NULL, NULL, '213123', 'L', NULL, '2024-09-07 08:51:35', '2024-09-07 08:51:35'),
-	(112321, '3213', '123', 'AKTIF', '$2y$10$C1KIpr.v.F.t.3xLvxrSMu7PunPYW/RVinNIp2BVZTOeoTlg.HD9i', NULL, NULL, NULL, '23123', 'L', NULL, '2024-09-07 08:54:23', '2024-09-07 08:54:23');
+	(112277, 'superadmin', 'SuperAdmin Dev', 'AKTIF', '$2y$10$5D0BGqhoXbeq5wU2raO.guuguGtDlKtBveoTgQIUfc/m5OAOGg7Oy', 'zRvk16miIgDRe2WL1TsuxGSNit4785xIKKi2tu7lC0wi0bImIvMTyznSE860', 'adb830fe-a863-481b-849e-eba8715da241', '2024-09-10 07:26:59', NULL, NULL, '127.0.0.1', '2023-07-06 11:28:03', '2024-09-10 07:26:59'),
+	(112310, 'admin', 'Admin Loka', 'AKTIF', '$2y$10$.kJUqBJKUatHQR8Ci8NWjeVwlZPmH8utdtf1TsIIN6TyRPww5SAci', 'mpu101ewHCMz8vuQaxndHwqFV6hDPGmOs7zk6p0kw9at3OJOhsjZcrBG7Yu5', 'f52ccc0a-1883-4e23-9cd0-a15130273ecc', '2024-07-07 16:35:07', NULL, NULL, '127.0.0.1', '2024-05-24 18:46:41', '2024-07-07 16:35:07');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
