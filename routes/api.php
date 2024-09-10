@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\BaristaController;
 use App\Http\Controllers\API\ProdukController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,4 +25,6 @@ Route::middleware(['auth:api'])->group(function () {
    Route::get('produk/{id}', [ProdukController::class, 'detail']);
 
    Route::get('user/detail', [AuthController::class, 'detail'])->name('user.detail');
+   Route::get('barista/list/terdekat', [BaristaController::class, 'baristaTerdekat'])->name('barista.list.terdekat');
+   Route::get('barista/{id}', [BaristaController::class, 'detail'])->name('barista.detail');
 });

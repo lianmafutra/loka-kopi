@@ -27,4 +27,9 @@ class Barista extends Model
   {
       return $this->belongsTo(User::class, 'users_id', 'id');
   }
+
+  public function gerobak(): BelongsTo
+  {
+      return $this->belongsTo(Gerobak::class, 'gerobak_id', 'id');
+  }
 }
