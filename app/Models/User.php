@@ -8,17 +8,19 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
-use OwenIt\Auditing\Contracts\Auditable;
+use Laravel\Passport\HasApiTokens;
+
+
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\ResponseCache\Facades\ResponseCache;
 use Storage;
 
 class User extends Authenticatable 
 {
-    use HasFactory, Notifiable;
+   
     use HasRoles;
     use LmFileTrait;
-
+    use HasApiTokens, HasFactory, Notifiable;
     
    //  use \OwenIt\Auditing\Auditable;
   
@@ -36,6 +38,7 @@ class User extends Authenticatable
 
     protected $casts = [
         'created_at' => 'date:d-m-Y H:i:s',
+        'password' => 'hashed',
         'updated_at' => 'date:d-m-Y H:i:s',
         'last_login_at' => 'date:d/m/Y H:i:s',
     ];

@@ -28,7 +28,7 @@ Route::get('/', [LoginController::class, 'showLoginForm'])->name('index');
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login.form');
 Route::post('login-action', [LoginController::class, 'login'])->name('login.action');
 
-Route::prefix('admin')->middleware(['auth'])->group(function () {
+Route::prefix('admin')->middleware(['auth_web'])->group(function () {
 
    Route::prefix('app')->group(function () {
       Route::resource('role', RoleController::class);

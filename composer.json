@@ -13,7 +13,7 @@
         "itsgoingd/clockwork": "^5.2",
         "laravel/framework": "^11.0.7",
         "laravel/octane": "^2.3",
-        "laravel/passport": "^12.0",
+        "laravel/passport": "^12",
         "laravel/sanctum": "^4.0",
         "laravel/ui": "^4.0",
         "maatwebsite/excel": "^3.0.1",

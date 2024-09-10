@@ -111,14 +111,14 @@ class MenuSidebar
             'active' => ['master/konsumen*'],
             'permission' => ['role-admin'],
          ],
-         [
-            'type' => 'menu',
-            'title' => 'Data Lokasi',
-            'url' => route('master-data.lokasi.index'),
-            'icon' => 'fas fa-angle-right',
-            'active' => ['master-data/dokter*'],
-            'permission' => ['role-admin'],
-         ],
+         // [
+         //    'type' => 'menu',
+         //    'title' => 'Data Lokasi',
+         //    'url' => route('master-data.lokasi.index'),
+         //    'icon' => 'fas fa-angle-right',
+         //    'active' => ['master-data/dokter*'],
+         //    'permission' => ['role-admin'],
+         // ],
   
          [
             'type' => 'menu',

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\Facades\Log;
+use Laravel\Passport\Exceptions\OAuthServerException;
 use SebastianBergmann\Invoker\TimeoutException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
@@ -64,6 +65,10 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
 
+ 
+   
+
+     
         if ($request->ajax()) {
    
             if ($exception instanceof TokenMismatchException) {
@@ -74,7 +79,10 @@ class Handler extends ExceptionHandler
             }
 
         }
+
+        
         if ($request->is('api/*')) {
+       
             if ($exception instanceof AuthenticationException) {
                 return $this->error('Token tidak cocok', 401);
 

@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth_web'])->group(function () {
    Route::get('beranda', [BerandaController::class, 'index'])->name('beranda.index');
 
    Route::controller(UserController::class)->group(function () {

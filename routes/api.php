@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\ProdukController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth:api'])->group(function () {
+Route::post('user/login', [AuthController::class, 'login'])->name('login');
+Route::post('user/register', [AuthController::class, 'register']);
 
+
+Route::middleware(['auth:api'])->group(function () {
+   Route::get('produk/list', [ProdukController::class, 'list']);
+   Route::get('produk/{id}', [ProdukController::class, 'detail']);
 });
