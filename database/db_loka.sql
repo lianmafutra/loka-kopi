@@ -725,6 +725,9 @@ CREATE TABLE IF NOT EXISTS `gerobak` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `barista_id` int(11) NOT NULL,
   `nama` varchar(50) NOT NULL DEFAULT '',
+  `latitude` double DEFAULT NULL,
+  `longitude` double DEFAULT NULL,
+  `lokasi_terkini` text,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
@@ -733,12 +736,12 @@ CREATE TABLE IF NOT EXISTS `gerobak` (
 
 -- Membuang data untuk tabel db_loka.gerobak: ~5 rows (lebih kurang)
 /*!40000 ALTER TABLE `gerobak` DISABLE KEYS */;
-INSERT INTO `gerobak` (`id`, `barista_id`, `nama`, `created_at`, `updated_at`) VALUES
-	(1, 5, 'GRB-1', '2024-09-07 07:42:43', '2024-09-07 17:32:16'),
-	(2, 2, 'GRB-2', '2024-09-07 07:42:43', '2024-09-08 17:00:13'),
-	(3, 3, 'GRB-3', '2024-09-07 07:42:43', '2024-09-07 07:42:43'),
-	(5, 5, 'GRB-5', '2024-09-07 07:42:43', '2024-09-07 07:42:43'),
-	(112327, 2, 'GRB-6', '2024-09-07 16:49:07', '2024-09-07 16:49:07');
+INSERT INTO `gerobak` (`id`, `barista_id`, `nama`, `latitude`, `longitude`, `lokasi_terkini`, `created_at`, `updated_at`) VALUES
+	(1, 5, 'GRB-1', -1.6314338208279267, 103.60807964635303, 'kantor PU Provinsi jambi', '2024-09-07 07:42:43', '2024-09-07 17:32:16'),
+	(2, 2, 'GRB-2', -1.6314331194881393, 103.60924881323884, 'Jl. KH. Agus Salim, Kotabaru, Paal Lima, Kec. Kota Baru, Kota Jambi, Pengadilan Tinggi Agama Jambi', '2024-09-07 07:42:43', '2024-09-08 17:00:13'),
+	(3, 3, 'GRB-3', -1.626614998978253, 103.60267174226027, 'Jl. Pangeran Hidayat No.88, Suka Karya, Kec. Kota Baru, Kota Jambi, Jambi 36129', '2024-09-07 07:42:43', '2024-09-07 07:42:43'),
+	(5, 5, 'GRB-5', NULL, NULL, NULL, '2024-09-07 07:42:43', '2024-09-07 07:42:43'),
+	(112327, 2, 'GRB-6', NULL, NULL, NULL, '2024-09-07 16:49:07', '2024-09-07 16:49:07');
 /*!40000 ALTER TABLE `gerobak` ENABLE KEYS */;
 
 -- membuang struktur untuk table db_loka.gerobak_stok
@@ -857,11 +860,13 @@ CREATE TABLE IF NOT EXISTS `oauth_access_tokens` (
   KEY `oauth_access_tokens_user_id_index` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel db_loka.oauth_access_tokens: ~3 rows (lebih kurang)
+-- Membuang data untuk tabel db_loka.oauth_access_tokens: ~5 rows (lebih kurang)
 /*!40000 ALTER TABLE `oauth_access_tokens` DISABLE KEYS */;
 INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+	('2eacf1c2dfdf8c068c440abc841953ffb16e7b2239979f1dd399f0a6ee3b22a8c21c0912d2f2b7be', 112365, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 07:52:15', '2024-09-10 07:52:15', '2025-09-10 07:52:15'),
 	('2ee2d0f6e942517e58b3b259bcd1f3ab4d32dfb70a162f4c80598816f1564aa9029bc519078866f9', 112363, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 07:27:34', '2024-09-10 07:27:34', '2025-09-10 07:27:34'),
 	('804e771f0da6cc2ef8ed304aa081ba6ddb77df7e9cd66b3b34a6ade069b54b3fcfe9fd4514307d52', 112351, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 05:41:26', '2024-09-10 05:41:26', '2025-09-10 05:41:26'),
+	('9eb14c0b5895aab74f8f9b4b0fc82f0e66f73ac41cd918da1400843ef71763254c2c2df419d7ffb5', 112365, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 07:52:38', '2024-09-10 07:52:38', '2025-09-10 07:52:38'),
 	('de643da1714e75d78dbfbfc2381919aa7e5e84ce51ca0f13348ce3b27ea4516184f8fe5beafc5912', 112364, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 07:30:37', '2024-09-10 07:30:37', '2025-09-10 07:30:37');
 /*!40000 ALTER TABLE `oauth_access_tokens` ENABLE KEYS */;
 
@@ -1258,9 +1263,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=112365 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=112366 DEFAULT CHARSET=latin1;
 
--- Membuang data untuk tabel db_loka.users: ~12 rows (lebih kurang)
+-- Membuang data untuk tabel db_loka.users: ~9 rows (lebih kurang)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `username`, `name`, `status`, `password`, `remember_token`, `foto`, `last_login_at`, `kontak`, `jenkel`, `last_login_ip`, `created_at`, `updated_at`) VALUES
 	(1, 'andi123', 'Andi Saputra1', 'AKTIF', '$2y$10$.kJUqBJKUatHQR8Ci8NWjeVwlZPmH8utdtf1TsIIN6TyRPww5SAci', NULL, 'foto1.jpg', '2024-09-07 10:00:00', '08123456789', 'P', '192.168.1.1', '2024-09-07 07:49:24', '2024-09-07 09:06:40'),
@@ -1270,7 +1275,8 @@ INSERT INTO `users` (`id`, `username`, `name`, `status`, `password`, `remember_t
 	(5, 'rudi321', 'Rudi Hartono', 'AKTIF', '$2y$10$.kJUqBJKUatHQR8Ci8NWjeVwlZPmH8utdtf1TsIIN6TyRPww5SAci', NULL, NULL, '2024-09-07 13:00:00', '08567890123', 'L', '192.168.1.5', '2024-09-07 07:49:24', '2024-09-07 07:49:24'),
 	(7, 'lm', 'Lian Mafutra Konsumen', 'AKTIF', '$2y$10$.kJUqBJKUatHQR8Ci8NWjeVwlZPmH8utdtf1TsIIN6TyRPww5SAci', NULL, NULL, '2024-09-07 13:00:00', '08567890123', 'L', '192.168.1.5', '2024-09-07 07:49:24', '2024-09-08 16:58:12'),
 	(112277, 'superadmin', 'SuperAdmin Dev', 'AKTIF', '$2y$10$5D0BGqhoXbeq5wU2raO.guuguGtDlKtBveoTgQIUfc/m5OAOGg7Oy', 'zRvk16miIgDRe2WL1TsuxGSNit4785xIKKi2tu7lC0wi0bImIvMTyznSE860', 'adb830fe-a863-481b-849e-eba8715da241', '2024-09-10 07:26:59', NULL, NULL, '127.0.0.1', '2023-07-06 11:28:03', '2024-09-10 07:26:59'),
-	(112310, 'admin', 'Admin Loka', 'AKTIF', '$2y$10$.kJUqBJKUatHQR8Ci8NWjeVwlZPmH8utdtf1TsIIN6TyRPww5SAci', 'mpu101ewHCMz8vuQaxndHwqFV6hDPGmOs7zk6p0kw9at3OJOhsjZcrBG7Yu5', 'f52ccc0a-1883-4e23-9cd0-a15130273ecc', '2024-07-07 16:35:07', NULL, NULL, '127.0.0.1', '2024-05-24 18:46:41', '2024-07-07 16:35:07');
+	(112310, 'admin', 'Admin Loka', 'AKTIF', '$2y$10$.kJUqBJKUatHQR8Ci8NWjeVwlZPmH8utdtf1TsIIN6TyRPww5SAci', 'mpu101ewHCMz8vuQaxndHwqFV6hDPGmOs7zk6p0kw9at3OJOhsjZcrBG7Yu5', 'f52ccc0a-1883-4e23-9cd0-a15130273ecc', '2024-07-07 16:35:07', NULL, NULL, '127.0.0.1', '2024-05-24 18:46:41', '2024-07-07 16:35:07'),
+	(112365, 'lianmafutra@gmail.com', 'lianmafutra', 'AKTIF', '$2y$10$ypM1A1lsgQA5dtQ648I7WOezfuLUzTI6x9dxw3aHjrKcfycc48FGG', NULL, NULL, '2024-09-10 07:52:38', '082244261525', NULL, '127.0.0.1', '2024-09-10 07:52:15', '2024-09-10 07:52:38');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

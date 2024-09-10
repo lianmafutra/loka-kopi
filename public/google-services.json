@@ -1,0 +1,14 @@
+{
+   "type": "service_account",
+   "project_id": "eofficejambikota",
+   "private_key_id": "68dbc848747d8a7e1fe043d545f17af333c8fe8f",
+   "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCxDvcNCLhEeNf4\nEMf1/g+x4bLB0FmZbq04wZkxVYcIzxuWI2ghe+uqXP/XG8hhc8qTQz1kKKGtjzYE\njKk7u3seKUTlct5V9LTqU9sGWIrW7vavvp0n7hTSRtbpsiDqZ7ZIwkn030/MygS4\nkDyQvMNiYIYnVpDudvMpZJ03Wrx/HwepgtdMmnhmtJdq4Y2QBX5V0mFye6FPj6ua\nC3kX8X81olWMzaDdy7KLcKVZYjH4GrlXkGvSqZPenpzmomiz0sBnp5SdJtA43zIw\n9sNIMkWnSfQt85txM/7+iY3Yw3zbrEn0X+yfYc1r4kUGnCvuYUJfr+a0BRoR5oaZ\nl/7nQ94JAgMBAAECggEAASfmWqTtwwYA7u3OcwoouGdkny7zhB9nV8FXyoJ9l66h\nG6P5MuLCtpbV1WXT3eL/dbemJ8hmHyJvXqyREZfskAACovbS1xUlCzSR76LWATIy\nf7zgUhmT9Dgh1gkOKEmWCeKO0LTr1JvrAk4avx0kWg45l08m3LpVEGDyRSFoAp0X\n8pbv/sLjUd37o74GRpc2teQP9nwhlM72LxwN1BD/B/OLzdK6KKH0HkDG2gANRq1u\nCqyuMbr4LJBGtKrgyPVEd+aSxrEEHESraEUNPlibZsiZ7L5ABtuSA1d7kKwrmrOJ\nsAZMu5otIijI5N0XOu5OtQowb/c4Id2Bu4ED1IIqewKBgQDtwroQDz5kW8KPoO7c\nsp4nndWjuiwdMMUFZIGhnd41oNp2lxDa21iF3Wp5tYDCqIPppkji+mhgELo5Upng\n6xWGo+Cq948bTZPPT92O6jrvpsTJltkmMDIaJxzuTfh50Xi7sY5qh2t0adI/rz+z\nbid6fJjSBna9FF8QcvHa2DPsOwKBgQC+pCKufPS2WI0zu8nKuZuddmcjUFaoKHCA\nEhew6Poyk1agm91LoNlxxFN/C8EoRH7x76zvngQG6D/6GbeuE+b0pyFb+a/1kl6g\n2KVpyEPgycSq7sI8vmf+Bn+HBB63hfpHatEOEdVlePyKyY7gZ17/BydZmLgXIXKP\nYCSxweAuiwKBgQCLc8Y7+yTmKifQpFzVV3KJ2/pdgKm1KVC13ABocbbOj5zzJ6G8\nLCEcywRThJCUG9DbLyva7XJgvg7r5jXZBSloAiCZRoBKTFMgqkBSPbH5tEAB2Rde\nXbBVRJGkeFj/4kvFEtxsQSdWbWbi8YAUVsyS/BeKQD5Oom8rr6+JY3v41wKBgHPK\nwf31i7VNp8YqY3Cst+Y2SoLagyf0GBDR7G3ZtE4Py+gVg54x/qDpPEXIX/QTVn+g\nsguAkLWZT3KbOEOVdwxWjx6MU+H2m19a921+5CueocOo7XVzuTpDvCXHzNhvmgrS\nyFOhZVoS2GF79zo5zytbrvzuk7II8MpA/Uiyl3XtAoGBAMXHtP620wWKZo33gQ/3\n68KFYhSHisjJaq8gSqjdw7a6wlVN0NGD792uM4lHOoWwdseiYV8SF0qAE5xl6dSl\nu2SEd07/etLL+RFhfjyn9K6XZ33NIDBABG0PZYgOjLJst7phdt3Fh26qqbTZM8k8\naG32YC/+m/5seagCic64nVWq\n-----END PRIVATE KEY-----\n",
+   "client_email": "firebase-adminsdk-y93nc@eofficejambikota.iam.gserviceaccount.com",
+   "client_id": "111331036325502042182",
+   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+   "token_uri": "https://oauth2.googleapis.com/token",
+   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-y93nc%40eofficejambikota.iam.gserviceaccount.com",
+   "universe_domain": "googleapis.com"
+ }
+ 

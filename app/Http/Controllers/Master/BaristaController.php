@@ -59,6 +59,8 @@ class BaristaController extends Controller
             'password' => bcrypt($requestSafe->password),
          ]);
 
+         $user->assignRole(User::ROLE_BARISTA);
+
          $barista = Barista::create(
             $requestSafe->merge([
                'users_id' => $user->id,

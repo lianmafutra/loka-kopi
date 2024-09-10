@@ -21,10 +21,13 @@ Route::post('user/register', [AuthController::class, 'register']);
 
 
 Route::middleware(['auth:api'])->group(function () {
+
+   Route::post('user/logout', [AuthController::class, 'logout']);
+
    Route::get('produk/list', [ProdukController::class, 'list']);
    Route::get('produk/{id}', [ProdukController::class, 'detail']);
 
    Route::get('user/detail', [AuthController::class, 'detail'])->name('user.detail');
-   Route::get('barista/list/terdekat', [BaristaController::class, 'baristaTerdekat'])->name('barista.list.terdekat');
+   Route::post('barista/list/terdekat', [BaristaController::class, 'baristaTerdekat'])->name('barista.list.terdekat');
    Route::get('barista/{id}', [BaristaController::class, 'detail'])->name('barista.detail');
 });

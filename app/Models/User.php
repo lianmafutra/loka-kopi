@@ -21,6 +21,11 @@ class User extends Authenticatable
     use HasRoles;
     use LmFileTrait;
     use HasApiTokens, HasFactory, Notifiable;
+
+    const ROLE_KONSUMEN = 'konsumen';
+    const ROLE_BARISTA = 'barista';
+    const ROLE_ADMIN = 'admin';
+    const ROLE_SUPERADMIN = 'superadmin';
     
    //  use \OwenIt\Auditing\Auditable;
   
@@ -29,6 +34,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'roles'
     ];
 
    //  public function transformAudit(array $data): array

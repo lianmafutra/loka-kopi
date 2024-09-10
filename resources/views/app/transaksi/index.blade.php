@@ -2,11 +2,11 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }} ">
+    <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <style>
-
     </style>
 @endpush
-
 @section('header')
     <x-header title="Transaksi Loka"></x-header>
 @endsection
@@ -14,10 +14,37 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-             
+                <div class="row">
+                    <div class="col-md-3">
+                        <x-select2 id="rentang_waktu" label="" required="false" placeholder="Pilih Rentang Waktu">
+                            <option value="hari_ini">Hari Ini</option>
+                            <option value="minggu_ini">Minggu Ini</option>
+                            <option value="bulan_ini">Bulan Ini</option>                            
+                            <option value="semua">Semua Transaksi</option>
+                        </x-select2>
+                    </div>
+                    <div class="col-md-3">
+                        <x-select2 id="select_produk" label=" " required="false" placeholder="Pilih Produk">
+                            @foreach ($produk as $item)
+                                <option value="{{ $item->id }}">{{ $item?->nama }}</option>
+                            @endforeach
+                        </x-select2>
+                    </div>
+                    <div class="col-md-3">
+                     <div style="margin-top:22px; display: flex; gap: 10px;">
+                         <button id="btn_filter" type="button" class="btn btn-primary">
+                             <i class="mr-1 fas fa-filter nav-icon"></i> Filter
+                         </button>
+                         <button id="btn_reset" type="button" class="btn btn-secondary">
+                             <i class="mr-1 fas fa-redo nav-icon"></i> Reset 
+                         </button>
+                     </div>
+                 </div>
+                 
+                </div>
             </div>
             <div class="card-body">
-                <x-datatable id="datatable" :th="['No', 'Foto','Nama', 'Deskripsi','Harga', 'Komposisi', 'Aksi']" style="width: 100%"></x-datatable>
+                <x-datatable id="datatable" :th="['No', 'Barista', 'Produk', 'Jumlah', 'Transaksi','Lokasi', 'Created At', 'Aksi']" style="width: 100%"></x-datatable>
             </div>
         </div>
     </div>
@@ -25,7 +52,12 @@
 @push('js')
     <script src="{{ asset('template/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
     <script>
+        $('.select2bs4').select2({
+            theme: 'bootstrap4',
+            allowClear: true
+        })
         let datatable = $("#datatable").DataTable({
             serverSide: true,
             processing: true,
@@ -37,8 +69,13 @@
             aaSorting: [],
             // order: [3, 'desc'],
             scrollX: true,
-
-            ajax: route('master-data.produk.index'),
+            ajax: {
+                url: route('transaksi.index'),
+                data: function(e) {
+                    e.rentang_waktu = $('#rentang_waktu').val(),
+                        e.select_produk = $('#select_produk').val()
+                }
+            },
             columns: [{
                     data: "DT_RowIndex",
                     orderable: false,
@@ -46,39 +83,41 @@
                     width: '1%'
                 },
                 {
-                    data: 'foto',
-                    name: 'foto',
+                    data: 'barista_nama',
+                    name: 'barista_nama',
                     orderable: false,
                     searchable: false
                 },
                 {
-                    data: 'nama',
-                    name: 'nama',
-                    orderable: true,
-                    searchable: true
-                },
-
-                {
-                    data: 'desc_short',
-                    name: 'desc_short',
+                    data: 'produk_nama',
+                    name: 'produk_nama',
                     orderable: true,
                     searchable: true
                 },
                 {
-                    data: 'harga_format',
-                    name: 'harga_format',
+                    data: 'jumlah',
+                    name: 'jumlah',
                     orderable: true,
                     searchable: true
                 },
                 {
-                    data: 'komposisi2',
-                    name: 'komposisi2',
+                    data: 'tgl_transaksi',
+                    name: 'tgl_transaksi',
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                    data: 'lokasi',
+                    name: 'lokasi',
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                    data: 'created_at',
+                    name: 'created_at',
                     orderable: false,
                     searchable: false
                 },
-              
-               
-
                 {
                     data: "action",
                     width: '15%',
@@ -88,6 +127,18 @@
             ]
         })
 
+
+        $('#btn_filter').click(function(e) {
+            e.preventDefault();
+            datatable.ajax.reload()
+        });
+
+        $('#btn_reset').click(function(e) {
+            e.preventDefault();
+            $('#rentang_waktu').val(null).trigger('change');
+            $('#select_produk').val(null).trigger('change');
+            datatable.ajax.reload()
+        });
 
         $('#datatable').on('click', '.btn_hapus', function(e) {
             let data = $(this).attr('data-hapus');
@@ -106,7 +157,6 @@
                 }
             })
         })
-
         $('#datatable').on('click', '.btn_delete', function(e) {
             e.preventDefault()
             Swal.fire({
@@ -134,7 +184,6 @@
                             _alertSuccess(response.message)
                         },
                         error: function(response) {
-
                             _showError(response)
                         }
                     })
