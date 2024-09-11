@@ -152,8 +152,8 @@ class BaristaController extends Controller
             ];
          });
          $transformedData = [
-            'barista_id' => $barista->id,
-            'user_id' => $barista->user?->id,
+            'barista_id' => $barista?->id,
+            'user_id' => $barista?->user?->id,
             'nama' => strtoupper($barista->user?->name),
             'foto' => $barista?->user?->foto,
             'kontak' => $barista?->user?->kontak,
@@ -162,8 +162,8 @@ class BaristaController extends Controller
             'lokasi_terkini' => '',
             'latitude' => '',
             'longitude' => '',
-            'gerobak_id' => $barista->gerobak?->id,
-            'gerobak_nama' => $barista->gerobak?->nama,
+            'gerobak_id' => $barista?->gerobak?->id,
+            'gerobak_nama' => $barista?->gerobak?->nama,
             'info' => '',
             'stok' => $stok
          ];
@@ -180,7 +180,10 @@ class BaristaController extends Controller
 
    public function baristaProduk()
    {
+
+      
       try {
+
          $barista = Barista::where('id', auth()->user()->id)->with('gerobak', 'user')->first();
 
          $stok = GerobakStok::with('produk')->where('gerobak_id', $barista->gerobak?->id)->get();
@@ -193,13 +196,13 @@ class BaristaController extends Controller
             ];
          });
          $transformedData = [
-            'barista_id' => $barista->id,
-            'user_id' => $barista->user?->id,
-            'nama' => strtoupper($barista->user?->name),
+            'barista_id' => $barista?->id,
+            'user_id' => $barista?->user?->id,
+            'nama' => strtoupper($barista?->user?->name),
             'foto' => $barista?->user?->foto,
             'kontak' => $barista?->user?->kontak,
-            'gerobak_id' => $barista->gerobak?->id,
-            'gerobak_nama' => $barista->gerobak?->nama,
+            'gerobak_id' => $barista?->gerobak?->id,
+            'gerobak_nama' => $barista?->gerobak?->nama,
             'info' => '',
             'stok' => $stok
          ];
