@@ -38,6 +38,6 @@ Route::middleware(['auth:api'])->group(function () {
    Route::post('transaksi/input', [TransaksiController::class, 'store'])->name('transaksi.store');
 
    Route::get('slider/', [SliderController::class, 'list']);
-   Route::get('slider/', [SliderController::class, 'detail']);
+   Route::get('slider/{slider_id}', [SliderController::class, 'detail']);
 
 });
