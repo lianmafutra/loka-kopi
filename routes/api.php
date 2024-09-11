@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BaristaController;
 use App\Http\Controllers\API\ProdukController;
+use App\Http\Controllers\API\SliderController;
 use App\Http\Controllers\API\TransaksiController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,5 +36,8 @@ Route::middleware(['auth:api'])->group(function () {
    Route::get('barista/produk/list', [BaristaController::class, 'baristaProduk'])->name('barista.produk');
    Route::get('transaksi/histori', [TransaksiController::class, 'transaksiHistori'])->name('barista.produk');
    Route::post('transaksi/input', [TransaksiController::class, 'store'])->name('transaksi.store');
+
+   Route::get('slider/', [SliderController::class, 'list']);
+   Route::get('slider/', [SliderController::class, 'detail']);
 
 });
