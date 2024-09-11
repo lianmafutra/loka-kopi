@@ -177,4 +177,45 @@ class BaristaController extends Controller
 
       return $this->success("List Barista Terdekat", $data);
    }
+
+   public function baristaProduk()
+   {
+      try {
+         $barista = Barista::where('id', auth()->user()->id)->with('gerobak', 'user')->first();
+
+         $stok = GerobakStok::with('produk')->where('gerobak_id', $barista->gerobak?->id)->get();
+         $stok->transform(function ($stok) {
+            return [
+               'produk_id' => $stok->produk?->id,
+               'nama' => $stok->produk?->nama,
+               'foto' => $stok->produk?->foto,
+               'stok' => $stok?->jumlah_stok,
+            ];
+         });
+         $transformedData = [
+            'barista_id' => $barista->id,
+            'user_id' => $barista->user?->id,
+            'nama' => strtoupper($barista->user?->name),
+            'foto' => $barista?->user?->foto,
+            'kontak' => $barista?->user?->kontak,
+            'jarak' => '',
+            'estimasi' => '',
+            'lokasi_terkini' => '',
+            'latitude' => '',
+            'longitude' => '',
+            'gerobak_id' => $barista->gerobak?->id,
+            'gerobak_nama' => $barista->gerobak?->nama,
+            'info' => '',
+            'stok' => $stok
+         ];
+
+
+         return response()->json($transformedData);
+      } catch (ModelNotFoundException $e) {
+         return $this->error("barista tidak ditemukan", 404);
+      }
+
+
+      return $this->success("List Barista Terdekat", $data);
+   }
 }
