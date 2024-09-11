@@ -11,6 +11,7 @@ use App\Http\Controllers\Master\GerobakController;
 use App\Http\Controllers\Master\KonsumenController;
 use App\Http\Controllers\Master\LokasiController;
 use App\Http\Controllers\Master\ProdukController;
+use App\Http\Controllers\Master\SliderController;
 use App\Http\Controllers\UserController;
 
 use Illuminate\Support\Facades\Route;
@@ -60,7 +61,9 @@ Route::middleware(['auth_web'])->group(function () {
       'as' => 'master-data'
    ]);
 
-
+   Route::resource('master/slider', SliderController::class, [
+      'as' => 'master-data'
+   ]);
 
 
    Route::resource('master-data/pengguna', MasterUserController::class, [

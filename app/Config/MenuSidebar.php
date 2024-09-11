@@ -102,7 +102,14 @@ class MenuSidebar
          //    'active' => ['master/stok*'],
          //    'permission' => ['role-admin'],
          // ],
-        
+         [
+            'type' => 'menu',
+            'title' => 'Data Slider',
+            'url' => route('master-data.slider.index'),
+            'icon' => 'fas fa-angle-right',
+            'active' => ['master/slider*'],
+            'permission' => '',
+         ],
          [
             'type' => 'menu',
             'title' => 'Data Konsumen',

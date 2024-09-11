@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TransaksiRequest;
+use App\Http\Requests\Loka\TransaksiRequest;
+use App\Models\Produk;
 use App\Models\Transaksi;
 use App\Utils\ApiResponse;
 use Exception;
@@ -16,15 +17,44 @@ class TransaksiController extends Controller
 
    public function store(TransaksiRequest $request)
    {
+    
       try {
+         $array = json_decode($request->safe()->produk_orders, true);
          DB::beginTransaction();
-         $input = $request->safe();
-         Transaksi::create($input->all());
+         $requestSafe = $request->safe();
+
+         foreach ($array as $key => $produk) {
+            $produkData = Produk::find($produk['id']);
+            Transaksi::create([
+               'kode' => 1,
+               'user_id' => $requestSafe->user_id,
+               'user_nama' => $requestSafe->user_nama,
+               'username' => $requestSafe->username,
+               'jumlah' => $produk['jumlah'],
+               'produk_id' => $produk['id'],
+               'produk_nama' =>  $produkData->nama,
+               'tgl_transaksi' => $requestSafe->tgl_transaksi,
+               'lokasi' => $requestSafe->lokasi,
+           ]);
+         }
+
+        
          DB::commit();
          return $this->success("Input Transaksi Berhasil");
       } 
      catch (Exception $th) {
          DB::rollBack();
+         return $this->error("Input Transaksi Gagal , " . $th->getMessage(), 400);
+      }
+   }
+
+   public function transaksiHistori()
+   {
+      try {
+         $transaksiHistori = Transaksi::where('user_id', auth()->user()->id)->get();
+         return $this->success("Input Transaksi Berhasil", $transaksiHistori);
+      } 
+     catch (Exception $th) {
          return $this->error("Input Transaksi Gagal , " . $th->getMessage(), 400);
       }
    }

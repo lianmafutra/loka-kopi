@@ -33,8 +33,7 @@ Route::middleware(['auth:api'])->group(function () {
    Route::get('barista/{id}', [BaristaController::class, 'detail'])->name('barista.detail');
    
    Route::get('barista/produk/list', [BaristaController::class, 'baristaProduk'])->name('barista.produk');
-
-
-   Route::post('transaksi/', [TransaksiController::class, 'store'])->name('transaksi.store');
+   Route::get('transaksi/histori', [TransaksiController::class, 'transaksiHistori'])->name('barista.produk');
+   Route::post('transaksi/input', [TransaksiController::class, 'store'])->name('transaksi.store');
 
 });
