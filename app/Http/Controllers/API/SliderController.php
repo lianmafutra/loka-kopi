@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\API;
-use App\Http\Controllers\Controller;
-use App\Models\Produk;
 use App\Models\Slider;
 use App\Utils\ApiResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
