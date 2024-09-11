@@ -31,7 +31,7 @@ return Application::configure(basePath: dirname(__DIR__))
       });
 
       $exceptions->render(function (NotFoundHttpException $e, Request $request) {
-         return ResponseError::send($request, "EndPoint Route NotFound", 401);
+         return ResponseError::send($request, "EndPoint Route NotFound", 404);
       });
 
       $exceptions->render(function (AuthorizationException $exception, Request $request) {

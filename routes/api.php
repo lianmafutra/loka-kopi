@@ -23,6 +23,10 @@ Route::post('user/register', [AuthController::class, 'register']);
 
 
 Route::middleware(['auth:api'])->group(function () {
+   
+   Route::get('slider/', [SliderController::class, 'list']);
+   Route::get('slider/detail/{slider_id}', [SliderController::class, 'detail'])->name('slider.detail');
+
 
    Route::post('user/logout', [AuthController::class, 'logout']);
 
@@ -37,7 +41,5 @@ Route::middleware(['auth:api'])->group(function () {
    Route::get('transaksi/histori', [TransaksiController::class, 'transaksiHistori'])->name('barista.produk');
    Route::post('transaksi/input', [TransaksiController::class, 'store'])->name('transaksi.store');
 
-   Route::get('slider/', [SliderController::class, 'list']);
-   Route::get('slider/detail/{slider_id}', [SliderController::class, 'detail']);
-
+ 
 });

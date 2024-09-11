@@ -6,14 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Slider;
 use App\Utils\ApiResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\JsonResponse;
 
 
 
 class SliderController extends Controller
 {
    use ApiResponse;
-   public function list(): JsonResponse
+   public function list()
    {
      $slider = Slider::get();
      return $this->success("List Sliders", $slider);
@@ -22,7 +21,7 @@ class SliderController extends Controller
 
    public function detail($slider_id)
    {
-           try {
+        try {
               $slider = Slider::findOrFail($slider_id);
         } catch (ModelNotFoundException $e) {
               return $this->error("Data tidak ditemukan", 404);
