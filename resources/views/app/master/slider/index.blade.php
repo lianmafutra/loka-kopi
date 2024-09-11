@@ -19,7 +19,7 @@
                     Data</a>
             </div>
             <div class="card-body">
-                <x-datatable id="datatable" :th="['No', 'Image','Judul', 'Aksi']" style="width: 100%"></x-datatable>
+                <x-datatable id="datatable" :th="['No', 'Image','Judul','isDetail', 'Aksi']" style="width: 100%"></x-datatable>
             </div>
         </div>
     </div>
@@ -50,6 +50,7 @@
                 {
                     data: 'foto',
                     name: 'foto',
+                    width: '15%',
                     orderable: false,
                     searchable: false
                 },
@@ -59,9 +60,13 @@
                     orderable: true,
                     searchable: true
                 },
-
-           
-
+                {
+                    data: 'isDetail',
+                    name: 'isDetail',
+                    width: '10%',
+                    orderable: false,
+                    searchable: false
+                },
                 {
                     data: "action",
                     width: '15%',

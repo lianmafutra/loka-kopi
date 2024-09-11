@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Master;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Loka\SliderRequest;
 use App\Models\Slider;
-use Illuminate\Container\Attributes\DB;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class SliderController extends Controller
 {
@@ -20,14 +21,22 @@ class SliderController extends Controller
             ->addIndexColumn()
         
             ->addColumn('foto', function ($data) {
-               return ' <div class="shadow" style="width: 90px; height: 100px;">
+               return ' <div class="shadow" style="width: 300px; height: 150px;">
                      <img src="' . $data?->foto_url . '" alt="Centered Image" class="img-fluid w-100 h-100" style="object-fit: cover;">
                </div>';
+            })
+            ->editColumn('isDetail', function ($data) {
+               if($data->isDetail == "true"){
+                  return '<span class="badge badge-primary">Ya</span>';
+               }else{
+                  return '<span class="badge badge-secondary">Tidak</span>';
+               }
+               
             })
             ->addColumn('action', function ($data) {
                return view('app.master.slider.action', compact('data'));
             })
-            ->rawColumns(['action', 'foto'])
+            ->rawColumns(['action', 'foto','isDetail'])
             ->make(true);
       }
       return view('app.master.slider.index', compact('data'));
@@ -51,19 +60,11 @@ class SliderController extends Controller
 
          DB::beginTransaction();
          $requestSafe = $request->safe();
-
-
-
-
          $file = $request->file('foto');
          $fileName = Str::of(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '_' . time() . '.' . $file->getClientOriginalExtension();
-
-         $file->storeAs('public/uploads', $fileName);
-
-
-
+         $file->storeAs('public/uploads/slider/', $fileName);
          $slider = Slider::create(
-            $requestSafe->merge(['foto' =>  $fileName])->all()
+            $requestSafe->merge(['foto' =>  $fileName, 'path' => 'uploads/slider/'])->all()
          );
 
 
@@ -88,7 +89,6 @@ class SliderController extends Controller
     */
    public function edit(Slider $slider)
    {
-
       return view('app.master.slider.edit', compact('slider'));
    }
 
@@ -110,9 +110,9 @@ class SliderController extends Controller
 
             $fileName = Str::of(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '_' . time() . '.' . $file->getClientOriginalExtension();
 
-            $file->storeAs('public/uploads', $fileName);
+            $file->storeAs('public/uploads/slider/', $fileName);
 
-            $slider->fill($request->safe()->merge(['foto' =>  $fileName])->all())->save();
+            $slider->fill($request->safe()->merge(['foto' =>  $fileName, 'path' => 'uploads/slider/'])->all())->save();
          } else {
             $slider->fill($request->safe()->all())->save();
          }

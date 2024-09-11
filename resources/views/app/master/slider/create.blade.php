@@ -41,46 +41,25 @@
         }
 
         #imageResult {
-            width: 300px;
+            width: 600px;
             height: 300px;
             object-fit: cover;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
         }
-
-  
     </style>
 @endpush
 @section('header')
     <x-header title="Input Data Produk" back-button="true"></x-header>
 @endsection
 @section('content')
-<form id="form_sample" method="post" enctype="multipart/form-data">
+    <form id="form_sample" method="post" enctype="multipart/form-data">
         <div class="row">
             <div class="col-lg-8 col-sm-12">
                 @csrf
                 <div class="card">
                     <div class="card-body">
-                        <x-input label="Nama Produk" id="nama" required />
-                        <x-input label="Deskripsi Singkat" id="desc_short" required />
-                        <x-input-rupiah id="harga" label="Harga" />
-                        <x-textarea id="komposisi" label="Komposisi" placeholder="Komposisi"
-                            Info="jika lebih dari satu Pisahkan Dengan Tanda ;" />
-                        <x-tiny-editor id="desc_long" label="Deskripsi Konten" name="desc_long"></x-tiny-editor>
-                    </div>
-                    <div class="card-footer">
-                        <div style="gap:8px;" class="d-flex">
-                            <a href="{{ route('master-data.slider.index') }}" type="button"
-                                class="btn btn-secondary">Kembali</a>
-                            <button type="submit" class="btn_submit btn btn-primary">Simpan</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-body">
                         <div class="form-group">
-                            <label>Foto Produk
+                            <label>Slider Image
                             </label>
                             <!-- Upload image input-->
                             <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
@@ -101,9 +80,28 @@
                             </div>
                             <span class="text-danger error error-text foto_err"></span>
                         </div>
+                        <x-input label="Judul" id="nama" required />
+                        <x-select2 required id="isDetail" label="Klik Detail Konten" placeholder="Detail Konten">
+
+                      
+                           <option value="true">Ya</option>
+                           <option selected value="false">Tidak</option>
+                    
+                   </x-select2>
+                        <x-tiny-editor id="konten" label="Deskripsi Konten" name="konten"></x-tiny-editor>
+                      
+                    </div>
+                  
+                    <div class="card-footer">
+                        <div style="gap:8px;" class="d-flex">
+                            <a href="{{ route('master-data.slider.index') }}" type="button"
+                                class="btn btn-secondary">Kembali</a>
+                            <button type="submit" class="btn_submit btn btn-primary">Simpan</button>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </form>
 @endsection
@@ -111,25 +109,15 @@
     <script src="{{ asset('plugins/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>
     <script src="{{ asset('js/tinyEditorConfig.js') }}" referrerpolicy="origin"></script>
 
-    <script src="{{ asset('plugins/jquery.mask.min.js') }}"></script>
     <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
-    <script src="{{ asset('plugins/flatpicker/flatpickr.min.js') }}"></script>
-    <script src="{{ asset('plugins/flatpicker/id.min.js') }}"></script>
-    <script src="{{ asset('plugins/autoNumeric.min.js') }}"></script>
+
+
     <script>
         $(function() {
             $('.select2bs4').select2({
                 theme: 'bootstrap4',
             })
-            AutoNumeric.multiple('.rupiah', {
-                digitGroupSeparator: '.',
-                decimalPlaces: 0,
-                minimumValue: 0,
-                decimalCharacter: ',',
-                formatOnPageLoad: true,
-                allowDecimalPadding: false,
-                alwaysAllowDecimalCharacter: false
-            });
+
             $('#form_sample').submit(function(e) {
                 e.preventDefault();
                 const formData = new FormData(this);
@@ -165,7 +153,7 @@
             })
         })
         tinymce.init({
-            selector: '#desc_long',
+            selector: '#konten',
             plugins: 'image code table lists',
             menubar: 'favs file edit view insert format  table help',
             promotion: false,
