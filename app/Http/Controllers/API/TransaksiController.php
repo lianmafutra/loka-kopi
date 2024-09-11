@@ -18,6 +18,9 @@ class TransaksiController extends Controller
    public function store(TransaksiRequest $request)
    {
     
+      if(auth()->user()->role != "barista"){
+         return $this->error("Akses Tidak diizinkan", 401);
+        }
       try {
          $array = json_decode($request->safe()->produk_orders, true);
          DB::beginTransaction();
@@ -50,6 +53,9 @@ class TransaksiController extends Controller
 
    public function transaksiHistori()
    {
+      if(auth()->user()->role != "barista"){
+         return $this->error("Akses Tidak diizinkan", 401);
+        }
       try {
          $transaksiHistori = Transaksi::where('user_id', auth()->user()->id)->get();
          return $this->success("Input Transaksi Berhasil", $transaksiHistori);

@@ -181,7 +181,9 @@ class BaristaController extends Controller
    public function baristaProduk()
    {
 
-      
+     if(auth()->user()->role != "barista"){
+      return $this->error("Akses Tidak diizinkan", 401);
+     }
       try {
 
          $barista = Barista::where('id', auth()->user()->id)->with('gerobak', 'user')->first();
