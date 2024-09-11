@@ -102,16 +102,17 @@ CREATE TABLE IF NOT EXISTS `barista` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
--- Membuang data untuk tabel db_loka.barista: ~5 rows (lebih kurang)
+-- Membuang data untuk tabel db_loka.barista: ~6 rows (lebih kurang)
 /*!40000 ALTER TABLE `barista` DISABLE KEYS */;
 INSERT INTO `barista` (`id`, `users_id`, `gerobak_id`, `tgl_lahir`, `tgl_registrasi`, `alamat`, `created_at`, `updated_at`) VALUES
 	(1, 1, 1, '2024-04-18', '2024-04-19', 'Jl. Sudirman No. 452', '2024-09-07 07:42:43', '2024-09-07 09:05:14'),
 	(2, 2, 2, '1995-05-22', '2024-09-07', 'Jl. Ahmad Yani No. 12', '2024-09-07 07:42:43', '2024-09-07 07:42:43'),
 	(3, 3, 3, '1988-03-10', '2024-09-07', 'Jl. Gajah Mada No. 5', '2024-09-07 07:42:43', '2024-09-07 07:42:43'),
 	(5, 5, 5, '1992-11-11', '2024-09-07', 'Jl. Merdeka No. 20', '2024-09-07 07:42:43', '2024-09-07 07:42:43'),
-	(44, 4, 4, '1993-07-19', '2024-09-07', 'Jl. Panglima Polim No. 8', '2024-09-07 07:42:43', '2024-09-07 07:42:43');
+	(44, 4, 4, '1993-07-19', '2024-09-07', 'Jl. Panglima Polim No. 8', '2024-09-07 07:42:43', '2024-09-07 07:42:43'),
+	(45, 112379, NULL, '2024-09-25', '2024-09-12', 'dwqd', '2024-09-10 13:40:03', '2024-09-10 13:40:03');
 /*!40000 ALTER TABLE `barista` ENABLE KEYS */;
 
 -- membuang struktur untuk table db_loka.failed_jobs
@@ -838,11 +839,12 @@ CREATE TABLE IF NOT EXISTS `model_has_roles` (
   CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel db_loka.model_has_roles: ~2 rows (lebih kurang)
+-- Membuang data untuk tabel db_loka.model_has_roles: ~3 rows (lebih kurang)
 /*!40000 ALTER TABLE `model_has_roles` DISABLE KEYS */;
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 	(1, 'App\\Models\\User', 112277),
-	(14, 'App\\Models\\User', 112310);
+	(18, 'App\\Models\\User', 112377),
+	(17, 'App\\Models\\User', 112379);
 /*!40000 ALTER TABLE `model_has_roles` ENABLE KEYS */;
 
 -- membuang struktur untuk table db_loka.oauth_access_tokens
@@ -860,14 +862,24 @@ CREATE TABLE IF NOT EXISTS `oauth_access_tokens` (
   KEY `oauth_access_tokens_user_id_index` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel db_loka.oauth_access_tokens: ~5 rows (lebih kurang)
+-- Membuang data untuk tabel db_loka.oauth_access_tokens: ~15 rows (lebih kurang)
 /*!40000 ALTER TABLE `oauth_access_tokens` DISABLE KEYS */;
 INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+	('0dbdfae2d5283dbf5292493df29c3a8297cfe92ad263b29e110ece120ddc1c142ca1a176df48f530', 112377, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 13:47:52', '2024-09-10 13:47:52', '2025-09-10 13:47:52'),
 	('2eacf1c2dfdf8c068c440abc841953ffb16e7b2239979f1dd399f0a6ee3b22a8c21c0912d2f2b7be', 112365, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 07:52:15', '2024-09-10 07:52:15', '2025-09-10 07:52:15'),
 	('2ee2d0f6e942517e58b3b259bcd1f3ab4d32dfb70a162f4c80598816f1564aa9029bc519078866f9', 112363, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 07:27:34', '2024-09-10 07:27:34', '2025-09-10 07:27:34'),
+	('40a54c344f4aaebc47e9a846fe16cdd3208018fb318abd2eaca0b6a4becc5982f07e59357ba67f62', 112365, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 13:13:54', '2024-09-10 13:13:54', '2025-09-10 13:13:54'),
+	('4af605d28ac41bf17d6a8eeb2690699ce15de69d0daba8645e4a6036456367d233734b1a8e6743d0', 112377, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 13:48:38', '2024-09-10 13:48:38', '2025-09-10 13:48:38'),
+	('67b17fcecc074d8091815be332c53a0d8983979456dae9c9230b97b1b3b17092c26035781d4a0f74', 112379, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 13:50:30', '2024-09-10 13:50:30', '2025-09-10 13:50:30'),
+	('73d7ce324c000a8ab1947036e5b060cf04b7ac2c8ae853d6473a6460d43884f6bbdd9d59af7e6893', 112377, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 13:49:12', '2024-09-10 13:49:12', '2025-09-10 13:49:12'),
 	('804e771f0da6cc2ef8ed304aa081ba6ddb77df7e9cd66b3b34a6ade069b54b3fcfe9fd4514307d52', 112351, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 05:41:26', '2024-09-10 05:41:26', '2025-09-10 05:41:26'),
+	('8690480027fe747afcb614f15202b03bc12310832074c49c42ced55346f3913f0e040c5d7ff5335b', 112377, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 13:45:45', '2024-09-10 13:45:45', '2025-09-10 13:45:45'),
+	('8837c0cfe362b4357f247e5c80b0eef3ecadd1b5f8b61b8d16e09a63c6ac36ee8f756715b06cd398', 112377, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 13:37:44', '2024-09-10 13:37:44', '2025-09-10 13:37:44'),
 	('9eb14c0b5895aab74f8f9b4b0fc82f0e66f73ac41cd918da1400843ef71763254c2c2df419d7ffb5', 112365, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 07:52:38', '2024-09-10 07:52:38', '2025-09-10 07:52:38'),
-	('de643da1714e75d78dbfbfc2381919aa7e5e84ce51ca0f13348ce3b27ea4516184f8fe5beafc5912', 112364, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 07:30:37', '2024-09-10 07:30:37', '2025-09-10 07:30:37');
+	('cc4f4cb902ef74c08ebf678e401a048ae43c9c8f76ce3b51f032a02a0b07573e9ccfdec466605657', 112377, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 13:48:10', '2024-09-10 13:48:10', '2025-09-10 13:48:10'),
+	('d078e16c058fff79f43e23eff7dcb299ff1219901cde5e153347e7a16da6e7be45af8c47d6780066', 112377, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 1, '2024-09-10 13:43:22', '2024-09-10 13:45:26', '2025-09-10 13:43:22'),
+	('de643da1714e75d78dbfbfc2381919aa7e5e84ce51ca0f13348ce3b27ea4516184f8fe5beafc5912', 112364, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 07:30:37', '2024-09-10 07:30:37', '2025-09-10 07:30:37'),
+	('fea50013c17d47edee003c8a1df804a03adc5003e6cf9a096e115aff6b082ccb4af619226a46f443', 112377, '9cf8bde6-339c-47aa-9254-04b736eb7379', 'loka-api', '[]', 0, '2024-09-10 13:47:25', '2024-09-10 13:47:25', '2025-09-10 13:47:25');
 /*!40000 ALTER TABLE `oauth_access_tokens` ENABLE KEYS */;
 
 -- membuang struktur untuk table db_loka.oauth_auth_codes
@@ -1067,15 +1079,15 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `roles_name_guard_name_unique` (`name`,`guard_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Membuang data untuk tabel db_loka.roles: ~4 rows (lebih kurang)
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
 INSERT INTO `roles` (`id`, `name`, `slug`, `guard_name`, `desc`, `created_at`, `updated_at`) VALUES
 	(1, 'superadmin', '1', 'web', 'Super Admin App', '2022-11-18 10:50:20', '2022-11-18 10:50:20'),
-	(14, 'admin', 'admin', 'web', 'admin aplikasi (kelola : pasien, obat, user dll)', '2024-05-16 01:47:36', '2024-05-19 06:33:04'),
-	(15, 'pimpinan', 'pimpinan', 'web', 'pimpinan', '2024-05-16 01:47:50', '2024-05-16 01:47:50'),
-	(16, 'personil', 'personil', 'web', 'Personil', '2024-06-08 15:18:12', '2024-06-08 15:18:12');
+	(17, 'barista', 'barista', 'web', 'Penjual gerobak loka kopi', '2024-09-10 13:23:30', '2024-09-10 13:23:30'),
+	(18, 'konsumen', 'konsumen', 'web', 'pembeli', '2024-09-10 13:23:46', '2024-09-10 13:23:46'),
+	(19, 'admin', 'admin', 'web', 'owner loka kopi', '2024-09-10 13:24:04', '2024-09-10 13:24:04');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 
 -- membuang struktur untuk table db_loka.role_has_permissions
@@ -1088,16 +1100,8 @@ CREATE TABLE IF NOT EXISTS `role_has_permissions` (
   CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Membuang data untuk tabel db_loka.role_has_permissions: ~7 rows (lebih kurang)
+-- Membuang data untuk tabel db_loka.role_has_permissions: ~0 rows (lebih kurang)
 /*!40000 ALTER TABLE `role_has_permissions` DISABLE KEYS */;
-INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
-	(159, 14),
-	(160, 14),
-	(161, 14),
-	(162, 14),
-	(163, 14),
-	(164, 14),
-	(165, 14);
 /*!40000 ALTER TABLE `role_has_permissions` ENABLE KEYS */;
 
 -- membuang struktur untuk table db_loka.sample
@@ -1221,30 +1225,21 @@ CREATE TABLE IF NOT EXISTS `transaksi` (
   `barista_id` text,
   `barista_nama` text,
   `barista_username` text,
+  `jumlah` int(11) DEFAULT NULL,
+  `produk_id` int(11) DEFAULT NULL,
+  `produk_nama` varchar(500) DEFAULT NULL,
+  `tgl_transaksi` date DEFAULT NULL,
+  `lokasi` text,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
--- Membuang data untuk tabel db_loka.transaksi: ~0 rows (lebih kurang)
+-- Membuang data untuk tabel db_loka.transaksi: ~1 rows (lebih kurang)
 /*!40000 ALTER TABLE `transaksi` DISABLE KEYS */;
+INSERT INTO `transaksi` (`id`, `kode`, `barista_id`, `barista_nama`, `barista_username`, `jumlah`, `produk_id`, `produk_nama`, `tgl_transaksi`, `lokasi`, `created_at`, `updated_at`) VALUES
+	(1, '1', '1', 'Andi Saputra1', NULL, 3, 1, 'Kopi Arabika', '2024-01-10', 'Jl. Pangeran Hidayat No.88, Suka Karya, Kec. Kota Baru, Kota Jambi, Jambi 36129', '2024-09-10 20:14:20', '2024-09-10 20:14:21');
 /*!40000 ALTER TABLE `transaksi` ENABLE KEYS */;
-
--- membuang struktur untuk table db_loka.transaksi_produk
-CREATE TABLE IF NOT EXISTS `transaksi_produk` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `kode` text NOT NULL,
-  `barista_id` text,
-  `barista_nama` text,
-  `barista_username` text,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
-
--- Membuang data untuk tabel db_loka.transaksi_produk: ~0 rows (lebih kurang)
-/*!40000 ALTER TABLE `transaksi_produk` DISABLE KEYS */;
-/*!40000 ALTER TABLE `transaksi_produk` ENABLE KEYS */;
 
 -- membuang struktur untuk table db_loka.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -1263,9 +1258,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=112366 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=112380 DEFAULT CHARSET=latin1;
 
--- Membuang data untuk tabel db_loka.users: ~9 rows (lebih kurang)
+-- Membuang data untuk tabel db_loka.users: ~10 rows (lebih kurang)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `username`, `name`, `status`, `password`, `remember_token`, `foto`, `last_login_at`, `kontak`, `jenkel`, `last_login_ip`, `created_at`, `updated_at`) VALUES
 	(1, 'andi123', 'Andi Saputra1', 'AKTIF', '$2y$10$.kJUqBJKUatHQR8Ci8NWjeVwlZPmH8utdtf1TsIIN6TyRPww5SAci', NULL, 'foto1.jpg', '2024-09-07 10:00:00', '08123456789', 'P', '192.168.1.1', '2024-09-07 07:49:24', '2024-09-07 09:06:40'),
@@ -1274,9 +1269,10 @@ INSERT INTO `users` (`id`, `username`, `name`, `status`, `password`, `remember_t
 	(4, 'ayu123', 'Ayu Lestari', 'AKTIF', '$2y$10$.kJUqBJKUatHQR8Ci8NWjeVwlZPmH8utdtf1TsIIN6TyRPww5SAci', NULL, 'foto3.jpg', NULL, '08456789012', 'P', '192.168.1.4', '2024-09-07 07:49:24', '2024-09-07 07:49:24'),
 	(5, 'rudi321', 'Rudi Hartono', 'AKTIF', '$2y$10$.kJUqBJKUatHQR8Ci8NWjeVwlZPmH8utdtf1TsIIN6TyRPww5SAci', NULL, NULL, '2024-09-07 13:00:00', '08567890123', 'L', '192.168.1.5', '2024-09-07 07:49:24', '2024-09-07 07:49:24'),
 	(7, 'lm', 'Lian Mafutra Konsumen', 'AKTIF', '$2y$10$.kJUqBJKUatHQR8Ci8NWjeVwlZPmH8utdtf1TsIIN6TyRPww5SAci', NULL, NULL, '2024-09-07 13:00:00', '08567890123', 'L', '192.168.1.5', '2024-09-07 07:49:24', '2024-09-08 16:58:12'),
-	(112277, 'superadmin', 'SuperAdmin Dev', 'AKTIF', '$2y$10$5D0BGqhoXbeq5wU2raO.guuguGtDlKtBveoTgQIUfc/m5OAOGg7Oy', 'zRvk16miIgDRe2WL1TsuxGSNit4785xIKKi2tu7lC0wi0bImIvMTyznSE860', 'adb830fe-a863-481b-849e-eba8715da241', '2024-09-10 07:26:59', NULL, NULL, '127.0.0.1', '2023-07-06 11:28:03', '2024-09-10 07:26:59'),
+	(112277, 'superadmin', 'SuperAdmin Dev', 'AKTIF', '$2y$10$5D0BGqhoXbeq5wU2raO.guuguGtDlKtBveoTgQIUfc/m5OAOGg7Oy', 'zRvk16miIgDRe2WL1TsuxGSNit4785xIKKi2tu7lC0wi0bImIvMTyznSE860', 'adb830fe-a863-481b-849e-eba8715da241', '2024-09-10 18:40:43', NULL, NULL, '127.0.0.1', '2023-07-06 11:28:03', '2024-09-10 18:40:43'),
 	(112310, 'admin', 'Admin Loka', 'AKTIF', '$2y$10$.kJUqBJKUatHQR8Ci8NWjeVwlZPmH8utdtf1TsIIN6TyRPww5SAci', 'mpu101ewHCMz8vuQaxndHwqFV6hDPGmOs7zk6p0kw9at3OJOhsjZcrBG7Yu5', 'f52ccc0a-1883-4e23-9cd0-a15130273ecc', '2024-07-07 16:35:07', NULL, NULL, '127.0.0.1', '2024-05-24 18:46:41', '2024-07-07 16:35:07'),
-	(112365, 'lianmafutra@gmail.com', 'lianmafutra', 'AKTIF', '$2y$10$ypM1A1lsgQA5dtQ648I7WOezfuLUzTI6x9dxw3aHjrKcfycc48FGG', NULL, NULL, '2024-09-10 07:52:38', '082244261525', NULL, '127.0.0.1', '2024-09-10 07:52:15', '2024-09-10 07:52:38');
+	(112377, 'lianmafutra@gmail.com', 'lianmafutra', 'AKTIF', '$2y$10$G5fWYs.lONU/j8xt//Iv1ObKC4BU7INiixhS8GkdQC35axO9hcbh2', NULL, NULL, '2024-09-10 13:49:12', '082244261525', NULL, '127.0.0.1', '2024-09-10 13:37:44', '2024-09-10 13:49:12'),
+	(112379, 'baristabaru', 'dwqd', 'AKTIF', '$2y$10$G5fWYs.lONU/j8xt//Iv1ObKC4BU7INiixhS8GkdQC35axO9hcbh2', NULL, NULL, '2024-09-10 13:50:30', '2321321', 'L', '127.0.0.1', '2024-09-10 13:40:03', '2024-09-10 13:50:30');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
