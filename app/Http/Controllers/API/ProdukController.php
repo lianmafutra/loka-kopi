@@ -29,7 +29,7 @@ class ProdukController extends Controller
             'desc_short' =>  $produk?->desc_short,
             'harga' =>  $produk?->harga,
             'komposisi' =>  array_filter(array_map('trim', explode(';', $produk?->komposisi))),
-            'promo' =>  $produk?->foto,
+            'promo' =>  $produk?->promo,
             'foto_url' => $produk?->foto_url,
          ];
       return $this->success("Detail Produk", $produkTransform);
