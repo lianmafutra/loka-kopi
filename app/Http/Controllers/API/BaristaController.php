@@ -30,46 +30,48 @@ class BaristaController extends Controller
       }
    }
 
-   function haversine_distance($lat1, $lon1, $lat2, $lon2, $unit = 'km') {
+   function haversine_distance($lat1, $lon1, $lat2, $lon2, $unit = 'km')
+   {
       $earth_radius = ($unit === 'km') ? 6371 : 3958.8; // Radius bumi dalam kilometer atau mil
-  
+
       $lat_from = deg2rad($lat1);
       $lon_from = deg2rad($lon1);
       $lat_to = deg2rad($lat2);
       $lon_to = deg2rad($lon2);
-  
+
       $lat_diff = $lat_to - $lat_from;
       $lon_diff = $lon_to - $lon_from;
-  
+
       $a = sin($lat_diff / 2) ** 2 + cos($lat_from) * cos($lat_to) * sin($lon_diff / 2) ** 2;
       $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
-  
+
       $distance = $earth_radius * $c;
-  
+
       // Konversi jarak ke meter jika unit 'm'
       if ($unit === 'm') {
-          $distance *= 1000;
+         $distance *= 1000;
       }
-  
-      return (float) $distance; // Pastikan hasilnya adalah float
-  }
-  
 
-   function calculate_walking_time($distance, $unit = 'km') {
+      return (float) $distance; // Pastikan hasilnya adalah float
+   }
+
+
+   function calculate_walking_time($distance, $unit = 'km')
+   {
       $walking_speed_kmh = 5; // Kecepatan rata-rata jalan kaki dalam km/jam
-      
+
       if ($unit === 'm') {
-          $distance_km = $distance / 1000;
+         $distance_km = $distance / 1000;
       } else {
-          $distance_km = $distance;
+         $distance_km = $distance;
       }
-  
+
       $time_hours = $distance_km / $walking_speed_kmh;
       $time_minutes = $time_hours * 60;
-  
+
       return number_format($time_minutes, 0) . ' menit';
-  }
-  
+   }
+
 
    public function baristaTerdekat(Request $request)
    {
@@ -89,7 +91,7 @@ class BaristaController extends Controller
             $barista_lat = $barista->gerobak?->latitude;
             $barista_lon = $barista->gerobak?->longitude;
 
-          
+
             if ($barista_lat !== null && $barista_lon !== null) {
                $distance = $this->haversine_distance($lat_konsumen, $long_konsumen, $barista_lat, $barista_lon, $unit);
                $barista->distance = $distance;
@@ -100,9 +102,6 @@ class BaristaController extends Controller
             return false; // Barista tidak termasuk dalam hasil
          })->map(function ($barista) {
             return [
-             
-              
-
                'barista_id' => $barista?->id,
                'user_id' => $barista?->user?->id,
                'nama' => strtoupper($barista->user?->name),
@@ -119,22 +118,45 @@ class BaristaController extends Controller
             ];
          });
 
-         // Urutkan data berdasarkan jarak terdekat
-         $data = $data->sortBy(function ($item) use ($unit) {
-            return ($unit === 'km') ? floatval(str_replace(' km', '', $item['distance'])) : floatval(str_replace(' m', '', $item['distance'])) / 1000;
+         // Konversi array ke Collection
+         $collection = collect($data);
+
+         // Urutkan berdasarkan key 'distance' dari yang terkecil
+         $sorted = $collection->sortBy('distance');
+
+         // Ubah nilai distance ke meter atau km sesuai kondisi
+         $transformed = $sorted->map(function ($item) {
+            $distanceInKm = $item['distance'];
+            $distanceInMeters = $distanceInKm * 1000; // konversi km ke meter
+
+            if ($distanceInMeters < 1000) {
+               $item['distance'] = round($distanceInMeters, 2) . ' meters';
+            } else {
+               $item['distance'] = round($distanceInKm, 2) . ' km';
+            }
+
+            return $item;
          });
+
+         // Konversi kembali ke array jika diperlukan
+         $transformedArray = $transformed->values()->toArray();
+         // $sortedBaristas = $baristas->sortBy('distance');
+         // Urutkan data berdasarkan jarak terdekat
+         // $data2 = $data->sortBy(function ($item) use ($unit) {
+         //    return ($unit === 'km') ? floatval(str_replace(' km', '', $item['distance'])) : floatval(str_replace(' m', '', $item['distance'])) / 1000;
+         // });
          // Ambil barista terdekat (misalnya yang p
 
          // // Ambil barista terdekat (misalnya yang pertama)
          // $closestBarista = $data->first();
 
-         return response()->json($data);
+         return $this->success("Barista Terdekat", $transformedArray);
       } catch (ModelNotFoundException $e) {
          return $this->error("barista tidak ditemukan", 404);
       }
 
 
-      return $this->success("List Barista Terdekat", $data);
+      // return $this->success("List Barista Terdekat", $data);
    }
 
    public function detail($barista_id)
@@ -181,9 +203,9 @@ class BaristaController extends Controller
    public function baristaProduk()
    {
 
-     if(auth()->user()->role != "barista"){
-      return $this->error("Akses Tidak diizinkan", 401);
-     }
+      if (auth()->user()->role != "barista") {
+         return $this->error("Akses Tidak diizinkan", 401);
+      }
       try {
 
          $barista = Barista::where('id', auth()->user()->id)->with('gerobak', 'user')->first();
