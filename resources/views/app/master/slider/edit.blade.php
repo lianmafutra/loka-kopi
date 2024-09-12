@@ -82,6 +82,9 @@
                         </div>
                         <span class="text-danger error error-text foto_err"></span>
                     </div>
+                
+                    <x-input-number label="Order" id="new_order" required />
+
                         <x-input label="Judul" id="nama" required />
                         <x-select2 required id="isDetail" label="Klik Detail Konten" placeholder="Detail Konten">
 

@@ -31,7 +31,7 @@ class SliderRequest extends FormRequest
          'foto' => 'required|file|mimes:jpg,jpeg,png|max:2000',
          'konten' => 'nullable',
          'isDetail' => 'required',
-       
+         'new_order' => 'nullable',
      ];
 
      if (request()->isMethod('put')) {
