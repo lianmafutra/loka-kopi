@@ -81,4 +81,21 @@ class TransaksiController extends Controller
       }
 }
 
+public function destroy(Transaksi $transaksi)
+    {
+     
+      try {
+         DB::beginTransaction();
+         
+         $transaksi->delete();
+         DB::commit();
+
+         return $this->success(__('trans.crud.delete'));
+      } catch (\Throwable $th) {
+         DB::rollBack();
+
+         return $this->error(__('trans.crud.error') . $th, 400);
+      }
+    }
+
 }
