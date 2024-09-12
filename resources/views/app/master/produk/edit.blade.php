@@ -60,6 +60,13 @@
                 <div class="card">
                     <div class="card-body">
                         <x-input label="Nama Produk" id="nama" required />
+                        <x-select2 required id="kategori" label="Kategori" placeholder="Pilih Kategori">
+                     
+                        
+                           <option value="kopi">Coffe</option>
+                           <option value="nonkopi">NonCoffe</option>
+                  
+                        </x-select2>
                         <x-input label="Deskripsi Singkat" id="desc_short" required />
                         <x-input-rupiah id="harga" label="Harga" />
                         <x-textarea id="komposisi" label="Komposisi" placeholder="Komposisi"
@@ -211,6 +218,7 @@
 
 
             $('#nama').val(@json($produk?->nama))
+            $('#kategori').val(@json($produk?->kategori)).change()
             $('#desc_short').val(@json($produk?->desc_short))
             $('#komposisi').val(@json($produk?->komposisi))
             AutoNumeric.getAutoNumericElement('#harga').set(@json($produk?->harga))

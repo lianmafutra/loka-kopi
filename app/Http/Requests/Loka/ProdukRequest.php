@@ -35,6 +35,7 @@ class ProdukRequest extends FormRequest
          'desc_long' => 'required',
          'komposisi' => 'required',
          'harga' => 'required',
+         'kategori' => 'required',
      ];
 
      if (request()->isMethod('put')) {

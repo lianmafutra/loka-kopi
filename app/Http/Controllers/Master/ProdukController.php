@@ -31,15 +31,25 @@ class ProdukController extends Controller
                }
                return $badges;
             })
+            ->editColumn('kategori', function ($data) {
+             if($data->kategori == "kopi"){
+               $badges = '<span class="badge badge-info">Coffe</span> ';
+             }
+             else{
+               $badges = '<span class="badge badge-secondary">Non Coffe</span> ';
+             }
+                 
+               return $badges;
+            })
             ->addColumn('foto', function ($data) {
                return ' <div class="shadow" style="width: 90px; height: 100px;">
-        <img src="'.$data?->foto_url.'" alt="Centered Image" class="img-fluid w-100 h-100" style="object-fit: cover;">
+        <img src="' . $data?->foto_url . '" alt="Centered Image" class="img-fluid w-100 h-100" style="object-fit: cover;">
     </div>';
             })
             ->addColumn('action', function ($data) {
                return view('app.master.produk.action', compact('data'));
             })
-            ->rawColumns(['action', 'foto', 'komposisi2'])
+            ->rawColumns(['action', 'foto', 'komposisi2','kategori'])
             ->make(true);
       }
       return view('app.master.produk.index', compact('data'));
@@ -65,15 +75,15 @@ class ProdukController extends Controller
          $requestSafe = $request->safe();
 
 
-       
+
 
          $file = $request->file('foto');
          $fileName = Str::of(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '_' . time() . '.' . $file->getClientOriginalExtension();
 
          $file->storeAs('public/uploads', $fileName);
 
-    
-       
+
+
          $produk = Produk::create(
             $requestSafe->merge(['foto' =>  $fileName])->all()
          );
@@ -100,7 +110,7 @@ class ProdukController extends Controller
     */
    public function edit(Produk $produk)
    {
- 
+
       return view('app.master.produk.edit', compact('produk'));
    }
 
@@ -114,24 +124,23 @@ class ProdukController extends Controller
 
 
          DB::beginTransaction();
-       
+
          if ($request->hasFile('foto')) {
-           
-           
+
+
             $file = $request->file('foto');
-         
+
             $fileName = Str::of(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '_' . time() . '.' . $file->getClientOriginalExtension();
-         
+
             $file->storeAs('public/uploads', $fileName);
 
             $produk->fill($request->safe()->merge(['foto' =>  $fileName])->all())->save();
-            
          } else {
             $produk->fill($request->safe()->all())->save();
          }
 
 
-        
+
 
          DB::commit();
 

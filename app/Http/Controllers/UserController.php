@@ -53,18 +53,18 @@ class UserController extends Controller
    {
       try {
          $user = User::find(auth()->user()->id);
-         $user->nama_lengkap = $request->nama_lengkap;
+         $user->name = $request->name;
          $user->kontak = $request->kontak;
-         $user->email = $request->email;
-         $user->jenis_kelamin = $request->jenis_kelamin;
-         $user->alamat = $request->alamat;
+         // $user->email = $request->email;
+         $user->jenkel = $request->jenkel;
+        
          $user->save();
          DB::commit();
 
          return redirect()->back()->with('success', __('trans.crud.success'));
       } catch (\Throwable $th) {
          DB::rollback();
-
+         dd($th);
          return redirect()->back()->with('error', __('trans.crud.error'));
       }
    }

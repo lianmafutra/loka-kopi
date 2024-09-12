@@ -15,6 +15,10 @@ class Produk extends Model
       'updated_at' => 'date:d-m-Y H:i:s',
   ];
 
+  const KATEGORI_KOPI = 'kopi';
+  const KATEGORI_NON_KOPI = 'nonkopi';
+
+
   public function gerobakStoks()
   {
       return $this->hasOne(GerobakStok::class, 'produk_id', 'id');

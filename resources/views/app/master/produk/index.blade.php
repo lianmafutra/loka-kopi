@@ -19,7 +19,7 @@
                     Data</a>
             </div>
             <div class="card-body">
-                <x-datatable id="datatable" :th="['No', 'Foto','Nama', 'Deskripsi','Harga', 'Komposisi', 'Aksi']" style="width: 100%"></x-datatable>
+                <x-datatable id="datatable" :th="['No', 'Foto','Nama', 'Deskripsi','Harga', 'Komposisi','Kategori', 'Aksi']" style="width: 100%"></x-datatable>
             </div>
         </div>
     </div>
@@ -79,7 +79,13 @@
                     searchable: false
                 },
               
-               
+                {
+                    data: 'kategori',
+                    name: 'kategori',
+                    orderable: true,
+                    searchable: true
+                },
+              
 
                 {
                     data: "action",

@@ -68,25 +68,25 @@
                                     label='Username' required='false' disabled />
                                 <x-input id='role' value='{{ $user?->getRoleName() }}' name='role' placeholder=''
                                     label='Role' required='false' disabled />
-                                <x-input id='nama_lengkap' value='{{ $user?->nama_lengkap }}' name='nama_lengkap'
+                                <x-input id='name' value='{{ $user?->name }}' name='name'
                                     placeholder='Nama Lengkap' label='Nama' required='true' />
 
                                 <x-input id='kontak' value='{{ $user?->kontak }}' name='kontak' placeholder='Kontak'
                                     label='Contact' required='false' />
 
-                                <x-input id='email' value='{{ $user?->email }}' name='email' placeholder='Email'
-                                    label='Email'  />
+                                {{-- <x-input id='email' value='{{ $user?->email }}' name='email' placeholder='Email'
+                                    label='Email'  /> --}}
 
-                                <x-select2 required="true" id="jenis_kelamin" label="Jenis Kelamin"
-                                    placeholder="Jenis Kelamin" name="jenis_kelamin">
+                                <x-select2 required="true" id="jenkel" label="Jenis Kelamin"
+                                    placeholder="Jenis Kelamin" name="jenkel">
                                     <option value='L'>Pria</option>
                                     <option value='P'>Wanita</option>
                                 </x-select2>
-
+{{-- 
                                 <x-textarea id="alamat" label="Alamat" name="alamat" hint="Alamat" required="false"
                                     spellcheck="false">
                                     {{ $user->alamat }}
-                                </x-textarea>
+                                </x-textarea> --}}
 
                                 <div class="modal-footer ">
                                     <div class="float-right">
@@ -164,7 +164,7 @@
     $('.select2bs4').select2({
         theme: 'bootstrap4',
     })
-    $('#jenis_kelamin').val(@json($user->jenis_kelamin)).trigger("change");
+    $('#jenkel').val(@json($user->jenkel)).trigger("change");
 
     $(".btn_upload_foto").click(function() {
         $('#modal_upload_foto').modal('show')
