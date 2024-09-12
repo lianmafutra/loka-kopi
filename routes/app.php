@@ -70,11 +70,10 @@ Route::middleware(['auth_web'])->group(function () {
       'as' => 'master-data'
    ]);
 
+   Route::resource('master-data/transaksi', TransaksiController::class, [
+     
+   ]);
 
-
-   Route::get('transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
-
- 
 });
 
 

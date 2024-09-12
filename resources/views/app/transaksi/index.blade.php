@@ -19,7 +19,7 @@
                         <x-select2 id="rentang_waktu" label="" required="false" placeholder="Pilih Rentang Waktu">
                             <option value="hari_ini">Hari Ini</option>
                             <option value="minggu_ini">Minggu Ini</option>
-                            <option value="bulan_ini">Bulan Ini</option>                            
+                            <option value="bulan_ini">Bulan Ini</option>
                             <option value="semua">Semua Transaksi</option>
                         </x-select2>
                     </div>
@@ -31,20 +31,27 @@
                         </x-select2>
                     </div>
                     <div class="col-md-3">
-                     <div style="margin-top:22px; display: flex; gap: 10px;">
-                         <button id="btn_filter" type="button" class="btn btn-primary">
-                             <i class="mr-1 fas fa-filter nav-icon"></i> Filter
-                         </button>
-                         <button id="btn_reset" type="button" class="btn btn-secondary">
-                             <i class="mr-1 fas fa-redo nav-icon"></i> Reset 
-                         </button>
+                        <div style="margin-top:22px; display: flex; gap: 10px;">
+                            <button id="btn_filter" type="button" class="btn btn-primary">
+                                <i class="mr-1 fas fa-filter nav-icon"></i> Filter
+                            </button>
+                            <button id="btn_reset" type="button" class="btn btn-secondary">
+                                <i class="mr-1 fas fa-redo nav-icon"></i> Reset
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-3" >
+                     <div style="margin-top:22px; display: flex; justify-content: flex-end; gap: 10px;">
+                         <a href="{{ route('transaksi.create') }}" id="btn_input_transaksi" type="button" class="btn btn-primary">
+                             <i class="mr-1 fas fa-plus nav-icon"></i> Input Transaksi
+                         </a>
                      </div>
                  </div>
-                 
+
                 </div>
             </div>
             <div class="card-body">
-                <x-datatable id="datatable" :th="['No', 'Penginput', 'Produk', 'Jumlah', 'Transaksi','Lokasi', 'Created At', 'Aksi']" style="width: 100%"></x-datatable>
+                <x-datatable id="datatable" :th="['No', 'Penginput', 'Produk', 'Jumlah', 'Transaksi', 'Lokasi', 'Created At', 'Aksi']" style="width: 100%"></x-datatable>
             </div>
         </div>
     </div>
@@ -67,7 +74,7 @@
             info: true,
             ordering: true,
             aaSorting: [],
-            // order: [3, 'desc'],
+            order: [6, 'desc'],
             scrollX: true,
             ajax: {
                 url: route('transaksi.index'),
@@ -115,7 +122,7 @@
                 {
                     data: 'created_at',
                     name: 'created_at',
-                    orderable: false,
+                    orderable: true,
                     searchable: false
                 },
                 {
@@ -132,6 +139,13 @@
             e.preventDefault();
             datatable.ajax.reload()
         });
+
+
+      //   $('#btn_input_transaksi').click(function(e) {
+      //       e.preventDefault();
+           
+      //   });
+
 
         $('#btn_reset').click(function(e) {
             e.preventDefault();
