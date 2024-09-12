@@ -34,8 +34,13 @@ class BaristaRequest extends FormRequest
          'alamat' => 'required|string',
          'kontak' => 'required|string|max:50',
          'jenkel' => 'required|string',
+         'foto' => 'required|file|mimes:jpg,jpeg,png|max:2000',
      ];
-   
+
+     if (request()->isMethod('put')) {
+      $rules['foto'] =  'file|mimes:jpg,jpeg,png|max:2000|nullable';
+     }
+
      if (request()->isMethod('post')) {
          $rules['password'] = 'required';
      }

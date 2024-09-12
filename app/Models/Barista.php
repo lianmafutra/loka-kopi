@@ -18,6 +18,9 @@ class Barista extends Model
       'tgl_registrasi' => 'date:d-m-Y',
   ];
 
+  
+
+
   /**
    * Get the user that owns the Barista
    *
@@ -32,4 +35,7 @@ class Barista extends Model
   {
       return $this->belongsTo(Gerobak::class, 'gerobak_id', 'id');
   }
+
+
+ 
 }

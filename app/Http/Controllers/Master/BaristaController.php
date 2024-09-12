@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Loka\BaristaRequest;
 use App\Models\Barista;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class BaristaController extends Controller
 {
@@ -21,7 +21,15 @@ class BaristaController extends Controller
           return datatables()->of($data)
              ->addIndexColumn()
              ->addColumn('foto', function ($data) {
-               return '<img class="foto img-circle elevation-3 foto p-0" src="'.asset('img/avatar.png').''.'" height="40px" width="40px"; style="object-fit: cover; padding: 0px !important;">';
+               if (!empty($data->user?->foto) && trim($data->user?->foto) !== '') {
+                  $foto =  url('storage/uploads/barista/' .$data->user?->foto);
+
+                  return '<img class="foto img-circle elevation-3 foto p-0" src="'.$foto.'" height="40px" width="40px"; style="object-fit: cover; padding: 0px !important;">';
+               }else{
+                  return '<img onerror="this.onerror=null; this.src="'.asset('img/avatar.png').'" class="foto img-circle elevation-3 foto p-0" src="'.asset('img/avatar2.png').'" height="40px" width="40px"; style="object-fit: cover; padding: 0px !important;">';
+
+               }
+             
            })
              ->addColumn('action', function ($data) {
                return view('app.master.barista.action', compact('data'));
@@ -50,6 +58,14 @@ class BaristaController extends Controller
 
          DB::beginTransaction();
         $requestSafe = $request->safe();
+       
+
+
+        $file = $request->file('foto');
+        $fileName = Str::of(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '_' . time() . '.' . $file->getClientOriginalExtension();
+
+        $file->storeAs('public/uploads/barista/', $fileName);
+
 
          $user = User::create([
             'name' =>  $requestSafe->nama,
@@ -57,6 +73,8 @@ class BaristaController extends Controller
             'kontak' =>  $requestSafe->kontak,
             'username' => $requestSafe->username,
             'password' => bcrypt($requestSafe->password),
+            'foto' => $fileName,
+            'path_foto' => 'storage/uploads/barista/',
          ]);
 
          $user->assignRole(User::ROLE_BARISTA);
@@ -64,7 +82,7 @@ class BaristaController extends Controller
          $barista = Barista::create(
             $requestSafe->merge([
                'users_id' => $user->id,
-               ])->except('jenkel','nama','kontak','username','password')
+               ])->except('jenkel','nama','kontak','username','password','foto')
          );
 
     
@@ -90,7 +108,8 @@ class BaristaController extends Controller
      */
     public function edit(Barista $barista)
     {
-      return view('app.master.barista.edit', compact('barista'));
+     $x['foto']  =  url('storage/uploads/barista/' .$barista->user?->foto);
+      return view('app.master.barista.edit', compact('barista'), $x);
     }
 
     /**
@@ -99,20 +118,44 @@ class BaristaController extends Controller
     public function update(BaristaRequest $request, Barista $barista)
     {
       try {
-
-    
-    
+     
          DB::beginTransaction();
          $requestSafe = $request->safe();
+         if ($request->hasFile('foto')) {
 
-         $user = User::find($barista->id)->update([
-            'name' =>  $requestSafe->nama,
-            'username' =>  $requestSafe->username,
-            'jenkel' =>  $requestSafe->jenkel,
-            'kontak' =>  $requestSafe->kontak,
-         ]);
 
-         $barista->fill($request->except('jenkel','nama','kontak','username','password'))->save();
+            $file = $request->file('foto');
+
+            $fileName = Str::of(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '_' . time() . '.' . $file->getClientOriginalExtension();
+
+            $file->storeAs('public/uploads/barista/', $fileName);
+
+            // $produk->fill($request->safe()->merge(['foto' =>  $fileName])->all())->save();
+            $user = User::find($barista->id)->update([
+               'name' =>  $requestSafe->nama,
+               'username' =>  $requestSafe->username,
+               'jenkel' =>  $requestSafe->jenkel,
+               'kontak' =>  $requestSafe->kontak,
+               'foto' => $fileName,
+               'path_foto' => 'storage/uploads/barista/',
+            ]);
+
+         } else {
+            // $produk->fill($request->safe()->all())->save();
+
+            $user = User::find($barista->id)->update([
+               'name' =>  $requestSafe->nama,
+               'username' =>  $requestSafe->username,
+               'jenkel' =>  $requestSafe->jenkel,
+               'kontak' =>  $requestSafe->kontak,
+            ]);
+         }
+    
+      
+
+       
+
+         $barista->fill($request->except('jenkel','nama','kontak','username','password','foto'))->save();
      
          DB::commit();
 
