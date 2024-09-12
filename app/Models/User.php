@@ -56,7 +56,7 @@ class User extends Authenticatable
   
 
     protected $appends = [
-        'role',
+        'role','foto_url'
     ];
 
     public function scopeFilter($query)
@@ -115,6 +115,18 @@ class User extends Authenticatable
         }
     }
 
+    public function getFotoUrlAttribute()
+    {
+        // Assuming 'foto' is the column that stores the file name of the image
+        if ($this->foto) {
+            return url('storage/uploads/profile/' . $this->foto); // Change the folder path accordingly
+        }
+   
+        return url('img/placeholder_produk.png' . $this->foto);; // Return null if no image is available
+    }
+   
+    // Specify which attributes should be appended to the model's array and JSON form
+ 
 
 
     public function barista(): HasOne

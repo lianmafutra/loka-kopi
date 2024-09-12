@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -31,6 +32,8 @@ class UserController extends Controller
       if ($user == null) {
          abort(404);
       }
+
+    
 
       return view('admin.profile.index', compact('user'));
    }
@@ -73,17 +76,25 @@ class UserController extends Controller
 
          DB::beginTransaction();
 
-         $data = User::find(auth()->user()->id);
-         $data->fill($request->safe()->except('foto'))->save();
+         $user = User::find(auth()->user()->id);
+         // $data->fill($request->safe()->except('foto'))->save();
 
-         $data
-            ->addFile($request->foto)
-            ->path('foto')
-            ->field('foto')
-            ->extension(['jpg', 'png','jpeg'])
-            ->compress(40)
-            ->withThumb(100)
-            ->updateFile();
+         if ($request->hasFile('foto')) {
+           
+           
+            $file = $request->file('foto');
+         
+            $fileName = Str::of(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '_' . time() . '.' . $file->getClientOriginalExtension();
+         
+            $file->storeAs('public/uploads/profile/', $fileName);
+
+            $user->fill($request->safe()->merge(['foto' =>  $fileName,'path_foto' => 'uploads/profile/'])->all())->save();
+            
+         } else {
+            $user->fill($request->safe()->all())->save();
+         }
+
+
 
          DB::commit();
 

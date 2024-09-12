@@ -25,11 +25,7 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'foto' => Rule::filepond([
-                'file',
-                'mimes:jpg,png,jpeg',
-                'max:20000',
-            ]),
+            'foto' => 'required'
         ];
     }
 }

@@ -30,7 +30,7 @@
                 <div class="card-body box-profile">
                     <div class="text-center">
               
-                        <img onerror="this.onerror=null; this.src='{{ asset('img/avatar.png') }}'" class="profile-user-img img-fluid img-circle" src="{{ $user?->field('foto')->getFile()}}"
+                        <img onerror="this.onerror=null; this.src='{{ asset('img/avatar.png') }}'" class="profile-user-img img-fluid img-circle" src="{{ $user?->foto_url }}"
                             alt="User profile picture">
                     </div>
                     <h6 class="profile-username text-center">{{ $user?->nama_lengkap }}</h6>
@@ -72,7 +72,7 @@
                                     placeholder='Nama Lengkap' label='Nama' required='true' />
 
                                 <x-input id='kontak' value='{{ $user?->kontak }}' name='kontak' placeholder='Kontak'
-                                    label='Contact' required='true' />
+                                    label='Contact' required='false' />
 
                                 <x-input id='email' value='{{ $user?->email }}' name='email' placeholder='Email'
                                     label='Email'  />
@@ -143,7 +143,7 @@
                 @method('PUT')
                 <div class="modal-body">
                     <div class="form-group ">
-                        <input id="foto" required type="file" data-max-file-size="3 MB" class="filepond"
+                        <input id="foto" required type="file" 
                             name="foto">
                     </div>
                 </div>
@@ -155,14 +155,10 @@
         </div>
     </div>
 </div>
+
 @endsection
 @push('js')
-<script src="{{ asset('plugins/filepond/filepond.js') }}"></script>
-<script src="{{ asset('plugins/filepond/filepond-plugin-file-metadata.js') }}"></script>
-<script src="{{ asset('plugins/filepond/filepond-plugin-file-encode.js') }}"></script>
-<script src="{{ asset('plugins/filepond/filepond-plugin-file-validate-type.js') }}"></script>
-<script src="{{ asset('plugins/filepond/filepond-plugin-file-validate-size.js') }} "></script>
-<script src="{{ asset('plugins/filepond/filepond-plugin-image-preview.js') }}"></script>
+
 <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
 <script>
     $('.select2bs4').select2({
@@ -173,30 +169,6 @@
     $(".btn_upload_foto").click(function() {
         $('#modal_upload_foto').modal('show')
     });
-    FilePond.registerPlugin(
-        FilePondPluginFileMetadata,
-        FilePondPluginFileEncode,
-        FilePondPluginImagePreview,
-        FilePondPluginFileValidateType,
-        FilePondPluginFileValidateSize);
-    const file_cover = FilePond.create(document.querySelector('#foto'));
-    file_cover.setOptions({
-        server: {
-            url: "{{ config('filepond.server.url') }}",
-            headers: {
-                'X-CSRF-TOKEN': "{{ @csrf_token() }}",
-            },
-            load: (source, load, error, progress, abort, headers) => {
-                let request = new XMLHttpRequest();
-                request.open('GET', source);
-                request.responseType = "blob";
-                request.onreadystatechange = () => request.readyState === 4 && load(request
-                    .response);
-                request.send();
-            }
-        },
-     
-
-    })
+   
 </script>
 @endpush
