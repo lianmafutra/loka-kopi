@@ -133,8 +133,11 @@ class SliderController extends Controller
 
             // Ambil order baru dari request
             $newOrder = $request->input('new_order');
+            if($newOrder == 0){
+               $newOrder = 1;
+            }
             $currentOrder = $slider->order;
-
+          
             if ($newOrder == $currentOrder) {
                // Jika order baru sama dengan yang lama, tidak perlu di-update
                return response()->json(['message' => 'Order tidak berubah.']);
