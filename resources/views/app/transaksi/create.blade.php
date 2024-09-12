@@ -55,7 +55,7 @@
 
                     <div class="card-footer">
                         <div style="gap:8px;" class="d-flex">
-                            <a href="{{ route('master-data.slider.index') }}" type="button"
+                            <a href="{{ route('transaksi.index') }}" type="button"
                                 class="btn btn-secondary">Kembali</a>
 
                             <button type="button" class="btn btn-warning" id="add-row">Add Row</button>
