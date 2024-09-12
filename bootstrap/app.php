@@ -24,38 +24,42 @@ return Application::configure(basePath: dirname(__DIR__))
       ]);
    })
    ->withExceptions(function (Exceptions $exceptions) {
-      
 
-      $exceptions->render(function (MethodNotAllowedHttpException $e, Request $request) {
-         return ResponseError::send($request, "Method Not Allowed", 405);
-      });
 
-      $exceptions->render(function (NotFoundHttpException $e, Request $request) {
-         return ResponseError::send($request, "EndPoint Route NotFound", 404);
-      });
+      $exceptions->render(function (Exception $e, Request $request) {
+         if ($request->is('api/*') || $request->ajax()) {
+            if ($e instanceof MethodNotAllowedHttpException) {
+               return ResponseError::send($request, "Method Not Allowed", 405);
+            }
 
-      $exceptions->render(function (AuthorizationException $exception, Request $request) {
+            if ($e instanceof NotFoundHttpException) {
+               return ResponseError::send($request, "EndPoint Route NotFound", 404);
+            }
 
-         return ResponseError::send($request, "Failed unauthorized", 403);
-      });
+            if ($e instanceof AuthorizationException) {
+               return ResponseError::send($request, "Failed unauthorized", 403);
+            }
 
-      $exceptions->render(function (AuthenticationException $e, Request $request) {
-         return ResponseError::send($request, "Failed Authentication", 401);
-      });
+            if ($e instanceof AuthenticationException) {
+               return ResponseError::send($request, "Failed Authentication", 401);
+            }
 
-      $exceptions->render(function (AccessDeniedHttpException $exception, Request $request) {
-         return ResponseError::send($request, "This action is unauthorized", 401);
-      });
+            if ($e instanceof AccessDeniedHttpException) {
+               return ResponseError::send($request, "This action is unauthorized", 401);
+            }
 
-      $exceptions->render(function (QueryException $exception, Request $request) {
-         return ResponseError::send($request, "An error occurred while retrieving data. Please try again later.", 401);
-      });
+            if ($e instanceof QueryException) {
+               return ResponseError::send($request, "An error occurred while retrieving data. Please try again later.", 401);
+            }
 
-      $exceptions->render(function (TokenMismatchException $exception, Request $request) {
-         return ResponseError::send($request, "Your form has expired. Please try again", 419);
-      });
-      $exceptions->render(function (CustomException $exception, Request $request) {
-         return ResponseError::send($request, $exception->getMessage(), 400);
+            if ($e instanceof TokenMismatchException) {
+               return ResponseError::send($request, "Your form has expired. Please try again", 419);
+            }
+
+            if ($e instanceof CustomException) {
+               return ResponseError::send($request, $e->getMessage(), 400);
+            }
+         }
       });
    })
    ->withMiddleware(function (Middleware $middleware) {
