@@ -194,6 +194,7 @@
 
        
         $('#nama').val(@json($slider?->nama))
+        $('#new_order').val(@json($slider?->order))
         $('#isDetail').val(@json($slider?->isDetail)).change()
             $('#konten').html(@json($slider?->konten))
             document.getElementById('imageResult').src = @json($slider?->foto_url);
