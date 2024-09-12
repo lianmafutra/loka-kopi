@@ -138,10 +138,7 @@ class SliderController extends Controller
             }
             $currentOrder = $slider->order;
           
-            if ($newOrder == $currentOrder) {
-               // Jika order baru sama dengan yang lama, tidak perlu di-update
-               return response()->json(['message' => 'Order tidak berubah.']);
-            }
+           
 
             // Update slider lainnya yang berada di antara order yang lama dan baru
             if ($newOrder < $currentOrder) {

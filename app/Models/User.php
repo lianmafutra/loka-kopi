@@ -42,12 +42,18 @@ class User extends Authenticatable
    //      return (new CustomAudit())->initData($data);
    //  }
 
-    protected $casts = [
-        'created_at' => 'date:d-m-Y H:i:s',
-        'password' => 'hashed',
-        'updated_at' => 'date:d-m-Y H:i:s',
-        'last_login_at' => 'date:d/m/Y H:i:s',
-    ];
+   protected function casts(): array
+   {
+       return [
+         'created_at' => 'date:d-m-Y H:i:s',
+         'password' => 'hashed',
+         'updated_at' => 'date:d-m-Y H:i:s',
+         'last_login_at' => 'date:d/m/Y H:i:s',
+         'foto' => 'string',
+       ];
+   }
+
+  
 
     protected $appends = [
         'role',
