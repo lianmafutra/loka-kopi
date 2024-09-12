@@ -14,7 +14,7 @@ class SliderController extends Controller
    use ApiResponse;
    public function list()
    {
-     $slider = Slider::get();
+     $slider = Slider::orderBy('order', 'ASC')->get();
      return $this->success("List Sliders", $slider);
    }
 
