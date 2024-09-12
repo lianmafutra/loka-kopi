@@ -158,7 +158,7 @@
             let data = $(this).attr('data-hapus');
             Swal.fire({
                 title: 'Apakah anda yakin ingin menghapus data ?',
-                text: data,
+                text: 'Pengurangan Jumlah Stok Akan dikembalikan',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -175,7 +175,7 @@
             e.preventDefault()
             Swal.fire({
                 title: 'Are you sure, you want to delete this data ?',
-                text: $(this).attr('data-action'),
+                text: 'Pengurangan Jumlah Stok Akan dikembalikan',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',

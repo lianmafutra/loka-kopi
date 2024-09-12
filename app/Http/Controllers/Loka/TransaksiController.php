@@ -1,17 +1,23 @@
 <?php
+
 namespace App\Http\Controllers\Loka;
+
 use App\Http\Controllers\Controller;
+use App\Models\Barista;
+use App\Models\Gerobak;
+use App\Models\GerobakStok;
 use App\Models\Produk;
 use App\Models\Transaksi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 class TransaksiController extends Controller
 {
    public function index(Request $request)
    {
-   
-      $produk = Produk::query();
+
+      $produk = Produk::get();
       if (request()->ajax()) {
          $waktu = Carbon::today()->format('Y-m-d');
          if ($request->rentang_waktu == "hari_ini") {
@@ -27,7 +33,7 @@ class TransaksiController extends Controller
          } else {
             $data = Transaksi::query();
          }
-         if($request->select_produk!=null){
+         if ($request->select_produk != null) {
             $data->where('id', $request->select_produk);
          }
          $data = Transaksi::with('user');
@@ -51,42 +57,75 @@ class TransaksiController extends Controller
       }
       return view('app.transaksi.index', compact('produk'));
    }
+
    public function create()
    {
-      $x['products'] =Produk::get();
-     return view('app.transaksi.create', $x);
+      $x['products'] = Produk::get();
+      return view('app.transaksi.create', $x);
    }
+
    public function store(Request $request)
    {
+
+
+
+
       try {
          DB::beginTransaction();
-      foreach ($request->products as $product) {
-         $produk = Produk::find($product['id']);
-         Transaksi::create([
-            'user_id' => auth()->user()->id,
-            'user_nama' => auth()->user()->name, // menambahkan nama user
-            'username' => auth()->user()->username, // menambahkan username user
-            'produk_id' => $product['id'],
-            'produk_nama' => $produk->nama, // asumsikan $produk adalah instance produk yang memiliki nama
-            'jumlah' => $product['quantity'],
-            'tgl_transaksi' => Carbon::now(), // menambahkan tanggal transaksi saat ini
-            'lokasi' => '', // menambahkan lokasi transaksi, pastikan $lokasi didefinisikan
-        ]);
-     }
+         foreach ($request->products as $product) {
+
+            $produk = Produk::find($product['id']);
+
+            Transaksi::create([
+               'user_id' => auth()->user()->id,
+               'user_nama' => auth()->user()->name, // menambahkan nama user
+               'username' => auth()->user()->username, // menambahkan username user
+               'produk_id' => $product['id'],
+               'produk_nama' => $produk->nama, // asumsikan $produk adalah instance produk yang memiliki nama
+               'jumlah' => $product['quantity'],
+               'tgl_transaksi' => Carbon::now(), // menambahkan tanggal transaksi saat ini
+               'lokasi' => '', // menambahkan lokasi transaksi, pastikan $lokasi didefinisikan
+            ]);
+
+            $barista = Barista::find(auth()->user()->id);
+            $gerobakstok = GerobakStok::where('gerobak_id', $barista->id)->where('produk_id', $product['id']);
+            
+            if($gerobakstok->count() > 0){
+               $stokUpdate = $gerobakstok?->first()?->jumlah_stok -   $product['quantity'];
+
+               $gerobakstok->update([
+                  'jumlah_stok' => $stokUpdate
+               ]);
+            }else{
+               return $this->error('Gerobak Id Tidak ditemukan', 400);
+            }
+           
+         }
          DB::commit();
          return $this->success(__('trans.crud.success'));
       } catch (\Throwable $th) {
          DB::rollBack();
          return $this->error(__('trans.crud.error') . $th, 400);
       }
-}
+   }
 
-public function destroy(Transaksi $transaksi)
-    {
-     
+   public function destroy(Transaksi $transaksi)
+   {
+
       try {
          DB::beginTransaction();
+         $barista = Barista::find(auth()->user()->id);
+         $gerobakstok = GerobakStok::where('gerobak_id', $barista->id)->where('produk_id', $transaksi->produk_id);
          
+         if($gerobakstok->count() > 0){
+            $stokUpdate = $gerobakstok?->first()?->jumlah_stok +   $transaksi->jumlah;
+
+            $gerobakstok->update([
+               'jumlah_stok' => $stokUpdate
+            ]);
+         }else{
+            return $this->error('Gerobak Id Tidak ditemukan', 400);
+         }
          $transaksi->delete();
          DB::commit();
 
@@ -96,6 +135,5 @@ public function destroy(Transaksi $transaksi)
 
          return $this->error(__('trans.crud.error') . $th, 400);
       }
-    }
-
+   }
 }
