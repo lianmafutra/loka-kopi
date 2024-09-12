@@ -16,8 +16,10 @@ class BaristaRequest extends FormRequest
        $merges = [
           'tgl_lahir' => DateUtils::format($this->tgl_lahir),
           'tgl_registrasi' => DateUtils::format($this->tgl_registrasi),
+          'tgl_registrasi' => DateUtils::format($this->tgl_registrasi),
+
+         
        ];
-       $this->merge($merges);
     }
     /**
      * Get the validation rules that apply to the request.

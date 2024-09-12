@@ -59,6 +59,15 @@ class User extends Authenticatable
         'role','foto_url'
     ];
 
+    public function setAttribute($key, $value)
+    {
+       if (in_array($key, ['foto', 'path_foto'])) {
+          $this->attributes[$key] =preg_replace('/\s+/', '', $value);
+          return $this;
+       }
+       return parent::setAttribute($key, $value);
+    }
+
     public function scopeFilter($query)
     {
         return $query->whereDate('created_at', \Carbon\Carbon::today());

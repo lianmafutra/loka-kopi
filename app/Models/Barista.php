@@ -36,6 +36,15 @@ class Barista extends Model
       return $this->belongsTo(Gerobak::class, 'gerobak_id', 'id');
   }
 
+  public function setAttribute($key, $value)
+  {
+     if (in_array($key, ['foto', 'path_foto'])) {
+        $this->attributes[$key] =preg_replace('/\s+/', '', $value);
+        return $this;
+     }
+     return parent::setAttribute($key, $value);
+  }
+
 
  
 }

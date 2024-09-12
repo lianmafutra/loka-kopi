@@ -38,5 +38,15 @@ class Produk extends Model
   protected $appends = ['foto_url'];
 
 
+  public function setAttribute($key, $value)
+  {
+     if (in_array($key, ['foto', 'path_foto'])) {
+        $this->attributes[$key] =preg_replace('/\s+/', '', $value);
+        return $this;
+     }
+     return parent::setAttribute($key, $value);
+  }
+
+
 }
 
