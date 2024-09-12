@@ -35,8 +35,11 @@ class ProdukController extends Controller
              if($data->kategori == "kopi"){
                $badges = '<span class="badge badge-info">Coffe</span> ';
              }
+             elseif($data->kategori == "nonkopi"){
+               $badges = '<span class="badge badge-secondary">Coffe</span> ';
+             }
              else{
-               $badges = '<span class="badge badge-secondary">Non Coffe</span> ';
+               $badges = '<span class="badge badge-danger">Tidak ada</span> ';
              }
                  
                return $badges;
