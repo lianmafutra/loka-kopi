@@ -133,7 +133,7 @@ class SliderController extends Controller
 
             // Ambil order baru dari request
             $newOrder = $request->input('new_order');
-            if($newOrder == 0){
+            if($newOrder == 0 || $newOrder <=1 ){
                $newOrder = 1;
             }
             $currentOrder = $slider->order;
