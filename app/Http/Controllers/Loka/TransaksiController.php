@@ -38,13 +38,16 @@ class TransaksiController extends Controller
             $data->where('id', $request->select_produk);
 
          }
-     
+         $data = Transaksi::with('user');
 
          return datatables()->of($data)
             ->addIndexColumn()
             ->addColumn('foto', function ($data) {
                return ' <div class="shadow" style="width: 90px; height: 100px;">
                         <img src="" alt="Centered Image" class="img-fluid w-100 h-100" style="object-fit: cover;"></div>';
+            })
+            ->addColumn('penginput', function ($data) {
+               return $data?->user?->name;
             })
            
             ->addColumn('action', function ($data) {
