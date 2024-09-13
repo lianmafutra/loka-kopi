@@ -104,6 +104,7 @@ class BaristaController extends Controller
                'user_id' => $barista?->user?->id,
                'nama' => strtoupper($barista->user?->name),
                'foto' => $barista?->user?->foto,
+               'path_foto' => url('storage/uploads/barista/'.$barista->user?->foto),
                'kontak' => $barista?->user?->kontak,
                'distance' => $barista?->distance,
                'estimasi' => $barista?->walking_time,
