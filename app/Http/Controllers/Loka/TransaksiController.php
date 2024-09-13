@@ -24,8 +24,9 @@ class TransaksiController extends Controller
          $date_range_start= '';
          $date_range_end = '';
 
-     
+    
        $data = Transaksi::query();
+
 
          if ($request->has('rentang_waktu') && $request->rentang_waktu!= null) {
             $waktu = Carbon::today()->format('Y-m-d');
@@ -50,7 +51,7 @@ class TransaksiController extends Controller
 
     
          if ($request->has('select_produk') && $request->select_produk!= null) {
-            $data->where('id', $request->select_produk);
+            $data->where('produk_id', $request->select_produk);
          }
 
          
