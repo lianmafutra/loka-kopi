@@ -74,8 +74,8 @@ class BaristaController extends Controller
    public function baristaTerdekat(Request $request)
    {
 
-      $lat_konsumen = $request->lat_konsumen;
-      $long_konsumen = $request->long_konsumen;
+      $lat_konsumen = floatval($request->lat_konsumen);
+      $long_konsumen = floatval($request->long_konsumen);
 
 
 
