@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utils\Rupiah;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,9 +36,17 @@ class Produk extends Model
   }
 
   // Specify which attributes should be appended to the model's array and JSON form
-  protected $appends = ['foto_url'];
+  protected $appends = ['foto_url','harga_format'];
 
+  public function getHargaFormatAttribute()
+  {
+      // Assuming 'foto' is the column that stores the file name of the image
+    
+          return 'Rp'.Rupiah::toRupiah( $this->harga); // Change the folder path accordingly
+    
 
+     
+  }
   public function setAttribute($key, $value)
   {
      if (in_array($key, ['foto', 'path_foto'])) {

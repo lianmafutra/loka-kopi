@@ -3,6 +3,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Produk;
 use App\Utils\ApiResponse;
+use App\Utils\Rupiah;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 class ProdukController extends Controller
@@ -28,6 +29,7 @@ class ProdukController extends Controller
             'foto' =>  $produk?->foto,
             'desc_short' =>  $produk?->desc_short,
             'harga' =>  $produk?->harga,
+            'harga_format' =>  Rupiah::toRupiah($produk?->harga),
             'komposisi' =>  array_filter(array_map('trim', explode(';', $produk?->komposisi))),
             'promo' =>  $produk?->promo,
             'foto_url' => $produk?->foto_url,
