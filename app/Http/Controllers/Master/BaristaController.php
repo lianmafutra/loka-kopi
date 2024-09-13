@@ -155,7 +155,7 @@ class BaristaController extends Controller
 
        
 
-         $barista->fill($request->except('jenkel','nama','kontak','username','password','foto'))->save();
+         $barista->fill($requestSafe->except('jenkel','nama','kontak','username','password','foto'))->save();
      
          DB::commit();
 
