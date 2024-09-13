@@ -29,7 +29,7 @@ class ProdukController extends Controller
             'foto' =>  $produk?->foto,
             'desc_short' =>  $produk?->desc_short,
             'harga' =>  $produk?->harga,
-            'harga_format' =>  Rupiah::toRupiah($produk?->harga),
+            'harga_format' =>  "Rp".Rupiah::toRupiah($produk?->harga),
             'komposisi' =>  array_filter(array_map('trim', explode(';', $produk?->komposisi))),
             'promo' =>  $produk?->promo,
             'foto_url' => $produk?->foto_url,
