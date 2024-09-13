@@ -96,7 +96,7 @@ class TransaksiController extends Controller
 
             $produk = Produk::find($product['id']);
 
-             $data->create([
+             Transaksi::create([
                'user_id' => auth()->user()->id,
                'user_nama' => auth()->user()->name, // menambahkan nama user
                'username' => auth()->user()->username, // menambahkan username user
