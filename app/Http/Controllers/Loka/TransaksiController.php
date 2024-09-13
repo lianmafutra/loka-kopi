@@ -40,15 +40,17 @@ class TransaksiController extends Controller
                $endOfMonth = Carbon::now()->endOfMonth()->format('Y-m-d');
                $data =  $data->whereBetween('tgl_transaksi', [$startOfMonth, $endOfMonth]);
             } 
-            if ($request->select_produk != null) {
-               $data->where('id', $request->select_produk);
-            }
          }
         
 
          if ($request->has('rentang_tgl_start') && $request->rentang_tgl_start!= null) {
        
             $data->whereBetween('tgl_transaksi', [$request->rentang_tgl_start,$request->rentang_tgl_end]);
+         }
+
+    
+         if ($request->has('select_produk') && $request->select_produk!= null) {
+            $data->where('id', $request->select_produk);
          }
 
          
