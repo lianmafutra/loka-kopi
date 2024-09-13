@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="{{ asset('template/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }} ">
     <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/flatpicker/flatpickr.min.css') }}">
     <style>
     </style>
 @endpush
@@ -15,7 +16,18 @@
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-2">
+                        <div class="bd-highlight">
+                            <div style="margin-top:20px; padding: 0 !important; " class="input-group ">
+                                <input style="width: 80%" id="rentang_tgl" autocomplete="off" name="rentang_tgl"
+                                    class="form-control tanggal" type="text" placeholder="-- Rentang Tanggal --"
+                                    data-input>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-2">
                         <x-select2 id="rentang_waktu" label="" required="false" placeholder="Pilih Rentang Waktu">
                             <option value="hari_ini">Hari Ini</option>
                             <option value="minggu_ini">Minggu Ini</option>
@@ -23,14 +35,14 @@
                             <option value="semua">Semua Transaksi</option>
                         </x-select2>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-2">
                         <x-select2 id="select_produk" label=" " required="false" placeholder="Pilih Produk">
                             @foreach ($produk as $item)
                                 <option value="{{ $item->id }}">{{ $item?->nama }}</option>
                             @endforeach
                         </x-select2>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-3">
                         <div style="margin-top:22px; display: flex; gap: 10px;">
                             <button id="btn_filter" type="button" class="btn btn-primary">
                                 <i class="mr-1 fas fa-filter nav-icon"></i> Filter
@@ -40,13 +52,14 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col-md-3" >
-                     <div style="margin-top:22px; display: flex; justify-content: flex-end; gap: 10px;">
-                         <a href="{{ route('transaksi.create') }}" id="btn_input_transaksi" type="button" class="btn btn-primary">
-                             <i class="mr-1 fas fa-plus nav-icon"></i> Input Transaksi
-                         </a>
-                     </div>
-                 </div>
+                    {{-- <div class="col-md-3">
+                        <div style="margin-top:22px; display: flex; justify-content: flex-end; gap: 10px;">
+                            <a href="{{ route('transaksi.create') }}" id="btn_input_transaksi" type="button"
+                                class="btn btn-primary">
+                                <i class="mr-1 fas fa-plus nav-icon"></i> Input Transaksi
+                            </a>
+                        </div>
+                    </div> --}}
 
                 </div>
             </div>
@@ -60,7 +73,32 @@
     <script src="{{ asset('template/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
+
+    {{-- flatcpiker format date input --}}
+    <script src="{{ asset('plugins/flatpicker/flatpickr.min.js') }}"></script>
+    <script src="{{ asset('plugins/flatpicker/id.min.js') }}"></script>
     <script>
+        let dateStart = '';
+        let dateEnd = '';
+
+        const rentang_tgl = $("#rentang_tgl").flatpickr({
+            allowInput: true,
+            mode: "range",
+
+            dateFormat: "d/m/Y",
+
+            onChange: function(dates, dateStr, instance) {
+                if (dates.length == 2) {
+
+                    dateStart = instance.formatDate(dates[0], "Y-m-d");
+                    dateEnd = instance.formatDate(dates[1], "Y-m-d");
+                    $('#rentang_waktu').prop('disabled', true).trigger('change.select2');
+
+
+
+                }
+            }
+        })
         $('.select2bs4').select2({
             theme: 'bootstrap4',
             allowClear: true
@@ -80,7 +118,9 @@
                 url: route('transaksi.index'),
                 data: function(e) {
                     e.rentang_waktu = $('#rentang_waktu').val(),
-                        e.select_produk = $('#select_produk').val()
+                        e.select_produk = $('#select_produk').val(),
+                        e.rentang_tgl_start = dateStart,
+                        e.rentang_tgl_end = dateEnd
                 }
             },
             columns: [{
@@ -140,17 +180,26 @@
             datatable.ajax.reload()
         });
 
+        $('#rentang_waktu').on('change', function() {
+            $('#rentang_tgl').prop('disabled', true).trigger('change.select2');
+        });
 
-      //   $('#btn_input_transaksi').click(function(e) {
-      //       e.preventDefault();
-           
-      //   });
+
+        //   $('#btn_input_transaksi').click(function(e) {
+        //       e.preventDefault();
+
+        //   });
 
 
         $('#btn_reset').click(function(e) {
             e.preventDefault();
             $('#rentang_waktu').val(null).trigger('change');
             $('#select_produk').val(null).trigger('change');
+            $('#rentang_tgl').val(null);
+            $('#rentang_waktu').prop('disabled', false).trigger('change.select2');
+            $('#rentang_tgl').prop('disabled', false).trigger('change.select2');
+            dateStart = '';
+            dateEnd = '';
             datatable.ajax.reload()
         });
 

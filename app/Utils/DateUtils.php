@@ -3,6 +3,7 @@
 namespace App\Utils;
 
 use DateTime;
+use Exception;
 use Illuminate\Support\Carbon;
 
 class DateUtils
@@ -19,10 +20,22 @@ class DateUtils
     public static function format($date)
     {
     
-      if($date != null){
-     
-         return Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d');
-      }
+      if ($date != null) {
+         try {
+             // Coba dengan format 'd/m/Y'
+             return Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d');
+         } catch (Exception $e) {
+             try {
+                 // Jika gagal, coba dengan format 'd-m-Y'
+                 return Carbon::createFromFormat('d-m-Y', $date)->format('Y-m-d');
+             } catch (Exception $e) {
+                 // Jika keduanya gagal, bisa return null atau pesan error
+                 return null; // Atau return pesan error
+             }
+         }
+     }
+ 
+     return null;
     }
 
     public static function rangeDate($dateRange)

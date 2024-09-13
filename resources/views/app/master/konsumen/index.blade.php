@@ -8,16 +8,16 @@
 @endpush
 
 @section('header')
-    <x-header title="Data Master Barista"></x-header>
+    <x-header title="Data Konsumen Loka"></x-header>
 @endsection
 @section('content')
     <div class="col-lg-12">
         <div class="card">
-            <div class="card-header">
+            {{-- <div class="card-header">
                 <a href="{{ route('master-data.konsumen.create') }}" id="btn_input_data" class="btn btn-sm btn-primary"><i
                         class="fas fa-plus"></i> Input
                     Data</a>
-            </div>
+            </div> --}}
             <div class="card-body">
                 <x-datatable id="datatable" :th="['No','Foto', 'Nama','Email', 'Jenis Kelamin', 'Tgl Lahir', 'Tgl Regis', 'alamat', 'Kontak', 'Aksi']" style="width: 100%"></x-datatable>
             </div>

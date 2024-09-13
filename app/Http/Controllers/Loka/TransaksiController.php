@@ -8,6 +8,7 @@ use App\Models\Gerobak;
 use App\Models\GerobakStok;
 use App\Models\Produk;
 use App\Models\Transaksi;
+use App\Utils\DateUtils;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,24 +20,43 @@ class TransaksiController extends Controller
 
       $produk = Produk::get();
       if (request()->ajax()) {
-         $waktu = Carbon::today()->format('Y-m-d');
-         if ($request->rentang_waktu == "hari_ini") {
+         
+         $date_range_start= '';
+         $date_range_end = '';
+
+     
+       $data = Transaksi::query();
+
+         if ($request->has('rentang_waktu') && $request->rentang_waktu!= null) {
             $waktu = Carbon::today()->format('Y-m-d');
-            $data = Transaksi::where('tgl_transaksi',  $waktu);
-         } else if ($request->rentang_waktu == "minggu_ini") {
-            $waktu = Carbon::now()->subDays(7)->format('Y-m-d');
-            $data = Transaksi::where('tgl_transaksi', '>=', $waktu);
-         } else if ($request->rentang_waktu == "bulan_ini") {
-            $startOfMonth = Carbon::now()->startOfMonth()->format('Y-m-d');
-            $endOfMonth = Carbon::now()->endOfMonth()->format('Y-m-d');
-            $data = Transaksi::whereBetween('tgl_transaksi', [$startOfMonth, $endOfMonth]);
-         } else {
-            $data = Transaksi::query();
+            if ($request->rentang_waktu == "hari_ini") {
+               $waktu = Carbon::today()->format('Y-m-d');
+               $data =  $data->where('tgl_transaksi',  $waktu);
+            } else if ($request->rentang_waktu == "minggu_ini") {
+               $waktu = Carbon::now()->subDays(7)->format('Y-m-d');
+               $data =  $data->where('tgl_transaksi', '>=', $waktu);
+            } else if ($request->rentang_waktu == "bulan_ini") {
+               $startOfMonth = Carbon::now()->startOfMonth()->format('Y-m-d');
+               $endOfMonth = Carbon::now()->endOfMonth()->format('Y-m-d');
+               $data =  $data->whereBetween('tgl_transaksi', [$startOfMonth, $endOfMonth]);
+            } 
+            if ($request->select_produk != null) {
+               $data->where('id', $request->select_produk);
+            }
          }
-         if ($request->select_produk != null) {
-            $data->where('id', $request->select_produk);
+        
+
+         if ($request->has('rentang_tgl_start') && $request->rentang_tgl_start!= null) {
+       
+            $data->whereBetween('tgl_transaksi', [$request->rentang_tgl_start,$request->rentang_tgl_end]);
          }
-         $data = Transaksi::with('user');
+
+         
+
+         $data->with('user');
+
+
+
          return datatables()->of($data)
             ->addIndexColumn()
             ->addColumn('foto', function ($data) {
@@ -76,7 +96,7 @@ class TransaksiController extends Controller
 
             $produk = Produk::find($product['id']);
 
-            Transaksi::create([
+             $data->create([
                'user_id' => auth()->user()->id,
                'user_nama' => auth()->user()->name, // menambahkan nama user
                'username' => auth()->user()->username, // menambahkan username user
