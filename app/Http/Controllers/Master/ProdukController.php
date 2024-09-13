@@ -81,7 +81,7 @@ class ProdukController extends Controller
 
 
          $file = $request->file('foto');
-         $fileName = Str::of(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '_' . time() . '.' . $file->getClientOriginalExtension();
+         $fileName =  preg_replace('/\s+/', '', Str::of(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '_' . time() . '.' . $file->getClientOriginalExtension());
 
          $file->storeAs('public/uploads', $fileName);
 
@@ -133,7 +133,7 @@ class ProdukController extends Controller
 
             $file = $request->file('foto');
 
-            $fileName = Str::of(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $fileName =  preg_replace('/\s+/', '', Str::of(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '_' . time() . '.' . $file->getClientOriginalExtension());
 
             $file->storeAs('public/uploads', $fileName);
 

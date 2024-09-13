@@ -63,7 +63,7 @@ class SliderController extends Controller
          DB::beginTransaction();
          $requestSafe = $request->safe();
          $file = $request->file('foto');
-         $fileName = Str::of(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '_' . time() . '.' . $file->getClientOriginalExtension();
+         $fileName =  preg_replace('/\s+/', '', Str::of(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '_' . time() . '.' . $file->getClientOriginalExtension());
          $file->storeAs('public/uploads/slider/', $fileName);
         
          // Geser semua slider lainnya ke bawah (increment) karena slider baru akan di urutan 1
@@ -119,7 +119,7 @@ class SliderController extends Controller
 
             $file = $request->file('foto');
 
-            $fileName = Str::of(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $fileName =  preg_replace('/\s+/', '', Str::of(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '_' . time() . '.' . $file->getClientOriginalExtension());
 
             $file->storeAs('public/uploads/slider/', $fileName);
 

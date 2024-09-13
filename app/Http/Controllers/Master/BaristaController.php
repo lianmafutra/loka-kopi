@@ -62,7 +62,7 @@ class BaristaController extends Controller
 
 
         $file = $request->file('foto');
-        $fileName = Str::of(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '_' . time() . '.' . $file->getClientOriginalExtension();
+        $fileName =  preg_replace('/\s+/', '', Str::of(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '_' . time() . '.' . $file->getClientOriginalExtension());
 
         $file->storeAs('public/uploads/barista/', $fileName);
 
@@ -126,8 +126,8 @@ class BaristaController extends Controller
 
             $file = $request->file('foto');
 
-            $fileName = Str::of(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '_' . time() . '.' . $file->getClientOriginalExtension();
-
+            $fileName =  preg_replace('/\s+/', '', Str::of(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '_' . time() . '.' . $file->getClientOriginalExtension());
+           
             $file->storeAs('public/uploads/barista/', $fileName);
 
             // $produk->fill($request->safe()->merge(['foto' =>  $fileName])->all())->save();
