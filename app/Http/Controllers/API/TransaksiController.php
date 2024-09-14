@@ -15,6 +15,10 @@ class TransaksiController extends Controller
 
    use ApiResponse;
 
+   public function info() {
+      return $this->success("Nikmati Kesegaran tak tertandingi dari minuman es loka Kopi, Segarkan harimu !", 200);
+   }
+
    public function store(TransaksiRequest $request)
    {
     

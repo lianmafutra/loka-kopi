@@ -44,4 +44,7 @@ Route::middleware(['auth:api'])->group(function () {
    Route::post('transaksi/input', [TransaksiController::class, 'store'])->name('transaksi.store');
 
  
+   Route::get('info', [TransaksiController::class, 'info'])->name('info');
+
+ 
 });
