@@ -14,6 +14,8 @@ class BaristaController extends Controller
 
    use ApiResponse;
 
+   
+
    function format_distance($distance, $unit = 'km')
    {
       if ($unit === 'km') {
@@ -179,11 +181,6 @@ $transformedArray = $transformed->values()->toArray();
             'foto' => $barista?->user?->foto,
             'path_foto' => url('storage/uploads/barista/'.$barista?->user?->foto),
             'kontak' => $barista?->user?->kontak,
-            'jarak' => '',
-            'estimasi' => '',
-            'lokasi_terkini' => '',
-            'latitude' => '',
-            'longitude' => '',
             'gerobak_id' => $barista?->gerobak?->id,
             'gerobak_nama' => $barista?->gerobak?->nama,
             'info' => '',
