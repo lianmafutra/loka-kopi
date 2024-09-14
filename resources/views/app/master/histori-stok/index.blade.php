@@ -35,7 +35,7 @@
             info: true,
             ordering: true,
             aaSorting: [],
-            order: [1, 'asc'],
+            order: [5, 'Desc'],
             scrollX: true,
             ajax: route('histori-stok.index'),
             columns: [{
