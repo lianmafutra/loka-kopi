@@ -14,7 +14,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                   // window.location.replace(route('logout'))
-                  window.location.replace(route('login'))
+                  window.location.replace( route('login.form'))
                 }
             })
         },

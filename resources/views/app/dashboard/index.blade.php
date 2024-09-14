@@ -60,20 +60,79 @@
     </div>
 
 
-  
-@endsection
-@push('js')
-    <script src="{{ asset('template/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script> <!-- Import plugin chartjs-plugin-datalabels -->
-    <script>
-        $('.select2bs4').select2({
-            theme: 'bootstrap4',
-        })
+    <div class="row">
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-container">
+                        <table class="table table-bordered custom-datatable">
+                            <thead>
+                                <tr>
+                                    <th>Periode</th>
+                                    <th style="text-align: center;">Transaksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Transaksi Hari Ini</td>
+                                    <td style="text-align: center;" id="today-transactions">{{ $transaksi_hari_ini }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Transaksi Bulan Ini</td>
+                                    <td style="text-align: center;" id="month-transactions">{{ $transaksi_bulan_ini }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Transaksi Minggu Ini</td>
+                                    <td style="text-align: center;" id="week-transactions">{{ $transaksi_minggu_ini }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Transaksi Tahun Ini ({{ date('Y') }})</td>
+                                    <td style="text-align: center;"  style="text-align: center; id="year-transactions">{{ $transaksi_tahun_ini }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Seluruh Transaksi</td>
+                                    <td style="text-align: center;" id="year-transactions">{{ $transaksi_seluruh }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
 
 
-     
-    </script>
-@endpush
+        </div>
+        <div class="col-4">
+         <div class="card">
+             <div class="card-body">
+                 <div class="table-container">
+                     <table class="table table-bordered custom-datatable">
+                         <thead>
+                             <tr>
+                                 <th>Periode</th>
+                                 <th>Transaksi</th>
+                             </tr>
+                         </thead>
+                        
+                     </table>
+
+                 </div>
+             </div>
+         </div>
+
+
+     </div>
+    </div>
+    @endsection
+    @push('js')
+        <script src="{{ asset('template/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+        <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script> <!-- Import plugin chartjs-plugin-datalabels -->
+        <script>
+            $('.select2bs4').select2({
+                theme: 'bootstrap4',
+            })
+        </script>
+    @endpush
