@@ -89,16 +89,27 @@ class BaristaController extends Controller
    {
       $walking_speed_kmh = 5; // Kecepatan rata-rata jalan kaki dalam km/jam
 
-      if ($unit === 'm') {
-         $distance_km = $distance / 1000;
-      } else {
-         $distance_km = $distance;
-      }
+    if ($unit === 'm') {
+        $distance_km = $distance / 1000;
+    } else {
+        $distance_km = $distance;
+    }
 
-      $time_hours = $distance_km / $walking_speed_kmh;
-      $time_minutes = $time_hours * 60;
+    $time_hours = $distance_km / $walking_speed_kmh;
+    $total_minutes = $time_hours * 60;
 
-      return number_format($time_minutes, 0) . ' menit';
+    // Hitung jam dan menit
+    $hours = floor($total_minutes / 60);
+    $minutes = round($total_minutes % 60);
+
+    // Format output
+    if ($hours > 0 && $minutes > 0) {
+        return "$hours jam $minutes menit";
+    } elseif ($hours > 0) {
+        return "$hours jam";
+    } else {
+        return "$minutes menit";
+    }
    }
 
    function transformDistance($distanceInKm)
@@ -148,7 +159,7 @@ class BaristaController extends Controller
                'foto' => $barista?->user?->foto,
                'path_foto' => url('storage/uploads/barista/' . $barista?->user?->foto),
                'kontak' => $barista?->user?->kontak,
-               'distance' => $barista?->distance,
+               'distance' => $barista->distance,
                'estimasi' => $barista?->walking_time,
                'lokasi_terkini' => $barista?->gerobak?->lokasi_terkini,
                'latitude' => $barista?->gerobak->latitude,
@@ -173,10 +184,10 @@ class BaristaController extends Controller
             if ($distanceInMeters < 1000) {
                $item['distance'] = round($distanceInMeters, 2) . ' m';
             } else {
-               $item['distance'] = round($distanceInKm, 2) . ' Km';
+               $item['distance'] =  round($distanceInKm, 2) . ' Km';
             }
 
-            return $item;
+            return  $item;
          });
 
          // Konversi kembali ke array jika diperlukan
