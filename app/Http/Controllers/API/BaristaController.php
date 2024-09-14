@@ -227,7 +227,8 @@ class BaristaController extends Controller
             return [
                'produk_id' => $stok->produk?->id,
                'nama' => $stok->produk?->nama,
-               'foto' => $stok->produk?->foto,
+               // 'foto' => $stok->produk?->foto,
+               'foto_url' =>$stok->produk?->foto_url,
                'stok' => $stok?->jumlah_stok,
             ];
          });
