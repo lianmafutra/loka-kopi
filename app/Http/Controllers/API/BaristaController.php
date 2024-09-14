@@ -74,6 +74,16 @@ class BaristaController extends Controller
       return number_format($time_minutes, 0) . ' menit';
    }
 
+   function transformDistance($distanceInKm) {
+      $distanceInMeters = $distanceInKm * 1000; // konversi km ke meter
+  
+      if ($distanceInMeters < 1000) {
+          return round($distanceInMeters, 2) . ' m';
+      } else {
+          return round($distanceInKm, 2) . ' Km';
+      }
+  }
+
 
    public function baristaTerdekat(Request $request)
    {
@@ -193,15 +203,10 @@ class BaristaController extends Controller
                $barista_lat = $barista->gerobak?->latitude;
                $barista_lon = $barista->gerobak?->longitude;
                $distance = $this->haversine_distance($lat_konsumen, $long_konsumen, $barista_lat, $barista_lon, $unit);
-               $barista->distance = $distance;
+                $distanceNew =$this->transformDistance( $distance);
                $barista->walking_time = $this->calculate_walking_time($distance, $unit);
-   
-               if ($distance >= 1000) {
-                  $distance_km = $distance / 1000;
-                  $distanceNew = round($distance_km, 2) ."m";
-               } else {
-                  $distanceNew =  round($distance, 2) ."km";
-               }
+             
+             
             }
             
          }
@@ -213,7 +218,7 @@ class BaristaController extends Controller
             'foto' => $barista?->user?->foto,
             'path_foto' => url('storage/uploads/barista/' . $barista?->user?->foto),
             'kontak' => $barista?->user?->kontak,
-            'distance' =>  $distanceNew,
+            'distance' => $distanceNew,
             'estimasi' => $barista?->walking_time,
             'lokasi_terkini' => $barista?->gerobak?->lokasi_terkini,
             'latitude' => $barista?->gerobak->latitude,
