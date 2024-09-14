@@ -36,7 +36,7 @@ class ProdukController extends Controller
                $badges = '<span class="badge badge-info">Coffe</span> ';
              }
              elseif($data->kategori == "nonkopi"){
-               $badges = '<span class="badge badge-secondary">Coffe</span> ';
+               $badges = '<span class="badge badge-secondary">Non Coffe</span> ';
              }
              else{
                $badges = '<span class="badge badge-danger">Tidak ada</span> ';
