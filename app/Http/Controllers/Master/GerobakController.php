@@ -7,6 +7,7 @@ use App\Http\Requests\Loka\GerobakRequest;
 use App\Models\Barista;
 use App\Models\Gerobak;
 use App\Models\GerobakStok;
+use App\Models\HistoriStok;
 use App\Models\Produk;
 use App\Utils\ApiResponse;
 use App\Utils\Rupiah;
@@ -120,12 +121,52 @@ class GerobakController extends Controller
 
 
    public function updateStokGerobak(Request $request){
-     $GerobakStok = GerobakStok::where('id', $request->gerobak_stok_id)->first();
-      $stokTerbaru = $GerobakStok?->jumlah_stok + $request->stok_update;
-    $GerobakStok->update([
-         'jumlah_stok' => $stokTerbaru
-      ]);
-      return $this->success('update data stok gerobak berhasil', 200);
+
+
+      try {
+         DB::beginTransaction();
+
+      
+         $GerobakStok = GerobakStok::where('id', $request->gerobak_stok_id)->first();
+         $stokTerbaru = $GerobakStok?->jumlah_stok + $request->stok_update;
+   
+        
+   
+       $GerobakStok->update([
+            'jumlah_stok' => $stokTerbaru
+         ]);
+   
+         // insert ke histori stok 
+   
+        $produk = Produk::find( $GerobakStok->produk_id);
+          $gerobak =  Gerobak::find( $GerobakStok->gerobak_id);
+          $barista =  Barista::find( $gerobak->id);
+   
+        $historiStok = HistoriStok::create([
+            'user_id' => auth()->user()?->id,  
+            'user_nama' => auth()?->user()?->name,  
+            'gerobak_id' => $GerobakStok->gerobak_id,  
+            'gerobak_nama' =>  $gerobak->nama,  
+            'barista_nama' => $barista->user?->name,  
+            'produk_id' => $produk->id,  
+            'produk_nama' => $produk->nama,  
+            'jumlah' => $request->stok_update,  
+            'stok_sebelum' => $GerobakStok?->jumlah_stok,  
+            'catatan' => $request->update_stok_ket,  
+        ]);
+         DB::commit();
+
+         return $this->success('update data stok gerobak berhasil', 200);
+      } catch (\Throwable $th) {
+         DB::rollBack();
+         return $this->error(__('trans.crud.error') . $th, 400);
+      }
+
+   
+
+
+
+     
    }
 
    public function edit(Gerobak $gerobak)

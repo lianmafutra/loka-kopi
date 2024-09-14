@@ -8,6 +8,7 @@ use App\Http\Controllers\Klinik\Dashboard\DashboarddController;
 use App\Http\Controllers\Loka\TransaksiController;
 use App\Http\Controllers\Master\BaristaController;
 use App\Http\Controllers\Master\GerobakController;
+use App\Http\Controllers\Master\HistoriStokController;
 use App\Http\Controllers\Master\KonsumenController;
 use App\Http\Controllers\Master\LokasiController;
 use App\Http\Controllers\Master\ProdukController;
@@ -71,6 +72,10 @@ Route::middleware(['auth_web'])->group(function () {
    ]);
 
    Route::resource('transaksi', TransaksiController::class, [
+     
+   ]);
+
+   Route::resource('master/histori-stok', HistoriStokController::class, [
      
    ]);
 

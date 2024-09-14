@@ -76,7 +76,7 @@ class MenuSidebar
             'url' => route('master-data.barista.index'),
             'icon' => 'fas fa-angle-right',
             'active' => ['master/barista*'],
-            'permission' => ['role-admin'],
+            'permission' => [],
          ],
          [
             'type' => 'menu',
@@ -84,7 +84,15 @@ class MenuSidebar
             'url' => route('master-data.gerobak.index'),
             'icon' => 'fas fa-angle-right',
             'active' => ['master/gerobak*'],
-            'permission' => ['role-admin'],
+            'permission' => [],
+         ],
+         [
+            'type' => 'menu',
+            'title' => 'Histori Perubahan Stok',
+            'url' => route('histori-stok.index'),
+            'icon' => 'fas fa-angle-right',
+            'active' => ['master/histori-stok*'],
+            'permission' => [],
          ],
          [
             'type' => 'menu',
@@ -92,7 +100,7 @@ class MenuSidebar
             'url' => route('master-data.produk.index'),
             'icon' => 'fas fa-angle-right',
             'active' => ['master/produk*'],
-            'permission' => ['role-admin'],
+            'permission' => [],
          ],
          // [
          //    'type' => 'menu',
