@@ -113,22 +113,29 @@
                   <table class="table table-bordered custom-datatable">
                      <thead>
                          <tr>
-                           <th>Barista</th>
-                             <th> Gerobak</th>
+                             <th>Barista</th>
+                             <th>Gerobak</th>
                              <th>Transaksi</th>
-                           
-                            
                          </tr>
                      </thead>
                      <tbody>
                          @foreach ($gerobaks as $gerobak)
                              <tr>
-                              
-                                 <td>{{ $gerobak->barista ? $gerobak?->barista?->user?->name : 'Tidak ada' }}</td>
+                                 <td>
+                                     @if ($gerobak->barista && $gerobak->barista->user)
+                                         <div class="d-flex align-items-center">
+                                             <!-- Avatar Badge -->
+                                             <img class="foto img-circle elevation-3 foto p-0" height="40px" width="40px"; style="object-fit: cover; padding: 0px !important;" src="{{ url('storage/uploads/barista/' .$gerobak?->barista?->user?->foto) }}" class="avatar">
+                                             <!-- Barista Name -->
+                                           
+                                             <span class="ml-2">{{ $gerobak->barista->user->name }}</span>
+                                         </div>
+                                     @else
+                                         Tidak ada
+                                     @endif
+                                 </td>
                                  <td>{{ $gerobak->nama }}</td>
-                                 <td>{{ $gerobak->transaksi_count }}</td>
-                               
-                                
+                                 <td style="text-align: center;">{{ $gerobak->transaksi_count }}</td>
                              </tr>
                          @endforeach
                      </tbody>
