@@ -47,6 +47,12 @@ class Produk extends Model
 
      
   }
+
+  public function transaksi()
+  {
+      return $this->hasMany(Transaksi::class, 'produk_id', 'id');
+  }
+
   public function setAttribute($key, $value)
   {
      if (in_array($key, ['foto', 'path_foto'])) {

@@ -62,7 +62,9 @@
 
     <div class="row">
         <div class="col-3">
-            <div class="card">
+            <div class="card">  <div class="card-header">
+              Statistik Transaksi
+            </div>
                 <div class="card-body">
                     <div class="table-container">
                         <table class="table table-bordered custom-datatable">
@@ -108,6 +110,9 @@
         </div>
         <div class="col-4">
          <div class="card">
+            <div class="card-header">
+               Barista Terlaris Hari Ini
+            </div>
              <div class="card-body">
                  <div class="table-container">
                   <table class="table table-bordered custom-datatable">
@@ -147,6 +152,52 @@
 
 
      </div>
+     <div class="col-4">
+      <div class="card">
+         <div class="card-header">
+             Kopi Terlaris Hari Ini
+         </div>
+          <div class="card-body">
+              <div class="table-container">
+               <table class="table table-bordered custom-datatable">
+                  <thead>
+                      <tr>
+                          <th> Nama Kopi</th>
+                          <th>Terjual</th>
+                         
+                      </tr>
+                  </thead>
+                  <tbody>
+                      @foreach ($produk as $item)
+                          <tr>
+                              <td>
+                                  @if ($item->nama)
+                                      <div class="d-flex align-items-center">
+                                          <!-- Avatar Badge -->
+                                     
+
+                                         <img class="foto img-circle elevation-3 foto p-0" height="40px" width="40px"; style="object-fit: cover; padding: 0px !important;" src="{{ $item->foto_url }}" class="avatar">
+                                          <!-- Barista Name -->
+                                        
+                                          <span class="ml-2">{{ $item->nama }}</span>
+                                      </div>
+                                  @else
+                                      Tidak ada
+                                  @endif
+                              </td>
+                           
+                              <td style="text-align: center;">{{ $item->transaksi_count }}</td>
+                          </tr>
+                      @endforeach
+                  </tbody>
+              </table>
+
+              </div>
+          </div>
+      </div>
+
+
+  </div>
     </div>
     @endsection
     @push('js')

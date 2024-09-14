@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Barista;
 use App\Models\Gerobak;
 use App\Models\Konsumen;
+use App\Models\Produk;
 use App\Models\Transaksi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -38,6 +39,13 @@ class DashboarddController extends Controller
          ->with('barista') // Eager load barista
          ->orderBy('transaksi_count', 'desc')
          ->get();
+
+         $x['produk'] =  Produk::withCount('transaksi')
+        
+         ->orderBy('transaksi_count', 'desc')
+         ->get();
+
+         
 
 
 
