@@ -64,7 +64,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <x-datatable id="datatable" :th="['No', 'Penginput', 'Produk', 'Jumlah', 'Transaksi', 'Lokasi', 'Created At', 'Aksi']" style="width: 100%"></x-datatable>
+                <x-datatable id="datatable" :th="['No', 'Penginput','Gerobak', 'Produk', 'Jumlah', 'Transaksi', 'Lokasi', 'Created At', 'Aksi']" style="width: 100%"></x-datatable>
             </div>
         </div>
     </div>
@@ -134,6 +134,12 @@
                     name: 'penginput',
                     orderable: false,
                     searchable: false
+                },
+                {
+                    data: 'gerobak',
+                    name: 'gerobak',
+                    orderable: true,
+                    searchable: true
                 },
                 {
                     data: 'produk_nama',

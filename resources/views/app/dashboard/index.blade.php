@@ -78,6 +78,10 @@
                                     <td style="text-align: center;" id="today-transactions">{{ $transaksi_hari_ini }}</td>
                                 </tr>
                                 <tr>
+                                 <td>Transaksi Kemarin</td>
+                                 <td style="text-align: center;" id="yesterday-transactions">{{ $transaksi_kemarin }}</td>
+                             </tr>
+                                <tr>
                                     <td>Transaksi Bulan Ini</td>
                                     <td style="text-align: center;" id="month-transactions">{{ $transaksi_bulan_ini }}</td>
                                 </tr>
@@ -106,15 +110,29 @@
          <div class="card">
              <div class="card-body">
                  <div class="table-container">
-                     <table class="table table-bordered custom-datatable">
-                         <thead>
+                  <table class="table table-bordered custom-datatable">
+                     <thead>
+                         <tr>
+                           <th>Barista</th>
+                             <th> Gerobak</th>
+                             <th>Transaksi</th>
+                           
+                            
+                         </tr>
+                     </thead>
+                     <tbody>
+                         @foreach ($gerobaks as $gerobak)
                              <tr>
-                                 <th>Periode</th>
-                                 <th>Transaksi</th>
+                              
+                                 <td>{{ $gerobak->barista ? $gerobak?->barista?->user?->name : 'Tidak ada' }}</td>
+                                 <td>{{ $gerobak->nama }}</td>
+                                 <td>{{ $gerobak->transaksi_count }}</td>
+                               
+                                
                              </tr>
-                         </thead>
-                        
-                     </table>
+                         @endforeach
+                     </tbody>
+                 </table>
 
                  </div>
              </div>

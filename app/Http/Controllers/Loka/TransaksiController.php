@@ -72,6 +72,9 @@ class TransaksiController extends Controller
             ->addColumn('action', function ($data) {
                return view('app.transaksi.action', compact('data'));
             })
+            ->addColumn('gerobak', function ($data) {
+               return $data->gerobak_nama;
+            })
             ->addColumn('transaksi', function ($data) {
                return "";
             })

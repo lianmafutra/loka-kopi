@@ -37,5 +37,10 @@ class Gerobak extends Model
   {
       return $this->hasMany(GerobakStok::class, 'gerobak_id', 'id');
   }
+
+  public function transaksi()
+  {
+      return $this->hasMany(Transaksi::class, 'gerobak_id', 'id');
+  }
   
 }
