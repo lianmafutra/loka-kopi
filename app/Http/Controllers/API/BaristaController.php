@@ -20,8 +20,14 @@ class BaristaController extends Controller
    function lokasiUpdate(LokasiUpdateRequestAPI $request)
    {
    
+
       try {
          DB::beginTransaction();
+
+         // if (auth()->user()->role != "barista") {
+         //    return $this->error("Akses Tidak diizinkan", 401);
+         // }
+
          $requestSafe = $request->safe();
          Gerobak::where('barista_id', auth()->user()->id)->update([
             'latitude' => $requestSafe->latitude,

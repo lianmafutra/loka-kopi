@@ -25,8 +25,8 @@ class LokasiUpdateRequestAPI extends FormRequest
     {
         return [
          'lokasi_terkini' => 'required|string',
-         'latitude' => 'required',
-         'longitude' => 'required',
+         'latitude' => 'required|numeric',
+         'longitude' => 'required|numeric',
         ];
     }
 
