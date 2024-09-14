@@ -3,18 +3,39 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\LokasiUpdateRequestAPI;
 use App\Models\Barista;
+use App\Models\Gerobak;
 use App\Models\GerobakStok;
 use App\Utils\ApiResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BaristaController extends Controller
 {
 
    use ApiResponse;
 
-
+   function lokasiUpdate(LokasiUpdateRequestAPI $request)
+   {
+   
+      try {
+         DB::beginTransaction();
+         $requestSafe = $request->safe();
+         Gerobak::where('barista_id', auth()->user()->id)->update([
+            'latitude' => $requestSafe->latitude,
+            'longitude' => $requestSafe->longitude,
+            'lokasi_terkini' => $requestSafe->lokasi_terkini,
+         ]);
+         DB::commit();
+         return $this->success("Update Lokasi Berhasil", "");
+      } 
+      catch (Exception $th) {
+         DB::rollBack();
+         return $this->error("Gagal", 400);
+   }
+}
 
    function format_distance($distance, $unit = 'km')
    {
@@ -74,15 +95,16 @@ class BaristaController extends Controller
       return number_format($time_minutes, 0) . ' menit';
    }
 
-   function transformDistance($distanceInKm) {
+   function transformDistance($distanceInKm)
+   {
       $distanceInMeters = $distanceInKm * 1000; // konversi km ke meter
-  
+
       if ($distanceInMeters < 1000) {
-          return round($distanceInMeters, 2) . ' m';
+         return round($distanceInMeters, 2) . ' m';
       } else {
-          return round($distanceInKm, 2) . ' Km';
+         return round($distanceInKm, 2) . ' Km';
       }
-  }
+   }
 
 
    public function baristaTerdekat(Request $request)
@@ -175,9 +197,9 @@ class BaristaController extends Controller
    public function detail($barista_id, Request $request)
    {
       try {
-     
-       
-      
+
+
+
 
          $distanceNew = null;
 
@@ -193,7 +215,7 @@ class BaristaController extends Controller
             ];
          });
 
-    
+
 
          if ($request->has('lat_konsumen') && $request->has('long_konsumen')) {
             if ($request->lat_konsumen != null && $request->long_konsumen != null) {
@@ -203,12 +225,9 @@ class BaristaController extends Controller
                $barista_lat = $barista->gerobak?->latitude;
                $barista_lon = $barista->gerobak?->longitude;
                $distance = $this->haversine_distance($lat_konsumen, $long_konsumen, $barista_lat, $barista_lon, $unit);
-                $distanceNew =$this->transformDistance( $distance);
+               $distanceNew = $this->transformDistance($distance);
                $barista->walking_time = $this->calculate_walking_time($distance, $unit);
-             
-             
             }
-            
          }
 
          $transformedData = [

@@ -37,7 +37,7 @@ Route::middleware(['auth:api'])->group(function () {
    Route::post('barista/list/terdekat', [BaristaController::class, 'baristaTerdekat'])->name('barista.list.terdekat');
    Route::post('barista/{id}', [BaristaController::class, 'detail'])->name('barista.detail');
 
-   Route::put('barista/lokasi/update', [BaristaController::class, 'lokasiUpdate'])->name('barista.lokasi.update');
+   Route::post('barista/lokasi/update', [BaristaController::class, 'lokasiUpdate'])->name('barista.lokasi.update');
    
    Route::get('barista/produk/list', [BaristaController::class, 'baristaProduk'])->name('barista.produk');
    Route::get('transaksi/histori', [TransaksiController::class, 'transaksiHistori'])->name('barista.produk');
