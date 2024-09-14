@@ -79,6 +79,8 @@ Route::middleware(['auth_web'])->group(function () {
      
    ]);
 
+   Route::get('transaksiPerbulan', [DashboarddController::class, 'grafikTransaksiPerbulan'])->name('grafik.transaksi.perbulan');
+   Route::get('transaksiPerhari', [DashboarddController::class, 'getDailyTransaksiData'])->name('grafik.transaksi.perhari');
 });
 
 
