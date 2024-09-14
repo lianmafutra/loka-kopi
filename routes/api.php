@@ -21,17 +21,17 @@ use Illuminate\Support\Facades\Route;
 Route::post('user/login', [AuthController::class, 'login'])->name('login');
 Route::post('user/register', [AuthController::class, 'register']);
 
+Route::get('slider/', [SliderController::class, 'list']);
+Route::get('slider/detail/{slider_id}', [SliderController::class, 'detail'])->name('slider.detail');
+Route::get('produk/list', [ProdukController::class, 'list']);
+Route::get('produk/{id}', [ProdukController::class, 'detail']);
 
 Route::middleware(['auth:api'])->group(function () {
    
-   Route::get('slider/', [SliderController::class, 'list']);
-   Route::get('slider/detail/{slider_id}', [SliderController::class, 'detail'])->name('slider.detail');
-
-
+ 
    Route::post('user/logout', [AuthController::class, 'logout']);
 
-   Route::get('produk/list', [ProdukController::class, 'list']);
-   Route::get('produk/{id}', [ProdukController::class, 'detail']);
+ 
 
    Route::get('user/detail', [AuthController::class, 'detail'])->name('user.detail');
    Route::post('barista/list/terdekat', [BaristaController::class, 'baristaTerdekat'])->name('barista.list.terdekat');
