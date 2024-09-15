@@ -218,8 +218,8 @@
     <script src="{{ asset('template/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script> <!-- Import plugin chartjs-plugin-datalabels -->
+    <script src="{{ asset('template/admin/plugins/chart.js/Chart.min.js') }}"></script>
+    <script src="{{ asset('template/admin/plugins/chart.js/chartjs-plugin-datalabels.js') }}"></script> <!-- Import plugin chartjs-plugin-datalabels -->
     <script>
       
 

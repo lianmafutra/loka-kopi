@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\BaristaInfoStatusRequestAPI;
 use App\Http\Requests\API\LokasiUpdateRequestAPI;
 use App\Models\Barista;
 use App\Models\Gerobak;
@@ -17,31 +18,6 @@ class BaristaController extends Controller
 
    use ApiResponse;
 
-   function lokasiUpdate(LokasiUpdateRequestAPI $request)
-   {
-   
-
-      try {
-         DB::beginTransaction();
-
-         // if (auth()->user()->role != "barista") {
-         //    return $this->error("Akses Tidak diizinkan", 401);
-         // }
-
-         $requestSafe = $request->safe();
-         Gerobak::where('barista_id', auth()->user()->id)->update([
-            'latitude' => $requestSafe->latitude,
-            'longitude' => $requestSafe->longitude,
-            'lokasi_terkini' => $requestSafe->lokasi_terkini,
-         ]);
-         DB::commit();
-         return $this->success("Update Lokasi Berhasil", "");
-      } 
-      catch (Exception $th) {
-         DB::rollBack();
-         return $this->error("Gagal", 400);
-   }
-}
 
    function format_distance($distance, $unit = 'km')
    {
@@ -89,27 +65,27 @@ class BaristaController extends Controller
    {
       $walking_speed_kmh = 5; // Kecepatan rata-rata jalan kaki dalam km/jam
 
-    if ($unit === 'm') {
-        $distance_km = $distance / 1000;
-    } else {
-        $distance_km = $distance;
-    }
+      if ($unit === 'm') {
+         $distance_km = $distance / 1000;
+      } else {
+         $distance_km = $distance;
+      }
 
-    $time_hours = $distance_km / $walking_speed_kmh;
-    $total_minutes = $time_hours * 60;
+      $time_hours = $distance_km / $walking_speed_kmh;
+      $total_minutes = $time_hours * 60;
 
-    // Hitung jam dan menit
-    $hours = floor($total_minutes / 60);
-    $minutes = round($total_minutes % 60);
+      // Hitung jam dan menit
+      $hours = floor($total_minutes / 60);
+      $minutes = round($total_minutes % 60);
 
-    // Format output
-    if ($hours > 0 && $minutes > 0) {
-        return "$hours jam $minutes menit";
-    } elseif ($hours > 0) {
-        return "$hours jam";
-    } else {
-        return "$minutes menit";
-    }
+      // Format output
+      if ($hours > 0 && $minutes > 0) {
+         return "$hours jam $minutes menit";
+      } elseif ($hours > 0) {
+         return "$hours jam";
+      } else {
+         return "$minutes menit";
+      }
    }
 
    function transformDistance($distanceInKm)
@@ -166,7 +142,7 @@ class BaristaController extends Controller
                'longitude' => $barista?->gerobak->longitude,
                'gerobak_id' => $barista?->gerobak?->id,
                'gerobak_nama' => $barista?->gerobak?->nama,
-               'info' => ''
+               'info' =>$barista?->info
             ];
          });
 
@@ -228,10 +204,11 @@ class BaristaController extends Controller
                'produk_id' => $stok->produk?->id,
                'nama' => $stok->produk?->nama,
                // 'foto' => $stok->produk?->foto,
-               'foto_url' =>$stok->produk?->foto_url,
+               'foto_url' => $stok->produk?->foto_url,
                'stok' => $stok?->jumlah_stok,
             ];
          });
+
 
 
 
@@ -262,8 +239,9 @@ class BaristaController extends Controller
             'longitude' => $barista?->gerobak->longitude,
             'gerobak_id' => $barista?->gerobak?->id,
             'gerobak_nama' => $barista?->gerobak?->nama,
-            'info' => '',
-            'stok' => $stok
+            'info' => $barista?->info,
+            'stok' => $stok,
+           
          ];
 
 
@@ -315,5 +293,50 @@ class BaristaController extends Controller
 
 
       return $this->success("List Barista Terdekat", $data);
+   }
+
+   function lokasiUpdate(LokasiUpdateRequestAPI $request)
+   {
+      try {
+         DB::beginTransaction();
+
+         if (auth()->user()->role != "barista") {
+            return $this->error("Akses Tidak diizinkan", 401);
+         }
+
+         $requestSafe = $request->safe();
+         Gerobak::where('barista_id', auth()->user()->id)->update([
+            'latitude' => $requestSafe->latitude,
+            'longitude' => $requestSafe->longitude,
+            'lokasi_terkini' => $requestSafe->lokasi_terkini,
+         ]);
+         DB::commit();
+         return $this->success("Update Lokasi Berhasil", "");
+      } catch (Exception $th) {
+         DB::rollBack();
+         return $this->error("Gagal", 400);
+      }
+   }
+
+
+   function updateInfoStatus(BaristaInfoStatusRequestAPI $request) {
+      try {
+         DB::beginTransaction();
+
+         if (auth()->user()->role != "barista") {
+            return $this->error("Akses Tidak diizinkan", 401);
+         }
+
+         $requestSafe = $request->safe();
+         Barista::where('id', auth()->user()->id)->update([
+            'info' => $requestSafe->info,
+         ]);
+         DB::commit();
+         return $this->success("Update Info Barista Berhasil");
+      } catch (Exception $th) {
+         DB::rollBack();
+         return $this->error("Gagal", 400);
+      }
+
    }
 }
