@@ -8,6 +8,7 @@ use App\Http\Requests\API\LokasiUpdateRequestAPI;
 use App\Models\Barista;
 use App\Models\Gerobak;
 use App\Models\GerobakStok;
+use App\Models\HistoriLokasi;
 use App\Utils\ApiResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -305,15 +306,45 @@ class BaristaController extends Controller
          }
 
          $requestSafe = $request->safe();
-         Gerobak::where('barista_id', auth()->user()->id)->update([
+         $gerobak = Gerobak::find(auth()->user()->id);
+
+         HistoriLokasi::create([
+            'barista_id' => $gerobak?->barista_id,
+            'latitude' => $requestSafe->latitude,
+            'longitude' => $requestSafe->longitude,
+            'lokasi_terkini' => $requestSafe->lokasi_terkini,
+
+            'latitude_before' => $gerobak->latitude,
+            'longitude_before' => $gerobak->longitude,
+            'lokasi_terkini_before' => $gerobak->lokasi_terkini,
+         ]);
+
+         $gerobak->update([
             'latitude' => $requestSafe->latitude,
             'longitude' => $requestSafe->longitude,
             'lokasi_terkini' => $requestSafe->lokasi_terkini,
          ]);
+
+
+    
+
+      
+
          DB::commit();
          return $this->success("Update Lokasi Berhasil", "");
       } catch (Exception $th) {
          DB::rollBack();
+         return $this->error("Gagal", 400);
+      }
+   }
+
+
+   function lokasiHistori()
+   {
+      try {
+         $historilokasi = HistoriLokasi::orderBy('created_at', 'desc')->get();
+         return $this->success("Histori Lokasi Barista",  $historilokasi);
+      } catch (Exception $th) {
          return $this->error("Gagal", 400);
       }
    }

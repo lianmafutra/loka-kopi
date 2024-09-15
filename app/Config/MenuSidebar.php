@@ -161,6 +161,13 @@ class MenuSidebar
             'icon' => 'fas fa-angle-right',
             'active' => ['transaksi*'],
          ],
+         [
+            'type' => 'menu',
+            'title' => 'Info Barista',
+            'url' => route('info.barista.index'),
+            'icon' => 'fas fa-angle-right',
+            'active' => ['info/barista*'],
+         ],
          // [
          //    'type' => 'menu',
          //    'title' => ' Rekam Medis',

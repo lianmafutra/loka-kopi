@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\SampleCrudController;
 use App\Http\Controllers\Admin\TinyEditorController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\Klinik\Dashboard\DashboarddController;
+use App\Http\Controllers\Loka\InfoBaristaController;
 use App\Http\Controllers\Loka\TransaksiController;
 use App\Http\Controllers\Master\BaristaController;
 use App\Http\Controllers\Master\GerobakController;
@@ -36,6 +37,9 @@ Route::middleware(['auth_web'])->group(function () {
 
    // app Klinik
    Route::get('dashboard', [DashboarddController::class, 'index'])->name('loka.dashboard.index');
+ 
+
+   Route::get('info/barista', [InfoBaristaController::class, 'index'])->name('info.barista.index');
  
 
    Route::resource('master/konsumen', KonsumenController::class, [
