@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\RegisterRequest;
+use App\Http\Requests\API\UserUpdateFotoRequestAPI;
 use App\Models\TokenFCM;
 use App\Models\User;
 use App\Utils\ApiResponse;
@@ -13,6 +14,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -71,6 +73,36 @@ class AuthController extends Controller
          return $this->error("Pendaftaran User Gagal , " . $th->getMessage(), 400);
       }
    }
+
+   public function updateFoto(UserUpdateFotoRequestAPI $request)
+   {
+      try {
+      
+         DB::beginTransaction();
+         if ($request->hasFile('foto')) {
+         
+
+            $file = $request->file('foto');
+
+            $fileName =  preg_replace('/\s+/', '', Str::of(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '_' . time() . '.' . $file->getClientOriginalExtension());
+           
+            $file->storeAs('public/uploads/profile/', $fileName);
+
+            User::find(auth()->user()->id)->update([
+               'foto' => $fileName,
+               'path_foto' => 'storage/uploads/profile/',
+            ]);
+           
+         }
+         
+         DB::commit();
+         return $this->success("User Foto Profil Berhasil");
+      } catch (\Throwable $th) {
+         DB::rollback();
+         return $this->error("User Foto Profil Gagal". $th->getMessage(), 400);
+      }
+   }
+   
 
 
 

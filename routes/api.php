@@ -27,6 +27,7 @@ Route::get('produk/list', [ProdukController::class, 'list']);
 Route::get('produk/{id}', [ProdukController::class, 'detail']);
 
 Route::middleware(['auth:api'])->group(function () {
+
    
  
    Route::post('user/logout', [AuthController::class, 'logout']);
@@ -34,6 +35,9 @@ Route::middleware(['auth:api'])->group(function () {
  
 
    Route::get('user/detail', [AuthController::class, 'detail'])->name('user.detail');
+   Route::post('user/updateFoto', [AuthController::class, 'updateFoto'])->name('user.updateFoto');;
+
+
    Route::post('barista/list/terdekat', [BaristaController::class, 'baristaTerdekat'])->name('barista.list.terdekat');
    Route::post('barista/{id}', [BaristaController::class, 'detail'])->name('barista.detail');
 
