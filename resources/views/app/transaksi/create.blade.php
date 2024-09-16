@@ -12,18 +12,21 @@
             max-width: 150px;
             /* Optional: adjust the max width as needed */
         }
+
         html,
         body {
             height: 100%;
             padding-bottom: 100px;
             margin-bottom: 100px;
         }
+
         .container {
             min-height: 100vh;
             /* Mengisi setidaknya 100% dari tinggi viewport */
             padding-bottom: 100px;
             margin-bottom: 100px;
         }
+
         select {
             -webkit-appearance: none !important;
             -moz-appearance: none !important;
@@ -37,6 +40,7 @@
             padding: 0.5rem;
             border-radius: 0;
         }
+
         .product-select2 {
             width: 100%;
             /* Adjust width to fit mobile screens */
@@ -57,7 +61,12 @@
             /* Adjust the value as needed */
             box-sizing: border-box;
         }
-    
+
+        button.btn.btn-danger.remove-row.remove-tr {
+            height: 50px;
+            font-size: 20px !important;
+        }
+
         .btn-custom-size {
             font-size: 25px;
             /* Adjust font size */
@@ -69,6 +78,7 @@
             height: 50px;
             /* Set a specific height if desired */
         }
+
         .product-select {
             width: 200px;
             padding-left: 20px;
@@ -144,9 +154,11 @@
 <!-- Select2 JS -->
 <script>
     let tokens = "";
+
     function iniToken(token) {
         tokens = token
     }
+
     function addRow() {
         var rowCount = $('#products-table tbody tr').length;
         var newRow = `
@@ -160,9 +172,12 @@
               </select>
           </td>
           <td><input type="number" placeholder="0"  class="product-select2" name="products[${rowCount}][quantity]" required></td>
-          <td>  <button type="button" class="btn btn-danger remove-row remove-tr">
-                                          <i class="fas fa-trash-alt"></i>
-                                        </button></td>
+          <td>
+                                                <button type="button" class="btn btn-danger remove-row remove-tr"
+                                                    style="font-size: 14px; padding: 10px 20px;">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </td>
       </tr>`;
         $('#products-table tbody').append(newRow);
         // Focus on the new select element
@@ -170,6 +185,7 @@
         newSelect.focus();
         // Reinitialize select2 for new rows
     }
+
     function submit() {
         var form = document.getElementById('form_sample');
         if (form.checkValidity() === false) {
@@ -233,4 +249,5 @@
         });
     })
 </script>
+
 </html>
