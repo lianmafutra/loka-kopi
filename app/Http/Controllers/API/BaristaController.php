@@ -193,11 +193,12 @@ class BaristaController extends Controller
       try {
 
 
-
+         
 
          $distanceNew = null;
 
-         $barista = Barista::findOrFail($barista_id)->with('gerobak', 'user')?->first();
+         $barista = Barista::with('gerobak', 'user')->findOrFail($barista_id);
+       
 
          $stok = GerobakStok::with('produk')->where('gerobak_id', $barista->gerobak?->id)->get();
          $stok->transform(function ($stok) {
