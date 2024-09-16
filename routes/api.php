@@ -26,13 +26,16 @@ Route::get('slider/detail/{slider_id}', [SliderController::class, 'detail'])->na
 Route::get('produk/list', [ProdukController::class, 'list']);
 Route::get('produk/{id}', [ProdukController::class, 'detail']);
 
+
+   
+
 Route::middleware(['auth:api'])->group(function () {
 
    
  
    Route::post('user/logout', [AuthController::class, 'logout']);
 
- 
+
 
    Route::get('user/detail', [AuthController::class, 'detail'])->name('user.detail');
    Route::post('user/updateFoto', [AuthController::class, 'updateFoto'])->name('user.updateFoto');;
@@ -48,9 +51,13 @@ Route::middleware(['auth:api'])->group(function () {
    
    Route::get('barista/produk/list', [BaristaController::class, 'baristaProduk'])->name('barista.produk');
    Route::get('transaksi/histori', [TransaksiController::class, 'transaksiHistori'])->name('barista.produk');
-   Route::post('transaksi/input', [TransaksiController::class, 'store'])->name('transaksi.store');
-
  
+   Route::post('transaksi/input', [TransaksiController::class, 'store'])->name('transaksi.store');
+ 
+   Route::post('transaksi/android/store', [TransaksiController::class, 'transaksiStore'])->name('android.transaksi.store');
+   Route::get('transaksi/android/create', [TransaksiController::class, 'transaksiCreate'])->name('android.transaksi.create');
+
+
    Route::get('info', [TransaksiController::class, 'info'])->name('info');
 
  
