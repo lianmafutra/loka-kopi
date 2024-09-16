@@ -153,6 +153,21 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Select2 JS -->
 <script>
+
+    // Set initial background color
+    $('.product-select').css('background-color', '#f8d7da');
+
+$('.product-select').on('change', function() {
+    if ($(this).val() === "") {
+        // Set background to red if no product is selected
+        $(this).css('background-color', '#f8d7da'); // light red
+    } else {
+        // Set background to normal (white) if product is selected
+        $(this).css('background-color', '#ffffff');
+    }
+});
+
+
     let tokens = "";
 
     function iniToken(token) {
