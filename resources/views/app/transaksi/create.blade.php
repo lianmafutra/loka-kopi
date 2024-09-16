@@ -108,7 +108,7 @@
                         @method('POST')
                         <div class="card">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="products-table">
+                                <table style="margin-bottom: 0 !important" class="table table-bordered" id="products-table">
                                     <thead style="font-size: 20px; color:#999999">
                                         <tr>
                                             <th>Produk</th>
