@@ -201,7 +201,7 @@
     $(function() {
 
        // Set initial background color
-    $('.product-select').css('background-color', '#f8d7da');
+    $('.product-select').css('background-color', 'rgb(244 247 255)');
 
 $('.product-select').on('change', function() {
     if ($(this).val() === "") {
@@ -209,7 +209,7 @@ $('.product-select').on('change', function() {
         $(this).css('background-color', '#f8d7da'); // light red
     } else {
         // Set background to normal (white) if product is selected
-        $(this).css('background-color', 'rgb(209 221 255)');
+        $(this).css('background-color', 'rgb(244 247 255)');
     }
 });
         // Event listener for change event on select
