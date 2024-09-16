@@ -64,13 +64,6 @@
 
                             </div>
 
-                            <div class="card-footer">
-                              <div style="gap:8px;" class="d-flex">
-                                {{-- <a href="{{ route('transaksi.index') }}" type="button" class="btn btn-secondary">Kembali</a> --}}
-                                <button type="button" class="btn btn-warning" id="add-row">Tambah</button>
-                                <button type="submit" class="btn btn-primary">Simpan</button>
-                              </div>
-                            </div>
                         </div>
                     </div>
 
