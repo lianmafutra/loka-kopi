@@ -57,10 +57,7 @@
             /* Adjust the value as needed */
             box-sizing: border-box;
         }
-        button.btn.btn-danger.remove-row.remove-tr {
-            height: 50px;
-            font-size: 20px !important;
-        }
+    
         .btn-custom-size {
             font-size: 25px;
             /* Adjust font size */
