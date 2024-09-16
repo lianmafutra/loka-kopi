@@ -101,9 +101,17 @@ class TransaksiController extends Controller
          foreach ($request->products as $product) {
 
             $produk = Produk::find($product['id']);
+         
+            $barista = Barista::with('gerobak')->find(auth()->user()->id);
+        
+            $gerobakstok = GerobakStok::where('gerobak_id', $barista->id)->where('produk_id', $product['id']);
+
+           
 
              Transaksi::create([
                'user_id' => auth()->user()->id,
+               'gerobak_id' => $barista->gerobak_id,
+               'gerobak_nama' =>  $barista?->gerobak->nama,
                'user_nama' => auth()->user()->name, // menambahkan nama user
                'username' => auth()->user()->username, // menambahkan username user
                'produk_id' => $product['id'],
@@ -113,8 +121,10 @@ class TransaksiController extends Controller
                'lokasi' => '', // menambahkan lokasi transaksi, pastikan $lokasi didefinisikan
             ]);
 
-            $barista = Barista::find(auth()->user()->id);
-            $gerobakstok = GerobakStok::where('gerobak_id', $barista->id)->where('produk_id', $product['id']);
+         
+
+         
+            
             
             if($gerobakstok->count() > 0){
                $stokUpdate = $gerobakstok?->first()?->jumlah_stok -   $product['quantity'];

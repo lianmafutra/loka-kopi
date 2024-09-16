@@ -12,9 +12,9 @@ class InfoBaristaController extends Controller
     public function index(Request $request){
 
      $barista = Barista::with('user')
-      ->join('users', 'barista.users_id', '=', 'users.id') // Assuming 'baristas' has a foreign key 'user_id'
-      ->orderBy('users.created_at', 'desc') // Ordering by the related 'users' table's 'created_at'
-      ->select('barista.*') // Ensure you're selecting from the 'baristas' table
+      ->join('users', 'barista.users_id', '=', 'users.id')
+      ->orderBy('users.created_at', 'desc')
+      ->select('barista.*') 
       ->get();
 
       

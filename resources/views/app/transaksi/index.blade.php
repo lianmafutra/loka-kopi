@@ -64,7 +64,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <x-datatable id="datatable" :th="['No', 'Penginput','Gerobak', 'Produk', 'Jumlah', 'Transaksi', 'Lokasi', 'Created At', 'Aksi']" style="width: 100%"></x-datatable>
+                <x-datatable id="datatable" :th="['No', 'Barista','Gerobak', 'Produk', 'Jumlah', 'Transaksi', 'Lokasi', 'Created At', 'Aksi']" style="width: 100%"></x-datatable>
             </div>
         </div>
     </div>
@@ -112,7 +112,7 @@
             info: true,
             ordering: true,
             aaSorting: [],
-            order: [6, 'desc'],
+            order: [7, 'desc'],
             scrollX: true,
             ajax: {
                 url: route('transaksi.index'),

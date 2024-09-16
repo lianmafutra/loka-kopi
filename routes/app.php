@@ -19,6 +19,9 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
+Route::resource('transaksi', TransaksiController::class, [
+     
+]);
 
 Route::middleware(['auth_web'])->group(function () {
    Route::get('beranda', [BerandaController::class, 'index'])->name('beranda.index');
@@ -75,10 +78,7 @@ Route::middleware(['auth_web'])->group(function () {
       'as' => 'master-data'
    ]);
 
-   Route::resource('transaksi', TransaksiController::class, [
-     
-   ]);
-
+ 
    Route::resource('master/histori-stok', HistoriStokController::class, [
      
    ]);
