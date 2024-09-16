@@ -119,14 +119,13 @@
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <select data-placeholder="Pilih Produk" class="product-select"
-                                                    name="products[0][id]" required>
-                                                    <option value="">Pilih Produk</option>
-                                                    <!-- Replace with your dynamic products -->
-                                                    @foreach ($products as $product)
-                                                        <option value="{{ $product->id }}">{{ $product->nama }}</option>
-                                                    @endforeach
-                                                </select>
+                                             <select data-placeholder="Pilih Produk" class="product-select" name="products[0][id]" required>
+                                                <option value="">Pilih Produk</option>
+                                                <!-- Replace with your dynamic products -->
+                                                @foreach ($products as $product)
+                                                    <option value="{{ $product->id }}">{{ $product->nama }}</option>
+                                                @endforeach
+                                            </select>
                                             </td>
                                             <td><input type="number" name="products[0][quantity]" placeholder="0"
                                                     class="product-select2" required /></td>
@@ -154,18 +153,7 @@
 <!-- Select2 JS -->
 <script>
 
-    // Set initial background color
-    $('.product-select').css('background-color', '#f8d7da');
-
-$('.product-select').on('change', function() {
-    if ($(this).val() === "") {
-        // Set background to red if no product is selected
-        $(this).css('background-color', '#f8d7da'); // light red
-    } else {
-        // Set background to normal (white) if product is selected
-        $(this).css('background-color', '#ffffff');
-    }
-});
+   
 
 
     let tokens = "";
@@ -211,6 +199,19 @@ $('.product-select').on('change', function() {
         }
     }
     $(function() {
+
+       // Set initial background color
+    $('.product-select').css('background-color', '#f8d7da');
+
+$('.product-select').on('change', function() {
+    if ($(this).val() === "") {
+        // Set background to red if no product is selected
+        $(this).css('background-color', '#f8d7da'); // light red
+    } else {
+        // Set background to normal (white) if product is selected
+        $(this).css('background-color', 'rgb(209 221 255)');
+    }
+});
         // Event listener for change event on select
         $('#products-table').on('change', '.product-select', function() {
             // Focus on the input field in the same row
