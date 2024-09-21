@@ -33,11 +33,12 @@ Route::middleware(['auth:api'])->group(function () {
    
  
    Route::post('user/logout', [AuthController::class, 'logout']);
-
+  
 
 
    Route::get('user/detail', [AuthController::class, 'detail'])->name('user.detail');
-   Route::post('user/updateFoto', [AuthController::class, 'updateFoto'])->name('user.updateFoto');;
+   Route::post('user/updateFoto', [AuthController::class, 'updateFoto'])->name('user.updateFoto');
+   Route::post('user/updateProfil', [AuthController::class, 'updateProfil'])->name('user.updateProfil');
 
 
    Route::post('barista/list/terdekat', [BaristaController::class, 'baristaTerdekat'])->name('barista.list.terdekat');

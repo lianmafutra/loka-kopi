@@ -6,6 +6,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\RegisterRequest;
 use App\Http\Requests\API\UserUpdateFotoRequestAPI;
+use App\Http\Requests\API\UserUpdateProfilRequest;
 use App\Models\TokenFCM;
 use App\Models\User;
 use App\Utils\ApiResponse;
@@ -103,6 +104,21 @@ class AuthController extends Controller
       }
    }
    
+   public function  updateProfil(UserUpdateProfilRequest $request){
+      try {
+      
+         DB::beginTransaction();
+    
+         $data = $request->safe()->all();
+         User::where('id', auth()->user()->id)->update($data);
+
+         DB::commit();
+         return $this->success("User Data User Berhasil");
+      } catch (\Throwable $th) {
+         DB::rollback();
+         return $this->error("Gagal Update Data User". $th->getMessage(), 400);
+      }
+   }
 
 
 
