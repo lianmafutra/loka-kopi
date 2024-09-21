@@ -317,7 +317,6 @@ class BaristaController extends Controller
          HistoriLokasi::create([
             'users_id' => auth()->user()->id,
             'barista_id' => $gerobak?->barista_id,
-            'barista_id' => $gerobak?->barista_id,
             'latitude' => $requestSafe->latitude,
             'longitude' => $requestSafe->longitude,
             'lokasi_terkini' => $requestSafe->lokasi_terkini,
@@ -351,12 +350,8 @@ class BaristaController extends Controller
    {
       try {
          
-         $historilokasi = HistoriLokasi::join('barista', 'histori_lokasi.barista_id', '=', 'barista.id')
-         ->where('barista.users_id', auth()->user()->id)
-         ->orderBy('histori_lokasi.created_at', 'desc')
-         ->get(['histori_lokasi.*']);
-
-
+       
+         $historilokasi = HistoriLokasi::where('users_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
          return $this->success("Histori Lokasi Barista",  $historilokasi);
       } catch (Exception $th) {
          return $this->error("Gagal", 400);
