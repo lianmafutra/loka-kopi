@@ -10,6 +10,7 @@ use App\Models\Gerobak;
 use App\Models\GerobakStok;
 use App\Models\HistoriLokasi;
 use App\Utils\ApiResponse;
+use App\Utils\Rupiah;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -208,6 +209,8 @@ class BaristaController extends Controller
                // 'foto' => $stok->produk?->foto,
                'foto_url' => $stok->produk?->foto_url,
                'stok' => $stok?->jumlah_stok,
+               'harga' => $stok?->produk?->harga,
+               'harga_format' =>  "Rp" . Rupiah::toRupiah($stok?->produk?->harga),
             ];
          });
 
@@ -273,6 +276,8 @@ class BaristaController extends Controller
                'nama' => $stok->produk?->nama,
                'foto' => $stok->produk?->foto,
                'stok' => $stok?->jumlah_stok,
+               'harga' => $stok?->produk?->harga,
+               'harga_format' =>  "Rp" . Rupiah::toRupiah($stok?->produk?->harga),
             ];
          });
          $transformedData = [
