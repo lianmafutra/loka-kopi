@@ -6,6 +6,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\RegisterRequest;
 use App\Http\Requests\API\UserUpdateFotoRequestAPI;
+use App\Http\Requests\API\UserUpdatePasswordRequest;
 use App\Http\Requests\API\UserUpdateProfilRequest;
 use App\Models\TokenFCM;
 use App\Models\User;
@@ -75,6 +76,9 @@ class AuthController extends Controller
       }
    }
 
+
+
+
    public function updateFoto(UserUpdateFotoRequestAPI $request)
    {
       try {
@@ -113,7 +117,28 @@ class AuthController extends Controller
          User::where('id', auth()->user()->id)->update($data);
 
          DB::commit();
-         return $this->success("User Data User Berhasil");
+         return $this->success("Update User Data  Berhasil");
+      } catch (\Throwable $th) {
+         DB::rollback();
+         return $this->error("Gagal Update Data User". $th->getMessage(), 400);
+      }
+   }
+   public function updatePassword(UserUpdatePasswordRequest $request){
+      try {
+         
+         if (!in_array(auth()->user()->role, ['barista', 'admin'])) {
+            return $this->error("Akses Tidak diizinkan", 401);
+        }
+        
+         DB::beginTransaction();
+
+        
+    
+         $data = $request->safe()->all();
+         User::where('id', auth()->user()->id)->update($data);
+
+         DB::commit();
+         return $this->success("Update password User Berhasil");
       } catch (\Throwable $th) {
          DB::rollback();
          return $this->error("Gagal Update Data User". $th->getMessage(), 400);

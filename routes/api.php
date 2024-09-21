@@ -39,6 +39,7 @@ Route::middleware(['auth:api'])->group(function () {
    Route::get('user/detail', [AuthController::class, 'detail'])->name('user.detail');
    Route::post('user/updateFoto', [AuthController::class, 'updateFoto'])->name('user.updateFoto');
    Route::post('user/updateProfil', [AuthController::class, 'updateProfil'])->name('user.updateProfil');
+   Route::post('user/updatePassword', [AuthController::class, 'updatePassword'])->name('user.updatePassword');
 
 
    Route::post('barista/list/terdekat', [BaristaController::class, 'baristaTerdekat'])->name('barista.list.terdekat');
@@ -48,6 +49,9 @@ Route::middleware(['auth:api'])->group(function () {
    Route::post('barista/info/update', [BaristaController::class, 'updateInfoStatus'])->name('barista.info.update');
 
    Route::get('barista/lokasi/histori', [BaristaController::class, 'lokasiHistori'])->name('barista.lokasi.histori');
+
+
+
    
    Route::get('barista/produk/list', [BaristaController::class, 'baristaProduk'])->name('barista.produk');
    Route::get('transaksi/histori', [TransaksiController::class, 'transaksiHistori'])->name('barista.produk');
