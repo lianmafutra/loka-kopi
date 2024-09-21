@@ -348,7 +348,9 @@ class BaristaController extends Controller
    function lokasiHistori()
    {
       try {
-         $historilokasi = HistoriLokasi::where('barista_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
+         
+         $barista = Barista::where('users_id',  auth()->user()->id)?->first();
+         $historilokasi = HistoriLokasi::where('barista_id', $barista->users_id)->orderBy('created_at', 'desc')->get();
          return $this->success("Histori Lokasi Barista",  $historilokasi);
       } catch (Exception $th) {
          return $this->error("Gagal", 400);
