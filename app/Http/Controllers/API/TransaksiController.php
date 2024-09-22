@@ -27,10 +27,24 @@ class TransaksiController extends Controller
       return $this->success("Info Beranda", "Nikmati Kesegaran tak tertandingi dari minuman es loka Kopi, Segarkan harimu !");
    }
 
-   public function transaksiCreate()
+   public function transaksiCreate(Request $request)
    {
       // $x['products'] = Produk::get();
 
+
+      $mode = $request->query('mode');
+      if($mode === 'dark'){
+         $barista = Barista::with('user')->first();
+
+         $gerobakId = $barista->gerobak_id;
+   
+          $x['products'] = Produk::with(['gerobakStoks' => function ($query) use ($gerobakId) {
+            $query->where('gerobak_id', $gerobakId);
+         }]);
+   
+         return view('app.transaksi.create-dark', $x);
+      }
+     else{
       $barista = Barista::with('user')->first();
 
       $gerobakId = $barista->gerobak_id;
@@ -40,6 +54,8 @@ class TransaksiController extends Controller
       }]);
 
       return view('app.transaksi.create', $x);
+     }
+     
    }
 
 
