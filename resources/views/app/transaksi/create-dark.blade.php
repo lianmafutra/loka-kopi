@@ -39,7 +39,7 @@ small.stock-info {
     font-size: 13px;
     margin-left: 6px;
     font-weight: bold;
-    color: #3232ff;
+    color: #ff7700;
     margin-top: 100px !important;
     /* margin-top: 20px !important; */
     /* padding-top: 20px; */
