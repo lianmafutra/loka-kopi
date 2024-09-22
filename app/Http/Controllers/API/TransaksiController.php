@@ -35,29 +35,27 @@ class TransaksiController extends Controller
       }
 
       $mode = $request->query('mode');
-      if($mode === 'dark'){
+      if ($mode === 'dark') {
          $barista = Barista::with('user')->first();
 
          $gerobakId = $barista->gerobak_id;
-   
-          $x['products'] = Produk::with(['gerobakStoks' => function ($query) use ($gerobakId) {
+
+         $x['products'] = Produk::with(['gerobakStoks' => function ($query) use ($gerobakId) {
             $query->where('gerobak_id', $gerobakId);
          }]);
-   
+
          return view('app.transaksi.create-dark', $x);
+      } else {
+         $barista = Barista::with('user')->first();
+
+         $gerobakId = $barista->gerobak_id;
+
+         $x['products'] = Produk::with(['gerobakStoks' => function ($query) use ($gerobakId) {
+            $query->where('gerobak_id', $gerobakId);
+         }]);
+
+         return view('app.transaksi.create', $x);
       }
-     else{
-      $barista = Barista::with('user')->first();
-
-      $gerobakId = $barista->gerobak_id;
-
-       $x['products'] = Produk::with(['gerobakStoks' => function ($query) use ($gerobakId) {
-         $query->where('gerobak_id', $gerobakId);
-      }]);
-
-      return view('app.transaksi.create', $x);
-     }
-     
    }
 
 
@@ -83,12 +81,19 @@ class TransaksiController extends Controller
                'lokasi' => '', // menambahkan lokasi transaksi, pastikan $lokasi didefinisikan
             ]);
             if ($gerobakstok->count() > 0) {
-               $stokUpdate = $gerobakstok?->first()?->jumlah_stok -   $product['quantity'];
+              $stokSaatIni =  $gerobakstok?->first()?->jumlah_stok;
+               // Cek apakah stok cukup
+               if ($stokSaatIni < $product['quantity']) {
+                  // Jika stok tidak cukup, lakukan return atau tindakan lainnya
+                  return $this->error( 'Stok tidak mencukupi',400);
+               }
+
+               $stokUpdate = $stokSaatIni -   $product['quantity'];
                $gerobakstok->update([
                   'jumlah_stok' => $stokUpdate
                ]);
             } else {
-               return $this->error('Gerobak Id Tidak ditemukan', 400);
+               return $this->error('Gerobak Tidak ditemukan', 400);
             }
          }
          DB::commit();
