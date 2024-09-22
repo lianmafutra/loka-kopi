@@ -205,11 +205,31 @@
         newSelect.focus();
         // Reinitialize select2 for new rows
     }
+    
+    
+    document.addEventListener('DOMContentLoaded', function() {
+    const quantityInputs = document.querySelectorAll('.product-quantity');
+
+    quantityInputs.forEach(input => {
+        input.addEventListener('input', function() {
+            if (this.value <= 0) {
+                this.setCustomValidity('Value must be greater than 0');
+                this.reportValidity(); // Show the validation message
+            } else {
+                this.setCustomValidity(''); // Clear the error message
+            }
+        });
+    });
+});
 
     function submit() {
         var form = document.getElementById('form_sample');
         if (form.checkValidity() === false) {
-            window.Android.showResponse("false");
+             const data = {
+                            key: "error",
+                            message: "Cek Inputan Data Dengan Benar"
+                        };
+                        window.Android.showResponse(JSON.stringify(data));
             form.reportValidity(); // Show validation messages
         } else {
             $(form).trigger('submit'); // Trigger form submission if valid
@@ -310,13 +330,19 @@
 
             // Ensure quantity does not exceed stock amount
             if (quantity > stockAmount) {
-                alert("Melebihi Sisa Stok")
+                const data = {
+                    key: "stok_kurang",
+                    message: "Melebihi Jumlah Stok Tersedia"
+                };
+                window.Android.showResponse(JSON.stringify(data));
                 $(this).val(""); // Set to max stock amount
             }
+
+           
         });
 
 
-        $('#form_sample').submit(function(e) {
+            $('#form_sample').submit(function(e) {
             e.preventDefault();
             const formData = new FormData(this);
             $.ajax({
@@ -331,7 +357,11 @@
                 },
                 success: (response) => {
                     if (response) {
-                        window.Android.showResponse(response.message);
+                        const data = {
+                            key: "submit_sukses",
+                            message: "Update Stok Berhasil"
+                        };
+                        window.Android.showResponse(JSON.stringify(data));
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -346,8 +376,14 @@
                     } catch (e) {
                         errorMessage += `Raw Response Text: ${jqXHR.responseText}`;
                     }
-                    alert(errorMessage);
-                    window.Android.showError(errorMessage);
+                    
+                      const data = {
+                            key: "error",
+                            message: "Error Update Stok"
+                        };
+                        window.Android.showResponse(JSON.stringify(data));
+                   
+                  
                 }
             });
         });

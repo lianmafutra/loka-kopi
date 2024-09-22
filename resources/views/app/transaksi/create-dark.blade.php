@@ -2,11 +2,18 @@
 @push('css')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Select2 CSS -->
-    <link rel="stylesheet" href="{{ asset('css/input-stok-dark.css') }}">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-       
+        small.stock-info {
+            font-size: 13px;
+            margin-left: 6px;
+            font-weight: bold;
+            color: #3232ff;
+            margin-top: 100px !important;
+            /* margin-top: 20px !important; */
+            /* padding-top: 20px; */
+        }
+
         .table input[type="number"] {
             width: 100%;
             /* Ensure input takes full width of the cell */
@@ -33,23 +40,15 @@
         select {
             -webkit-appearance: none !important;
             -moz-appearance: none !important;
+            background-color: #fafafa;
             height: 45px;
             width: 100%;
             background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAUCAMAAACtdX32AAAAdVBMVEUAAAD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhMdQaAAAAJ3RSTlMAAAECAwQGBwsOFBwkJTg5RUZ4eYCHkJefpaytrsXGy8zW3+Do8vNn0bsyAAAAYElEQVR42tXROwJDQAAA0Ymw1p9kiT+L5P5HVEi3qJn2lcPjtIuzUIJ/rhIGy762N3XaThqMN1ZPALsZPEzG1x8LrFL77DHBnEMxBewz0fJ6LyFHTPL7xhwzWYrJ9z22AqmQBV757MHfAAAAAElFTkSuQmCC);
             background-position: 100%;
             background-repeat: no-repeat;
+            border: 1px solid #ccc;
             padding: 0.5rem;
             border-radius: 0;
-
-            appearance: none;
-            /* Menghapus gaya bawaan */
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="%23ffffff"><path d="M5.3 7.3a1 1 0 011.4 0l3.6 3.6a1 1 0 001.4 0l3.6-3.6a1 1 0 111.4 1.4l-4.3 4.3a1 1 0 01-1.4 0l-4.3-4.3a1 1 0 010-1.4z"/></svg>');
-            /* Gambar panah */
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            /* Posisi panah */
-            background-size: 1rem;
-            /* Ukuran panah */
         }
 
         .product-select2 {
@@ -206,11 +205,31 @@
         newSelect.focus();
         // Reinitialize select2 for new rows
     }
+    
+    
+    document.addEventListener('DOMContentLoaded', function() {
+    const quantityInputs = document.querySelectorAll('.product-quantity');
+
+    quantityInputs.forEach(input => {
+        input.addEventListener('input', function() {
+            if (this.value <= 0) {
+                this.setCustomValidity('Value must be greater than 0');
+                this.reportValidity(); // Show the validation message
+            } else {
+                this.setCustomValidity(''); // Clear the error message
+            }
+        });
+    });
+});
 
     function submit() {
         var form = document.getElementById('form_sample');
         if (form.checkValidity() === false) {
-            window.Android.showResponse("false");
+             const data = {
+                            key: "error",
+                            message: "Cek Inputan Data Dengan Benar"
+                        };
+                        window.Android.showResponse(JSON.stringify(data));
             form.reportValidity(); // Show validation messages
         } else {
             $(form).trigger('submit'); // Trigger form submission if valid
@@ -311,13 +330,19 @@
 
             // Ensure quantity does not exceed stock amount
             if (quantity > stockAmount) {
-                alert("Melebihi Sisa Stok")
+                const data = {
+                    key: "stok_kurang",
+                    message: "Melebihi Jumlah Stok Tersedia"
+                };
+                window.Android.showResponse(JSON.stringify(data));
                 $(this).val(""); // Set to max stock amount
             }
+
+           
         });
 
 
-        $('#form_sample').submit(function(e) {
+            $('#form_sample').submit(function(e) {
             e.preventDefault();
             const formData = new FormData(this);
             $.ajax({
@@ -332,7 +357,11 @@
                 },
                 success: (response) => {
                     if (response) {
-                        window.Android.showResponse(response.message);
+                        const data = {
+                            key: "submit_sukses",
+                            message: "Update Stok Berhasil"
+                        };
+                        window.Android.showResponse(JSON.stringify(data));
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -347,8 +376,14 @@
                     } catch (e) {
                         errorMessage += `Raw Response Text: ${jqXHR.responseText}`;
                     }
-                    alert(errorMessage);
-                    window.Android.showError(errorMessage);
+                    
+                      const data = {
+                            key: "error",
+                            message: "Error Update Stok"
+                        };
+                        window.Android.showResponse(JSON.stringify(data));
+                   
+                  
                 }
             });
         });
