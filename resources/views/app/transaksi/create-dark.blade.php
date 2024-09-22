@@ -171,6 +171,7 @@
 <!-- Select2 JS -->
 <script>
     let tokens = "";
+  
 
     function iniToken(token) {
         tokens = token
@@ -219,9 +220,10 @@
         let stockInfo = 0;
         // Event listener for change event on select
         $('#products-table').on('change', '.product-select', function() {
+   
 
             if ($(this).val() !== "") {
-               alert("a")
+            
                 // Enable the associated quantity input field
                 $(this).closest('tr').find('input[name*="[quantity]"]').prop('disabled', false);
 
@@ -296,8 +298,14 @@
             $(this).closest('tr').find('input[name*="[quantity]"]').focus();
             var productId = $(this).val();
 
+            var stockAmount =  parseInt($(this).closest('tr').find('.stock-amount').text())
 
-            let stockAmount = parseInt($(this).closest('tr').find('input[name*="[quantity]"]').find('.stock-amount').text());
+            // Jika Anda ingin mengambil nilai dari <span> di dalam <small> yang ada di <tr>
+        
+
+    
+
+
 
             let quantity = parseInt($(this).val());
 
