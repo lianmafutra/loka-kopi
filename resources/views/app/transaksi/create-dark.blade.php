@@ -7,14 +7,14 @@
 
 
 body {
-            background-color: #121212; /* Warna latar belakang */
+            background-color: #121212 ; /* Warna latar belakang */
             color: #ffffff; /* Warna teks */
         }
         .navbar {
-            background-color: #1f1f1f; /* Warna latar navbar */
+            background-color: #121212 ; /* Warna latar navbar */
         }
         .card {
-            background-color: #2a2a2a; /* Warna latar kartu */
+            background-color: #121212 ; /* Warna latar kartu */
             border-color: #444; /* Warna border kartu */
         }
         .btn-primary {
