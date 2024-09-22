@@ -85,6 +85,7 @@ class TransaksiController extends Controller
                // Cek apakah stok cukup
                if ($stokSaatIni < $product['quantity']) {
                   // Jika stok tidak cukup, lakukan return atau tindakan lainnya
+                  DB::rollBack();
                   return $this->error( 'Stok tidak mencukupi',400);
                }
 
