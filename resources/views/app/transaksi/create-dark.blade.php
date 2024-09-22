@@ -2,17 +2,11 @@
 @push('css')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Select2 CSS -->
+    <link rel="stylesheet" href="{{ asset('css/input-stok-dark.css') }}">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        small.stock-info {
-            font-size: 13px;
-            margin-left: 6px;
-            font-weight: bold;
-            color: #3232ff;
-            margin-top: 100px !important;
-            /* margin-top: 20px !important; */
-            /* padding-top: 20px; */
-        }
+      
 
         .table input[type="number"] {
             width: 100%;
