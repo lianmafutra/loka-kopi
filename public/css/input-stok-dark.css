@@ -1,0 +1,64 @@
+body {
+   background-color: #121212;
+   /* Warna latar belakang */
+   color: #ffffff;
+   /* Warna teks */
+}
+
+.navbar {
+   background-color: #121212;
+   /* Warna latar navbar */
+}
+
+.card {
+   background-color: #121212;
+   /* Warna latar kartu */
+   border-color: #444;
+   /* Warna border kartu */
+}
+
+.btn-primary {
+   background-color: #6200ea;
+   /* Warna tombol utama */
+   border-color: #6200ea;
+   /* Warna border tombol utama */
+}
+
+input,
+select,
+textarea {
+   background-color: #333;
+   /* Warna latar input field */
+   color: #fff;
+   /* Warna teks input field */
+   border: 1px solid #555;
+   /* Warna border input field */
+}
+
+input::placeholder,
+select::placeholder,
+textarea::placeholder {
+   color: #aaa;
+   /* Warna placeholder */
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+   border-color: #6200ea;
+   /* Warna border saat fokus */
+   box-shadow: 0 0 0 0.2rem rgba(98, 0, 234, 0.25);
+   /* Efek fokus */
+}
+
+/* Khusus untuk select dropdown */
+
+small.stock-info {
+   font-size: 13px;
+   margin-left: 6px;
+   font-weight: bold;
+   color: #ff7700;
+   margin-top: 100px !important;
+   /* margin-top: 20px !important; */
+   /* padding-top: 20px; */
+}

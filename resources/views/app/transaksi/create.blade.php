@@ -4,16 +4,16 @@
     <!-- Select2 CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        small.stock-info {
+            font-size: 13px;
+            margin-left: 6px;
+            font-weight: bold;
+            color: #3232ff;
+            margin-top: 100px !important;
+            /* margin-top: 20px !important; */
+            /* padding-top: 20px; */
+        }
 
-small.stock-info {
-    font-size: 13px;
-    margin-left: 6px;
-    font-weight: bold;
-    color: #3232ff;
-    margin-top: 100px !important;
-    /* margin-top: 20px !important; */
-    /* padding-top: 20px; */
-}
         .table input[type="number"] {
             width: 100%;
             /* Ensure input takes full width of the cell */
@@ -138,14 +138,14 @@ small.stock-info {
                                                 </select>
                                                 <br>
                                                 <small name="products[0][id]" class="stock-info" style="display: none">Sisa
-                                                   stok: <span class="stock-amount">0</span></small>
+                                                    stok: <span class="stock-amount">0</span></small>
                                                 {{-- <small class="stock-info">
                                                    Sisa stok: <span id="stok-value">0</span>
                                                </small> --}}
 
                                             </td>
                                             <td><input type="number" name="products[0][quantity]" placeholder="0"
-                                                    class="product-select2 product-quantity" required /></td>
+                                                    class="product-select2 product-quantity" required disabled /></td>
                                             <td>
                                                 <button type="button" class="btn btn-danger remove-row remove-tr"
                                                     style="font-size: 14px; padding: 10px 20px;">
@@ -169,8 +169,6 @@ small.stock-info {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Select2 JS -->
 <script>
-
-
     let tokens = "";
 
     function iniToken(token) {
@@ -192,7 +190,7 @@ small.stock-info {
               <small class="stock-info" style="display: none" name="products[${rowCount}][id]" >Sisa stok: <span class="stock-amount">0</span></small>
           </td>
           
-          <td><input type="number" placeholder="0"  class="product-select2 product-quantity" name="products[${rowCount}][quantity]" required></td>
+          <td><input  type="number" placeholder="0"  class="product-select2 product-quantity" name="products[${rowCount}][quantity]" required disabled></td>
           <td>
                                                 <button type="button" class="btn btn-danger remove-row remove-tr"
                                                     style="font-size: 14px; padding: 10px 20px;">
@@ -217,76 +215,97 @@ small.stock-info {
         }
     }
     $(function() {
-      let stockInfo = 0;
+        let stockInfo = 0;
         // Event listener for change event on select
         $('#products-table').on('change', '.product-select', function() {
-            
-         
+
+            if ($(this).val() !== "") {
+               alert("a")
+                // Enable the associated quantity input field
+                $(this).closest('tr').find('input[name*="[quantity]"]').prop('disabled', false);
+
+            } else {
+                // If no product is selected, disable the quantity input field
+               //  test.prop('disabled', true);
+               $(this).closest('tr').find('input[name*="[quantity]"]').prop('disabled', true);
+              $(this).closest('tr').find('input[name*="[quantity]"]').val("")
+            }
+
+
             // Get the name of the selected element
-        
-        
-      
-         
-         
-         
-         
-         // Focus on the input field in the same row
+
+
+
+
+
+            // Focus on the input field in the same row
             $(this).closest('tr').find('input[name*="[quantity]"]').focus();
             var productId = $(this).val();
 
             const selectName = $(this).attr('name');
-           
 
 
-             stockInfo =  $('small[name="' + selectName + '"]');
-          
+
+            stockInfo = $('small[name="' + selectName + '"]');
+            test = $(this).closest('tr').find('input[name*="[quantity]"]')
+
+
+
+
             let quantityInput = $(this).closest('#products-table').find('.product-quantity');
+
+
+
+
+
             if (productId) {
-            // Make an AJAX request to get stock info
-            $.ajax({
-               url: route('getStokProdukBarista',productId),
-                method: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + tokens
-                },
-                success: function(response) {
-                    // Assuming data contains the stock amount
-                    stockInfo.find('.stock-amount').text(response.data.jumlah_stok); // Update stock amount
-                    stockInfo.show(); // Show stock info
+                // Make an AJAX request to get stock info
+                $.ajax({
+                    url: route('getStokProdukBarista', productId),
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + tokens
+                    },
+                    success: function(response) {
+                        // Assuming data contains the stock amount
+                        stockInfo.find('.stock-amount').text(response.data
+                            .jumlah_stok); // Update stock amount
+                        stockInfo.show(); // Show stock info
+                        $(this).closest('tr').find('input[name*="[quantity]"]').focus();
+                        //   quantityInput.attr('max', stockAmount); // Set max attribute on quantity input
+                        //   quantityInput.val(Math.min(quantityInput.val(), stockAmount)); // Adjust value if it exceeds stock
+                    },
+                    error: function() {
+                        stockInfo.find('.stock-amount').text(
+                            'Error fetching stock'); // Handle error
+                        stockInfo.show(); // Show stock info
+                    }
+                });
+            } else {
+                stockInfo.hide(); // Hide stock info if no product is selected
+            }
 
-                  //   quantityInput.attr('max', stockAmount); // Set max attribute on quantity input
-                  //   quantityInput.val(Math.min(quantityInput.val(), stockAmount)); // Adjust value if it exceeds stock
-                },
-                error: function() {
-                    stockInfo.find('.stock-amount').text('Error fetching stock'); // Handle error
-                    stockInfo.show(); // Show stock info
-                }
-            });
-        } else {
-            stockInfo.hide(); // Hide stock info if no product is selected
-        }
 
-        
-           
+
         });
 
-         // Validate quantity input
-    $('#products-table').on('input', '.product-quantity', function() {
+        // Validate quantity input
+        $('#products-table').on('input', '.product-quantity', function() {
 
-      $(this).closest('tr').find('input[name*="[quantity]"]').focus();
+            $(this).closest('tr').find('input[name*="[quantity]"]').focus();
             var productId = $(this).val();
 
-       
-        let stockAmount = parseInt(stockInfo.find('.stock-amount').text());
-        console.log(stockAmount)
-        let quantity = parseInt($(this).val());
 
-        // Ensure quantity does not exceed stock amount
-        if (quantity > stockAmount) {
-         alert("Melebihi Sisa Stok")
-            $(this).val(""); // Set to max stock amount
-        }
-    });
+            let stockAmount = parseInt(stockInfo.find('.stock-amount').text());
+
+            let quantity = parseInt($(this).val());
+
+            // Ensure quantity does not exceed stock amount
+            if (quantity > stockAmount) {
+                alert("Melebihi Sisa Stok")
+                $(this).val(""); // Set to max stock amount
+            }
+        });
 
 
         $('#form_sample').submit(function(e) {
@@ -337,5 +356,4 @@ small.stock-info {
         });
     })
 </script>
-
 </html>
