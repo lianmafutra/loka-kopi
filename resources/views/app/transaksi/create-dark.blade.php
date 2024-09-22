@@ -8,7 +8,97 @@
     <style>
       
 
-    
+        .table input[type="number"] {
+            width: 100%;
+            /* Ensure input takes full width of the cell */
+            text-align: center;
+            /* Center text inside input */
+            max-width: 150px;
+            /* Optional: adjust the max width as needed */
+        }
+
+        html,
+        body {
+            height: 100%;
+            padding-bottom: 100px;
+            margin-bottom: 100px;
+        }
+
+        .container {
+            min-height: 100vh;
+            /* Mengisi setidaknya 100% dari tinggi viewport */
+            padding-bottom: 100px;
+            margin-bottom: 100px;
+        }
+
+        select {
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+         
+            height: 45px;
+            width: 100%;
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAUCAMAAACtdX32AAAAdVBMVEUAAAD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhMdQaAAAAJ3RSTlMAAAECAwQGBwsOFBwkJTg5RUZ4eYCHkJefpaytrsXGy8zW3+Do8vNn0bsyAAAAYElEQVR42tXROwJDQAAA0Ymw1p9kiT+L5P5HVEi3qJn2lcPjtIuzUIJ/rhIGy762N3XaThqMN1ZPALsZPEzG1x8LrFL77DHBnEMxBewz0fJ6LyFHTPL7xhwzWYrJ9z22AqmQBV757MHfAAAAAElFTkSuQmCC);
+            background-position: 100%;
+            background-repeat: no-repeat;
+            border: 1px solid ;
+            padding: 0.5rem;
+            border-radius: 0;
+        }
+
+        .product-select2 {
+            width: 100%;
+            /* Adjust width to fit mobile screens */
+            height: 50px;
+            /* Adjust height to fit your design */
+            font-weight: bold;
+            font-size: 20px;
+            /* Adjust font size */
+            padding: 5px;
+            /* Add padding for better touch interaction */
+       
+            /* Dark gray border color */
+            border-width: 1px;
+            /* Border size */
+            border-style: solid;
+            /* Border style */
+            border-radius: 10px;
+            /* Adjust the value as needed */
+            box-sizing: border-box;
+        }
+
+        button.btn.btn-danger.remove-row.remove-tr {
+            height: 50px;
+            font-size: 20px !important;
+        }
+
+        .btn-custom-size {
+            font-size: 25px;
+            /* Adjust font size */
+            padding: 20px;
+            /* Adjust padding */
+            /* Optionally adjust width and height */
+            width: auto;
+            /* Set a specific width if desired */
+            height: 50px;
+            /* Set a specific height if desired */
+        }
+
+        .product-select {
+            width: 200px;
+            padding-left: 20px;
+            max-width: 500px;
+            height: 50px;
+            font-size: 20px;
+            border-color: #636363;
+            /* Dark gray border color */
+            border-width: 1px;
+            /* Border size */
+            border-style: solid;
+            /* Border style */
+            border-radius: 10px;
+            /* Adjust the value as needed */
+            box-sizing: border-box;
+        }
     </style>
 @endpush
 @section('content')
