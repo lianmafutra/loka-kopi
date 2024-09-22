@@ -385,6 +385,7 @@ class BaristaController extends Controller
 
    public function getStokProdukBarista($produkId){
       $barista = Barista::with('gerobak')?->find(auth()->user()->id);
+      
       $gerobakstok = GerobakStok::where('gerobak_id', $barista?->id)->where('produk_id', $produkId)->first();
       return $this->success('',$gerobakstok);
    }

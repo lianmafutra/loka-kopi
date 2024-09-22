@@ -137,7 +137,8 @@ small.stock-info {
                                                     @endforeach
                                                 </select>
                                                 <br>
-                                                <small class="stock-info" style="display: none" >Sisa stok: <span class="stock-amount">0</span></small>
+                                                <small name="products[0][id]" class="stock-info" style="display: none">Sisa
+                                                   stok: <span class="stock-amount">0</span></small>
                                                 {{-- <small class="stock-info">
                                                    Sisa stok: <span id="stok-value">0</span>
                                                </small> --}}
@@ -183,11 +184,14 @@ small.stock-info {
           <td>
               <select data-placeholder="Pilih Produk" style="width: 200px"  name="products[${rowCount}][id]" class="product-select" required>
                   <option value="">Pilih Produk</option>
-                  @foreach ($products as $product)
+                  @foreach ($products->get() as $product)
                       <option value="{{ $product->id }}">{{ $product->nama }}</option>
                   @endforeach
               </select>
+              <br>
+              <small class="stock-info" style="display: none" name="products[${rowCount}][id]" >Sisa stok: <span class="stock-amount">0</span></small>
           </td>
+          
           <td><input type="number" placeholder="0"  class="product-select2 product-quantity" name="products[${rowCount}][quantity]" required></td>
           <td>
                                                 <button type="button" class="btn btn-danger remove-row remove-tr"
@@ -213,14 +217,29 @@ small.stock-info {
         }
     }
     $(function() {
+      let stockInfo = 0;
         // Event listener for change event on select
         $('#products-table').on('change', '.product-select', function() {
-            // Focus on the input field in the same row
+            
+         
+            // Get the name of the selected element
+        
+        
+      
+         
+         
+         
+         
+         // Focus on the input field in the same row
             $(this).closest('tr').find('input[name*="[quantity]"]').focus();
             var productId = $(this).val();
 
+            const selectName = $(this).attr('name');
+           
 
-            let stockInfo = $(this).closest('#products-table').find('.stock-info');
+
+             stockInfo =  $('small[name="' + selectName + '"]');
+          
             let quantityInput = $(this).closest('#products-table').find('.product-quantity');
             if (productId) {
             // Make an AJAX request to get stock info
@@ -232,8 +251,8 @@ small.stock-info {
                     stockInfo.find('.stock-amount').text(response.data.jumlah_stok); // Update stock amount
                     stockInfo.show(); // Show stock info
 
-                    quantityInput.attr('max', stockAmount); // Set max attribute on quantity input
-                    quantityInput.val(Math.min(quantityInput.val(), stockAmount)); // Adjust value if it exceeds stock
+                  //   quantityInput.attr('max', stockAmount); // Set max attribute on quantity input
+                  //   quantityInput.val(Math.min(quantityInput.val(), stockAmount)); // Adjust value if it exceeds stock
                 },
                 error: function() {
                     stockInfo.find('.stock-amount').text('Error fetching stock'); // Handle error
@@ -250,12 +269,19 @@ small.stock-info {
 
          // Validate quantity input
     $('#products-table').on('input', '.product-quantity', function() {
-        let stockAmount = parseInt($(this).closest('#products-table').find('.stock-amount').text());
+
+      $(this).closest('tr').find('input[name*="[quantity]"]').focus();
+            var productId = $(this).val();
+
+       
+        let stockAmount = parseInt(stockInfo.find('.stock-amount').text());
+        console.log(stockAmount)
         let quantity = parseInt($(this).val());
 
         // Ensure quantity does not exceed stock amount
         if (quantity > stockAmount) {
-            $(this).val(stockAmount); // Set to max stock amount
+         alert("Melebih Sisa Stok")
+            $(this).val(""); // Set to max stock amount
         }
     });
 
