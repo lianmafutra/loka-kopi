@@ -133,7 +133,7 @@ class AuthController extends Controller
          DB::beginTransaction();
 
         
-    
+
          $data = $request->safe()->all();
          User::where('id', auth()->user()->id)->update($data);
 

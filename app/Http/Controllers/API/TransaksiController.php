@@ -114,7 +114,7 @@ class TransaksiController extends Controller
          if (auth()->user()->role != "barista") {
             return $this->error("Akses Tidak diizinkan", 401);
          }
-         $transaksiHistori = Transaksi::where('user_id', auth()->user()->id)->get();
+         $transaksiHistori = Transaksi::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
          return $this->success("Input Transaksi Berhasil", $transaksiHistori);
       } catch (Exception $th) {
          return $this->error("Input Transaksi Gagal , " . $th->getMessage(), 400);

@@ -316,6 +316,8 @@ class BaristaController extends Controller
 
          HistoriLokasi::create([
             'users_id' => auth()->user()->id,
+            'gerobak_id' => $gerobak?->id,
+            'gerobak_nama' => $gerobak?->nama,
             'barista_id' => $gerobak?->barista_id,
             'latitude' => $requestSafe->latitude,
             'longitude' => $requestSafe->longitude,
