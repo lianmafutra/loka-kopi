@@ -26,6 +26,7 @@ class ProdukController extends Controller
       } catch (ModelNotFoundException $e) {
          return $this->error("Produk tidak ditemukan", 404);
       }
+      
       $produkTransform = [
          'id' =>  $produk?->id,
          'nama' =>  $produk?->nama,

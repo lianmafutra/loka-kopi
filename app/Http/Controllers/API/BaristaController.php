@@ -9,6 +9,7 @@ use App\Models\Barista;
 use App\Models\Gerobak;
 use App\Models\GerobakStok;
 use App\Models\HistoriLokasi;
+use App\Models\Produk;
 use App\Utils\ApiResponse;
 use App\Utils\Rupiah;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -380,6 +381,12 @@ class BaristaController extends Controller
          return $this->error("Gagal", 400);
       }
 
+   }
+
+   public function getStokProdukBarista($produkId){
+      $barista = Barista::with('gerobak')?->find(auth()->user()->id);
+      $gerobakstok = GerobakStok::where('gerobak_id', $barista?->id)->where('produk_id', $produkId)->first();
+      return $this->success('',$gerobakstok);
    }
 
 

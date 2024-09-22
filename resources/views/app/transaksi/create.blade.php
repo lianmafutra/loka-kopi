@@ -4,6 +4,16 @@
     <!-- Select2 CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+
+small.stock-info {
+    font-size: 13px;
+    margin-left: 6px;
+    font-weight: bold;
+    color: #3232ff;
+    margin-top: 100px !important;
+    /* margin-top: 20px !important; */
+    /* padding-top: 20px; */
+}
         .table input[type="number"] {
             width: 100%;
             /* Ensure input takes full width of the cell */
@@ -122,14 +132,19 @@
                                                 <select data-placeholder="Pilih Produk" class="product-select"
                                                     name="products[0][id]" required>
                                                     <option value="">Pilih Produk</option>
-                                                    <!-- Replace with your dynamic products -->
-                                                    @foreach ($products as $product)
+                                                    @foreach ($products->get() as $product)
                                                         <option value="{{ $product->id }}">{{ $product->nama }}</option>
                                                     @endforeach
                                                 </select>
+                                                <br>
+                                                <small class="stock-info" style="display: none" >Sisa stok: <span class="stock-amount">0</span></small>
+                                                {{-- <small class="stock-info">
+                                                   Sisa stok: <span id="stok-value">0</span>
+                                               </small> --}}
+
                                             </td>
                                             <td><input type="number" name="products[0][quantity]" placeholder="0"
-                                                    class="product-select2" required /></td>
+                                                    class="product-select2 product-quantity" required /></td>
                                             <td>
                                                 <button type="button" class="btn btn-danger remove-row remove-tr"
                                                     style="font-size: 14px; padding: 10px 20px;">
@@ -154,7 +169,7 @@
 <!-- Select2 JS -->
 <script>
 
-   
+
     let tokens = "";
 
     function iniToken(token) {
@@ -173,7 +188,7 @@
                   @endforeach
               </select>
           </td>
-          <td><input type="number" placeholder="0"  class="product-select2" name="products[${rowCount}][quantity]" required></td>
+          <td><input type="number" placeholder="0"  class="product-select2 product-quantity" name="products[${rowCount}][quantity]" required></td>
           <td>
                                                 <button type="button" class="btn btn-danger remove-row remove-tr"
                                                     style="font-size: 14px; padding: 10px 20px;">
@@ -202,7 +217,49 @@
         $('#products-table').on('change', '.product-select', function() {
             // Focus on the input field in the same row
             $(this).closest('tr').find('input[name*="[quantity]"]').focus();
+            var productId = $(this).val();
+
+
+            let stockInfo = $(this).closest('#products-table').find('.stock-info');
+            let quantityInput = $(this).closest('#products-table').find('.product-quantity');
+            if (productId) {
+            // Make an AJAX request to get stock info
+            $.ajax({
+               url: route('getStokProdukBarista',productId),
+                method: 'GET',
+                success: function(response) {
+                    // Assuming data contains the stock amount
+                    stockInfo.find('.stock-amount').text(response.data.jumlah_stok); // Update stock amount
+                    stockInfo.show(); // Show stock info
+
+                    quantityInput.attr('max', stockAmount); // Set max attribute on quantity input
+                    quantityInput.val(Math.min(quantityInput.val(), stockAmount)); // Adjust value if it exceeds stock
+                },
+                error: function() {
+                    stockInfo.find('.stock-amount').text('Error fetching stock'); // Handle error
+                    stockInfo.show(); // Show stock info
+                }
+            });
+        } else {
+            stockInfo.hide(); // Hide stock info if no product is selected
+        }
+
+        
+           
         });
+
+         // Validate quantity input
+    $('#products-table').on('input', '.product-quantity', function() {
+        let stockAmount = parseInt($(this).closest('#products-table').find('.stock-amount').text());
+        let quantity = parseInt($(this).val());
+
+        // Ensure quantity does not exceed stock amount
+        if (quantity > stockAmount) {
+            $(this).val(stockAmount); // Set to max stock amount
+        }
+    });
+
+
         $('#form_sample').submit(function(e) {
             e.preventDefault();
             const formData = new FormData(this);

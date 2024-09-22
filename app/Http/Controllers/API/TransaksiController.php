@@ -29,8 +29,16 @@ class TransaksiController extends Controller
 
    public function transaksiCreate()
    {
-      $x['products'] = Produk::get();
-      
+      // $x['products'] = Produk::get();
+
+      $barista = Barista::with('user')->first();
+
+      $gerobakId = $barista->gerobak_id;
+
+       $x['products'] = Produk::with(['gerobakStoks' => function ($query) use ($gerobakId) {
+         $query->where('gerobak_id', $gerobakId);
+      }]);
+
       return view('app.transaksi.create', $x);
    }
 
