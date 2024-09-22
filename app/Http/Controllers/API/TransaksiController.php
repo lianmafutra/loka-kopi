@@ -30,7 +30,9 @@ class TransaksiController extends Controller
    public function transaksiCreate(Request $request)
    {
       // $x['products'] = Produk::get();
-
+      if (auth()->user()->role != "barista") {
+         return $this->error("Akses Tidak diizinkan", 401);
+      }
 
       $mode = $request->query('mode');
       if($mode === 'dark'){
