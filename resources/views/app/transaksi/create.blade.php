@@ -246,6 +246,9 @@ small.stock-info {
             $.ajax({
                url: route('getStokProdukBarista',productId),
                 method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + tokens
+                },
                 success: function(response) {
                     // Assuming data contains the stock amount
                     stockInfo.find('.stock-amount').text(response.data.jumlah_stok); // Update stock amount
