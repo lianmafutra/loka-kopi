@@ -297,7 +297,7 @@
             var productId = $(this).val();
 
 
-            let stockAmount = parseInt(stockInfo.find('.stock-amount').text());
+            let stockAmount = parseInt($(this).closest('tr').find('input[name*="[quantity]"]').find('.stock-amount').text());
 
             let quantity = parseInt($(this).val());
 
