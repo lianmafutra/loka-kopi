@@ -283,7 +283,7 @@ small.stock-info {
 
         // Ensure quantity does not exceed stock amount
         if (quantity > stockAmount) {
-         alert("Melebih Sisa Stok")
+         alert("Melebihi Sisa Stok")
             $(this).val(""); // Set to max stock amount
         }
     });
