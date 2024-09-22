@@ -12,8 +12,8 @@ class Barista extends Model
     protected $table = 'barista';
     protected $guarded = [];
     protected $casts = [
-      'created_at' => 'date:d-m-Y H:i:s',
-      'updated_at' => 'date:d-m-Y H:i:s',
+      'created_at' => 'datetime:d-m-Y H:i:s',
+      'updated_at' => 'datetime:d-m-Y H:i:s',
       'tgl_lahir' => 'date:d-m-Y',
       'tgl_registrasi' => 'date:d-m-Y',
   ];

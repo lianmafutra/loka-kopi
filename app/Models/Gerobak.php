@@ -13,8 +13,8 @@ class Gerobak extends Model
     protected $table = 'gerobak';
     protected $guarded = [];
     protected $casts = [
-      'created_at' => 'date:d-m-Y H:i:s',
-      'updated_at' => 'date:d-m-Y H:i:s',
+      'created_at' => 'datetime:d-m-Y H:i:s',
+      'updated_at' => 'datetime:d-m-Y H:i:s',
   ];
 
 

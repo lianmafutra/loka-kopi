@@ -11,7 +11,7 @@ class HistoriStok extends Model
    protected $table = 'histori_stok';
    protected $guarded = [];
    protected $casts = [
-     'created_at' => 'date:d-m-Y H:i:s',
-     'updated_at' => 'date:d-m-Y H:i:s',
+     'created_at' => 'datetime:d-m-Y H:i:s',
+     'updated_at' => 'datetime:d-m-Y H:i:s',
  ];
 }

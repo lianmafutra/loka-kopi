@@ -12,8 +12,8 @@ class Produk extends Model
     protected $table = 'produk';
     protected $guarded = [];
     protected $casts = [
-      'created_at' => 'date:d-m-Y H:i:s',
-      'updated_at' => 'date:d-m-Y H:i:s',
+      'created_at' => 'datetime:d-m-Y H:i:s',
+      'updated_at' => 'datetime:d-m-Y H:i:s',
   ];
 
   const KATEGORI_KOPI = 'kopi';
